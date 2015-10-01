@@ -5,6 +5,7 @@
 
 html,body{
   margin: 0;
+  padding: 0;
   font-family: 'Ubuntu', sans-serif;
   height: 100%;
 }
@@ -41,13 +42,23 @@ html,body{
 
 #threejs-container{
   height: 100%;
-  background: white url('../../placeholder.png');
+  background: white url('../../placeholder.png') no-repeat;
   background-size: contain;
   opacity: 0.6;
 }
 
 #placeholder{
   text-align: center;
-  margin-top: 5%;
   font-size: larger;
+}
+
+#control-panel{
+  height: 100%;
+  background-color: @terra;
+}
+
+@media (max-width: 1200px) {
+  #control-panel{
+    display: none;
+  }
 }
