@@ -1,0 +1,14 @@
+{
+  "name": "braking-distance-simulator-page",
+  "version": "1.0.0",
+  "description": "4th years honours project implementing braking distance 3d simulator using three.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Stanislav Hamara",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.0"
+  }
+}
