@@ -9,6 +9,7 @@
   "author": "Stanislav Hamara",
   "license": "MIT",
   "devDependencies": {
+    "bootstrap": "^3.3.5",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-less": "^3.0.3",
