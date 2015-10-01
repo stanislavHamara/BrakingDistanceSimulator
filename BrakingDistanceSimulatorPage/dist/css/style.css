@@ -1,4 +1,20 @@
 body {
   margin: 0;
-  font-family: 'Ubuntu';
+  font-family: 'Ubuntu', sans-serif;
+}
+.navbar-default {
+  background-color: #031634;
+  font-size: 18px;
+}
+.navbar-default .navbar-brand {
+  color: #E8DDCB;
+  font-size: 22px;
+}
+.navbar-default .navbar-brand:hover {
+  color: #CDB380;
+}
+.navbar {
+  border-radius: 0;
+  border: none;
+  margin: 0;
 }
