@@ -20,11 +20,14 @@ body {
   margin: 0;
 }
 #wrapper {
-  color: red;
   background-color: #E8DDCB;
   position: absolute;
   top: 50px;
   bottom: 0;
   right: 0;
   left: 0;
+}
+#threejs-container {
+  background-color: #033649;
+  height: 100%;
 }
