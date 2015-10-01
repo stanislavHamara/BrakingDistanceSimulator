@@ -20,7 +20,7 @@ body {
   font-family: 'Ubuntu', sans-serif;
   height: 100%;
 }
-#wrapper {
+#bds-wrapper {
   background-color: #E8DDCB;
   position: absolute;
   top: 50px;
@@ -28,25 +28,26 @@ body {
   right: 0;
   left: 0;
 }
-#threejs-container {
+#bds-threejs-container {
   height: 100%;
   background: white url('../../placeholder.png') no-repeat;
   background-size: contain;
   opacity: 0.6;
 }
-#placeholder {
+#bds-placeholder {
   text-align: center;
   font-size: larger;
 }
-#control-panel {
+#bds-control-panel {
   height: 100%;
   background-color: #E8DDCB;
+  color: #033649;
 }
-.control-title {
+.bds-control-title {
   text-align: center;
 }
 @media (max-width: 1200px) {
-  #control-panel {
+  #bds-control-panel {
     display: none;
   }
 }

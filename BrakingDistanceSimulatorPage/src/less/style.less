@@ -9,7 +9,7 @@ html,body{
 }
 
 //wrapper
-#wrapper{
+#bds-wrapper {
   background-color: @terra;
   position: absolute;
   top: 50px;
@@ -18,29 +18,30 @@ html,body{
   left: 0;
 }
 
-#threejs-container{
+#bds-threejs-container {
   height: 100%;
   background: white url('../../placeholder.png') no-repeat;
   background-size: contain;
   opacity: 0.6;
 }
 
-#placeholder{
+#bds-placeholder {
   text-align: center;
   font-size: larger;
 }
 
-#control-panel{
+#bds-control-panel {
   height: 100%;
   background-color: @terra;
+  color: @blue;
 }
 
-.control-title{
+.bds-control-title {
   text-align: center;
 }
 
 @media (max-width: 1200px) {
-  #control-panel{
+  #bds-control-panel {
     display: none;
   }
 }
