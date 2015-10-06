@@ -38,13 +38,36 @@ body {
   text-align: center;
   font-size: larger;
 }
+.bds-label {
+  font-size: 2vw;
+  line-height: 0.6;
+}
 #bds-control-panel {
   height: 100%;
   background-color: #E8DDCB;
   color: #033649;
-}
-.bds-control-title {
   text-align: center;
+}
+.bds-speed {
+  font-size: 10vw;
+  line-height: 1;
+}
+#bds-speed-controls {
+  margin-top: 3vh;
+}
+#bds-speed-controls .btn-group {
+  width: 80%;
+}
+#bds-speed-controls .btn-group .btn-default {
+  width: 16.6%;
+  background-color: #033649;
+  color: #E8DDCB;
+}
+#bds-speed-controls .btn-group .btn-default:hover {
+  background-color: #031634;
+}
+#bds-speed-controls .btn-group .btn-default:focus {
+  outline: none;
 }
 @media (max-width: 1200px) {
   #bds-control-panel {

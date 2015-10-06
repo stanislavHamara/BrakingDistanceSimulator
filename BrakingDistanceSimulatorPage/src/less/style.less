@@ -1,7 +1,7 @@
 @import "colors";
 @import "navbar";
 
-html,body{
+html, body {
   margin: 0;
   padding: 0;
   font-family: 'Ubuntu', sans-serif;
@@ -30,14 +30,39 @@ html,body{
   font-size: larger;
 }
 
+.bds-label {
+  font-size: 2vw;
+  line-height: 0.6;
+}
+
 #bds-control-panel {
   height: 100%;
   background-color: @terra;
   color: @blue;
+  text-align: center;
 }
 
-.bds-control-title {
-  text-align: center;
+.bds-speed {
+  font-size: 10vw;
+  line-height: 1;
+}
+
+#bds-speed-controls {
+  margin-top: 3vh;
+  .btn-group {
+    width: 80%;
+    .btn-default {
+      width: 16.6%;
+      background-color: @blue;
+      color: @terra;
+      &:hover {
+        background-color: @darkblue;
+      }
+      &:focus {
+        outline: none;
+      }
+    }
+  }
 }
 
 @media (max-width: 1200px) {
