@@ -40,7 +40,7 @@ body {
 }
 .bds-label {
   font-size: 2vw;
-  line-height: 0.6;
+  line-height: 1.9;
 }
 #bds-control-panel {
   height: 100%;
@@ -50,24 +50,46 @@ body {
 }
 .bds-speed {
   font-size: 10vw;
-  line-height: 1;
+  line-height: 0.75;
 }
-#bds-speed-controls {
-  margin-top: 3vh;
+.bds-controls {
+  margin-top: 1vh;
+  margin-bottom: 3vh;
 }
-#bds-speed-controls .btn-group {
+.bds-controls .btn-group,
+.bds-controls .list-group {
   width: 80%;
 }
-#bds-speed-controls .btn-group .btn-default {
-  width: 16.6%;
+.bds-controls .btn-group .btn-default,
+.bds-controls .list-group .btn-default,
+.bds-controls .btn-group .list-group-item,
+.bds-controls .list-group .list-group-item {
+  width: 16.8%;
   background-color: #033649;
   color: #E8DDCB;
 }
-#bds-speed-controls .btn-group .btn-default:hover {
+.bds-controls .btn-group .btn-default:hover,
+.bds-controls .list-group .btn-default:hover,
+.bds-controls .btn-group .list-group-item:hover,
+.bds-controls .list-group .list-group-item:hover {
   background-color: #031634;
 }
-#bds-speed-controls .btn-group .btn-default:focus {
+.bds-controls .btn-group .btn-default:focus,
+.bds-controls .list-group .btn-default:focus,
+.bds-controls .btn-group .list-group-item:focus,
+.bds-controls .list-group .list-group-item:focus {
   outline: none;
+}
+.bds-controls .list-group {
+  margin-left: 10%;
+}
+.bds-controls .list-group .list-group-item {
+  width: 100%;
+}
+.bds-controls .list-group .active {
+  background-color: #031634;
+  border: none;
+  z-index: 0;
 }
 @media (max-width: 1200px) {
   #bds-control-panel {
