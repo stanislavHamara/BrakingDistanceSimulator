@@ -1,0 +1,61 @@
+@import "colors";
+
+#bds-control-panel {
+  height: 100%;
+  background-color: @terra;
+  color: @blue;
+  text-align: center;
+}
+
+.bds-speed {
+  font-size: 10vw;
+  line-height: 0.75;
+}
+
+.bds-controls {
+  margin-top: 1vh;
+  .btn-group,.list-group{
+    width: 80%;
+    margin-bottom: 3vh;
+    .btn-default, .list-group-item {
+      width: 16.8%;
+      background-color: @blue;
+      color: @terra;
+      &:hover {
+        background-color: @darkblue;
+      }
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .list-group{
+    margin-left: 10%;
+    margin-bottom: 4.5vh;
+    .list-group-item{
+      width: 100%;
+    }
+    .active{
+      background-color: @darkblue;
+      border: none;
+      z-index: 0;
+    }
+  }
+}
+
+.bds-weather-control{
+  margin-top: 2%;
+  margin-left: 10%;
+  width: 80%;
+  .btn-default{
+    background-color: @blue;
+    color: @terra;
+    &:hover {
+      background-color: @darkblue;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}

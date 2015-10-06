@@ -1,18 +1,3 @@
-.navbar-default {
-  background-color: #031634;
-}
-.navbar-default .navbar-brand {
-  color: #E8DDCB;
-  font-size: 22px;
-}
-.navbar-default .navbar-brand:hover {
-  color: #CDB380;
-}
-.navbar {
-  border-radius: 0;
-  border: none;
-  margin: 0;
-}
 #bds-control-panel {
   height: 100%;
   background-color: #E8DDCB;
@@ -77,38 +62,4 @@
 }
 .bds-weather-control .btn-default:focus {
   outline: none;
-}
-html,
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Ubuntu', sans-serif;
-  height: 100%;
-}
-#bds-wrapper {
-  background-color: #E8DDCB;
-  position: absolute;
-  top: 50px;
-  bottom: 0;
-  right: 0;
-  left: 0;
-}
-#bds-threejs-container {
-  height: 100%;
-  background: white url('../../placeholder.png') no-repeat;
-  background-size: contain;
-  opacity: 0.6;
-}
-#bds-placeholder {
-  text-align: center;
-  font-size: larger;
-}
-.bds-label {
-  font-size: 2vw;
-  line-height: 1.9;
-}
-@media (max-width: 1200px) {
-  #bds-control-panel {
-    display: none;
-  }
 }
