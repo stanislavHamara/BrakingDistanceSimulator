@@ -11,5 +11,17 @@
 .navbar {
   border-radius: 0;
   border: none;
-  margin: 0;
+}
+.bds-speed-label {
+  margin-top: 15px;
+  color: #E8DDCB;
+}
+#bds-offset {
+  margin-right: 2%;
+}
+.bds-speed-input {
+  width: 15%;
+  margin-top: 9px;
+  padding-right: 1%;
+  padding-left: 1%;
 }
