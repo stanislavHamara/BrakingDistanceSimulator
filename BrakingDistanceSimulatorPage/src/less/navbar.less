@@ -4,6 +4,8 @@ a, span {
   cursor: default;
 }
 
+a{background-color: @darkblue,}
+
 .navbar-default {
   background-color: @darkblue;
   border-radius: 0;
@@ -28,10 +30,13 @@ a, span {
   }
 
   .navbar-nav {
-    li > a{
+    li > a {
       color: @terra;
+      &:hover{
+        color: @darkblue;
+        background-color: @terra;
+      }
     }
-
     .dropdown-menu {
       background-color: @darkblue;
     }
@@ -40,10 +45,12 @@ a, span {
         background-color: @darkblue;
       }
       a {
-        color: @terra
+        color: @terra;
+        &:focus {
+          background-color: @terra;
+        }
       }
     }
-
   }
 
   #bds-start-button {

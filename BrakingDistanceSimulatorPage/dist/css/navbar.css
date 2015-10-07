@@ -2,6 +2,9 @@ a,
 span {
   cursor: default;
 }
+a {
+  background-color: #031634;
+}
 .navbar-default {
   background-color: #031634;
   border-radius: 0;
@@ -25,6 +28,10 @@ span {
 .navbar-default .navbar-nav li > a {
   color: #E8DDCB;
 }
+.navbar-default .navbar-nav li > a:hover {
+  color: #031634;
+  background-color: #E8DDCB;
+}
 .navbar-default .navbar-nav .dropdown-menu {
   background-color: #031634;
 }
@@ -33,6 +40,9 @@ span {
 }
 .navbar-default .navbar-nav .open a {
   color: #E8DDCB;
+}
+.navbar-default .navbar-nav .open a:focus {
+  background-color: #E8DDCB;
 }
 .navbar-default #bds-start-button {
   background-color: #033649;
