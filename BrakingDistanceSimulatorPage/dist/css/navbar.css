@@ -8,6 +8,7 @@ span {
   border: none;
 }
 .navbar-default .navbar-right {
+  visibility: hidden;
   margin-right: -30px;
   right: 0;
 }

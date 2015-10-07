@@ -8,6 +8,7 @@ span {
   border: none;
 }
 .navbar-default .navbar-right {
+  visibility: hidden;
   margin-right: -30px;
   right: 0;
 }
@@ -180,5 +181,8 @@ body {
   }
   #bds-threejs-container {
     width: 100%;
+  }
+  .navbar-right {
+    visibility: visible !important;
   }
 }
