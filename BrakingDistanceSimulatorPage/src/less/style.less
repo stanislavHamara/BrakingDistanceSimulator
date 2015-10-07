@@ -1,36 +1,19 @@
-@darkblue: #031634;
-@blue: #033649;
-@darkterra: #CDB380;
-@terra: #E8DDCB;
+@import "colors";
+@import "navbar";
+@import "controls";
 
-html,body{
+html, body {
   margin: 0;
+  padding: 0;
   font-family: 'Ubuntu', sans-serif;
   height: 100%;
-}
-
-//navbar
-.navbar-default{
-  background-color: @darkblue;
-
-  .navbar-brand{
-    color: @terra;
-    font-size: 22px;
-
-    &:hover{
-      color: @darkterra;
-    }
-  }
-}
-
-.navbar{
-  border-radius: 0;
-  border: none;
-  margin: 0;
+  width: 100%;
+  position: relative;
+  overflow-x: hidden;
 }
 
 //wrapper
-#wrapper{
+#bds-wrapper {
   background-color: @terra;
   position: absolute;
   top: 50px;
@@ -39,15 +22,52 @@ html,body{
   left: 0;
 }
 
-#threejs-container{
+#bds-threejs-container {
   height: 100%;
-  background: white url('../../placeholder.png');
+  width: 75%;
+  background: white url('../../placeholder.png') no-repeat;
   background-size: contain;
   opacity: 0.6;
 }
 
-#placeholder{
+#bds-placeholder {
   text-align: center;
-  margin-top: 5%;
   font-size: larger;
+}
+
+.bds-label {
+  font-size: 2vw;
+  line-height: 1.9;
+}
+
+.bds-switch{
+  width: 80%;
+  margin-left: 10%;
+  text-align: left;
+  font-size: 140%;
+  line-height: 1.7;
+  margin-bottom: 2%;
+  .bootstrap-switch{
+    position: absolute;
+    right: 10%;
+  }
+  .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-primary, .bootstrap-switch
+  .bootstrap-switch-handle-on.bootstrap-switch-primary{
+    background-color: @blue;
+  }
+}
+
+
+@media (max-width: 1199px), (max-height: 845px){
+  #bds-control-panel {
+    display: none;
+    width: 0;
+  }
+  #bds-threejs-container{
+    width: 100%;
+  }
+
+ .navbar-right{
+    visibility: visible !important;
+  }
 }

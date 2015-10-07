@@ -1,0 +1,89 @@
+@import "colors";
+
+#bds-control-panel {
+  position: relative;
+  height: 100%;
+  width: 25%;
+  background-color: @terra;
+  color: @blue;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+.bds-speed {
+  font-size: 10vw;
+  line-height: 0.75;
+}
+
+.bds-controls {
+  .btn-group, .list-group {
+    width: 80%;
+    margin-bottom: 1vh;
+    .btn-default, .list-group-item {
+      width: 16.8%;
+      background-color: @blue;
+      color: @terra;
+      &:hover {
+        background-color: @darkblue;
+      }
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .list-group {
+    margin-left: 10%;
+    margin-bottom: 2.5vh;
+    .list-group-item {
+      width: 100%;
+    }
+    .active {
+      background-color: @darkblue;
+      border: none;
+      z-index: 0;
+    }
+  }
+}
+
+.bds-weather-control {
+  .btn-group {
+    width: 80%;
+    .btn-primary {
+      width: 33.3%;
+      background-color: @blue;
+      color: @terra;
+      &:hover {
+        background-color: @darkblue;
+      }
+      &:focus {
+        outline: none;
+      }
+    }
+    .active {
+      background-color: @darkblue;
+    }
+  }
+}
+
+#bds-start-simulation {
+  position: fixed;
+  bottom: 0;
+  width: 26%;
+  .btn-default {
+    height: 45px;
+    border: none;
+    border-radius: 0;
+    background-color: @blue;
+    font-size: 18px;
+    color: @terra;
+    &:hover {
+      background-color: @darkblue;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+
