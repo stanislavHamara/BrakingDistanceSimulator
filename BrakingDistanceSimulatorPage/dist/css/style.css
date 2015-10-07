@@ -71,13 +71,10 @@ span {
   font-size: 10vw;
   line-height: 0.75;
 }
-.bds-controls {
-  margin-top: 1vh;
-}
 .bds-controls .btn-group,
 .bds-controls .list-group {
   width: 80%;
-  margin-bottom: 3vh;
+  margin-bottom: 1vh;
 }
 .bds-controls .btn-group .btn-default,
 .bds-controls .list-group .btn-default,
@@ -101,7 +98,7 @@ span {
 }
 .bds-controls .list-group {
   margin-left: 10%;
-  margin-bottom: 4.5vh;
+  margin-bottom: 2.5vh;
 }
 .bds-controls .list-group .list-group-item {
   width: 100%;
@@ -110,9 +107,6 @@ span {
   background-color: #031634;
   border: none;
   z-index: 0;
-}
-.bds-weather-control {
-  margin-top: 2%;
 }
 .bds-weather-control .btn-group {
   width: 80%;
@@ -126,6 +120,24 @@ span {
   background-color: #031634;
 }
 .bds-weather-control .btn-group .btn-primary:focus {
+  outline: none;
+}
+#bds-start-simulation {
+  position: absolute;
+  bottom: 0;
+}
+#bds-start-simulation .btn-default {
+  height: 45px;
+  border: none;
+  border-radius: 0;
+  background-color: #033649;
+  font-size: 18px;
+  color: #E8DDCB;
+}
+#bds-start-simulation .btn-default:hover {
+  background-color: #031634;
+}
+#bds-start-simulation .btn-default:focus {
   outline: none;
 }
 html,
