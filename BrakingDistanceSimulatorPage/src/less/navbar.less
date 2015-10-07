@@ -1,39 +1,79 @@
 @import "colors";
 
-.navbar-default{
-  background-color: @darkblue;
+a, span {
+  cursor: default;
+}
 
-  .navbar-brand{
+.navbar-default {
+  background-color: @darkblue;
+  border-radius: 0;
+  border: none;
+
+  .navbar-right {
+    margin-right: -30px;
+    right: 0;
+    .bds-align-right {
+      float: right;
+    }
+  }
+
+  .navbar-brand {
     color: @terra;
     font-size: 22px;
 
-    &:hover{
+    &:hover {
       color: @darkterra;
     }
   }
+
+  .navbar-nav {
+    li > a{
+      color: @terra;
+    }
+
+    .dropdown-menu {
+      background-color: @darkblue;
+    }
+    .open {
+      li {
+        background-color: @darkblue;
+      }
+      a {
+        color: @terra
+      }
+    }
+
+  }
+
+  #bds-start-button {
+    background-color: @blue;
+    &:hover {
+      background-color: @terra;
+      a {
+        color: @blue;
+      }
+    }
+  }
+
+  .bds-hoverable:hover {
+    background-color: @terra;
+  }
+
+  .bds-speed-label {
+    margin-top: 15px;
+    color: @terra;
+  }
+
+  #bds-offset {
+    margin-right: 2%;
+  }
+
+  .bds-speed-input {
+    width: 15%;
+    margin-top: 9px;
+    padding-right: 1%;
+    padding-left: 1%;
+  }
 }
 
-.navbar{
-  border-radius: 0;
-  border: none;
-}
 
-
-
-.bds-speed-label{
-  margin-top: 15px;
-  color: @terra;
-}
-
-#bds-offset{
-  margin-right: 2%;
-}
-
-
-
-.bds-speed-input{
-  width: 15%;
-  margin-top: 9px;
-  padding-right: 1%;
-  padding-left: 1%;
-}
