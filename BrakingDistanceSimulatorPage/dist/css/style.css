@@ -70,12 +70,13 @@ a {
   padding-left: 1%;
 }
 #bds-control-panel {
+  position: relative;
   height: 100%;
   width: 25%;
   background-color: #E8DDCB;
   color: #033649;
   text-align: center;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 .bds-speed {
   font-size: 10vw;
@@ -136,8 +137,9 @@ a {
   background-color: #031634;
 }
 #bds-start-simulation {
-  position: absolute;
+  position: fixed;
   bottom: 0;
+  width: 26%;
 }
 #bds-start-simulation .btn-default {
   height: 45px;
@@ -159,6 +161,9 @@ body {
   padding: 0;
   font-family: 'Ubuntu', sans-serif;
   height: 100%;
+  width: 100%;
+  position: relative;
+  overflow-x: hidden;
 }
 #bds-wrapper {
   background-color: #E8DDCB;

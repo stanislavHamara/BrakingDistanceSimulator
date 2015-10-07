@@ -1,12 +1,13 @@
 @import "colors";
 
 #bds-control-panel {
+  position: relative;
   height: 100%;
   width: 25%;
   background-color: @terra;
   color: @blue;
   text-align: center;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .bds-speed {
@@ -66,8 +67,9 @@
 }
 
 #bds-start-simulation {
-  position: absolute;
+  position: fixed;
   bottom: 0;
+  width: 26%;
   .btn-default {
     height: 45px;
     border: none;

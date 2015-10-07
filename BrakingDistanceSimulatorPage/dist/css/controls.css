@@ -1,10 +1,11 @@
 #bds-control-panel {
+  position: relative;
   height: 100%;
   width: 25%;
   background-color: #E8DDCB;
   color: #033649;
   text-align: center;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 .bds-speed {
   font-size: 10vw;
@@ -65,8 +66,9 @@
   background-color: #031634;
 }
 #bds-start-simulation {
-  position: absolute;
+  position: fixed;
   bottom: 0;
+  width: 26%;
 }
 #bds-start-simulation .btn-default {
   height: 45px;
