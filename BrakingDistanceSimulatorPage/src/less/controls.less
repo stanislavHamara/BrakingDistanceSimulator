@@ -2,9 +2,11 @@
 
 #bds-control-panel {
   height: 100%;
+  width: 25%;
   background-color: @terra;
   color: @blue;
   text-align: center;
+  overflow: hidden;
 }
 
 .bds-speed {
@@ -44,19 +46,22 @@
   }
 }
 
-.bds-weather-control{
+.bds-weather-control {
   margin-top: 2%;
-  margin-left: 10%;
-  width: 80%;
-  .btn-default{
-    background-color: @blue;
-    color: @terra;
-    &:hover {
-      background-color: @darkblue;
-    }
-    &:focus {
-      outline: none;
+  .btn-group {
+    width: 80%;
+    .btn-primary {
+      width: 33.3%;
+      background-color: @blue;
+      color: @terra;
+      &:hover {
+        background-color: @darkblue;
+      }
+      &:focus {
+        outline: none;
+      }
     }
   }
 }
+
 

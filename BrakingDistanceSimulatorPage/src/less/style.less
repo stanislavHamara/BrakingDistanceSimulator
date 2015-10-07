@@ -21,6 +21,7 @@ html, body {
 
 #bds-threejs-container {
   height: 100%;
+  width: 75%;
   background: white url('../../placeholder.png') no-repeat;
   background-size: contain;
   opacity: 0.6;
@@ -54,8 +55,13 @@ html, body {
 }
 
 
-@media (max-width: 1200px) {
+@media (max-width: 1199px), (max-height: 845px){
   #bds-control-panel {
     display: none;
+    width: 0;
+  }
+
+  #bds-threejs-container{
+    width: 100%;
   }
 }

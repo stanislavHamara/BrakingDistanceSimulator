@@ -1,8 +1,10 @@
 #bds-control-panel {
   height: 100%;
+  width: 25%;
   background-color: #E8DDCB;
   color: #033649;
   text-align: center;
+  overflow: hidden;
 }
 .bds-speed {
   font-size: 10vw;
@@ -50,16 +52,18 @@
 }
 .bds-weather-control {
   margin-top: 2%;
-  margin-left: 10%;
+}
+.bds-weather-control .btn-group {
   width: 80%;
 }
-.bds-weather-control .btn-default {
+.bds-weather-control .btn-group .btn-primary {
+  width: 33.3%;
   background-color: #033649;
   color: #E8DDCB;
 }
-.bds-weather-control .btn-default:hover {
+.bds-weather-control .btn-group .btn-primary:hover {
   background-color: #031634;
 }
-.bds-weather-control .btn-default:focus {
+.bds-weather-control .btn-group .btn-primary:focus {
   outline: none;
 }
