@@ -23,73 +23,7 @@
 <!--threejs-container-->
 <div id="bds-wrapper">
     <div id="bds-threejs-container" class="col-lg-9"><p id="bds-placeholder">Placeholder</p></div>
-    <div id="bds-control-panel" class="col-lg-3">
-
-        <!--speed-->
-        <div class="row bds-controls">
-            <div class="row"><h3>Speed</h3></div>
-            <div class="row bds-speed">60</div>
-            <div class="row bds-label">km/h</div>
-            <div class="btn-group" role="group" aria-label="...">
-                <button type="button" class="btn btn-default">-1</button>
-                <button type="button" class="btn btn-default">-5</button>
-                <button type="button" class="btn btn-default">-10</button>
-                <button type="button" class="btn btn-default">+10</button>
-                <button type="button" class="btn btn-default">+5</button>
-                <button type="button" class="btn btn-default">+1</button>
-            </div>
-        </div>
-
-        <!--surface-->
-        <div class="row"><h3>Surface</h3></div>
-        <div class="row bds-controls">
-            <div class="list-group">
-                <button type="button" class="list-group-item active">Asphalt</button>
-                <button type="button" class="list-group-item">Grit</button>
-                <button type="button" class="list-group-item">Sand</button>
-                <button type="button" class="list-group-item">Ice</button>
-                <button type="button" class="list-group-item">Mud</button>
-            </div>
-        </div>
-
-        <!--weather-->
-        <div class="row"><h3 style="margin-top: 0">Weather</h3></div>
-        <div class="row bds-weather-control">
-            <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-primary active">
-                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Dry
-                </label>
-                <label class="btn btn-primary">
-                    <input type="radio" name="options" id="option2" autocomplete="off"> Wet
-                </label>
-                <label class="btn btn-primary">
-                    <input type="radio" name="options" id="option3" autocomplete="off"> Icy
-                </label>
-            </div>
-        </div>
-
-        <!--OTHER-->
-        <div class="row"><h3 style="margin-top: 7%">Other</h3></div>
-        <div class="row">
-            <div class="bds-switch">
-                Imperial Units
-                <input type="checkbox" name="my-checkbox">
-            </div>
-        </div>
-        <div class="row">
-            <div class="bds-switch">
-                Look Around
-                <input type="checkbox" name="my-checkbox" checked>
-            </div>
-        </div>
-        <div class="row">
-            <div class="btn-group btn-group-justified" id="bds-start-simulation" role="group" aria-label="...">
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-default">Start Simulation</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <bds-control-panel></bds-control-panel>
 </div>
 
 
