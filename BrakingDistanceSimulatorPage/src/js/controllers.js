@@ -7,7 +7,7 @@ angular.module('simulator.controllers', [])
         $scope.units = 'km/h';
         $scope.speed = 60;
 
-        $scope.speedButtons = ['-1', '-5', '-10', '+10', '+5', '+1'];
+        $scope.speedButtons = [-1, -5, -10, +10, +5, +1];
 
         $scope.togglePreferences = {
             imperial: false,
@@ -20,6 +20,6 @@ angular.module('simulator.controllers', [])
         };
 
         $scope.setSpeed = function (speed) {
-            $scope.speed += parseInt(speed);
+            $scope.speed += speed;
         };
     }]);

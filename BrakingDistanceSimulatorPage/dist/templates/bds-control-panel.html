@@ -9,7 +9,7 @@
             <button type="button"
                     class="btn btn-default"
                     ng-repeat="button in speedButtons"
-                    ng-click="setSpeed(button)">{{button}}</button>
+                    ng-click="setSpeed(button)">{{(button<0?'':'+') + button}}</button>
         </div>
     </div>
 
