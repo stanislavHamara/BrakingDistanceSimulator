@@ -1,4 +1,5 @@
-angular.module('simulator.directives', [])
+angular.module('simulator.directives', [
+    'frapontillo.bootstrap-switch'])
     .directive("bdsMenu", function () {
         return {
             restrict: 'E',

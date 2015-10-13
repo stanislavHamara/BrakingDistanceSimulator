@@ -1,2 +1,4 @@
-angular.module('simulator', ['simulator.directives','simulator.controllers', 'simulator.services'])
+angular.module('simulator', ['simulator.directives',
+    'simulator.controllers',
+    'simulator.services']);
 

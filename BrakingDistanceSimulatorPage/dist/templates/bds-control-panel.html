@@ -1,10 +1,10 @@
-<div id="bds-control-panel" class="col-lg-3" ng-controller="PropertiesController">
+<div id="bds-control-panel" class="col-lg-3" ng-controller="PropertiesController as ps">
 
     <!--speed-->
     <div class="row bds-controls">
         <div class="row"><h3>Speed</h3></div>
-        <div class="row bds-speed">60</div>
-        <div class="row bds-label">km/h</div>
+        <div class="row bds-speed"><p>{{speed}}</p></div>
+        <div class="row bds-label"><p>{{units}}</p></div>
         <div class="btn-group" role="group" aria-label="...">
             <button type="button" class="btn btn-default" ng-repeat="button in speedButtons">{{button}}</button>
         </div>
@@ -33,13 +33,13 @@
     <div class="row">
         <div class="bds-switch">
             Imperial Units
-            <input type="checkbox" name="my-checkbox">
+            <input bs-switch type="checkbox" name="my-checkbox" ng-model="togglePreferences.imperial" ng-change="setUnits()">
         </div>
     </div>
     <div class="row">
         <div class="bds-switch">
             Look Around
-            <input type="checkbox" name="my-checkbox" checked>
+            <input bs-switch="" type="checkbox" name="my-checkbox" ng-model="togglePreferences.lookAround">
         </div>
     </div>
     <div class="row">
