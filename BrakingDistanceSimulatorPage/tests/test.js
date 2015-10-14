@@ -1,22 +1,38 @@
-describe('PropertiesController', function() {
+describe('PropertiesController', function () {
 
     var $controller;
     var $scope = {};
 
-    beforeEach(function(){
+    beforeEach(function () {
         module('simulator.services');
         module('simulator.controllers');
+
+        inject(function (_$controller_, $compile) {
+            // The injector unwraps the underscores (_) from around the parameter names when matching
+            $controller = _$controller_;
+        });
+        $controller('PropertiesController', {$scope: $scope});
     });
 
-    beforeEach(inject(function(_$controller_){
-        // The injector unwraps the underscores (_) from around the parameter names when matching
-        $controller = _$controller_;
-    }));
+    describe('speed control', function () {
+        it('should change when the control button is pressed', function () {
+            $scope.setSpeed(5);
+            expect($scope.speed).toBe(65);
+        });
+    });
 
-   describe('speed', function(){
-      it('should be 60 on launch', function () {
-          var controller = $controller('PropertiesController', {$scope : $scope});
-          expect($scope.speed).toBe(60);
-      });
-   });
+    describe('units control', function () {
+        it('should change to imperial when turned on', function () {
+            $scope.togglePreferences.imperial = true;
+            $scope.setUnits();
+            expect($scope.units).toBe('mph');
+        });
+
+        it('should change to metric when turned off', function () {
+            $scope.togglePreferences.imperial = false;
+            $scope.setUnits();
+            expect($scope.units).toBe('km/h');
+        });
+    });
+
 });
