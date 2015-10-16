@@ -42,6 +42,7 @@ angular.module('simulator.controllers', [])
 
         $scope.startSimulation = function () {
             Properties.setSpeed($scope.speed, $scope.units);
+            console.log(Properties.getSimulation());
             return Properties.getSimulation();
         }
     }]);
