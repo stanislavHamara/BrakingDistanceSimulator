@@ -22,21 +22,26 @@ angular.module('simulator.controllers', [])
             $scope.speed += speed;
         };
 
-        $scope.setSurface = function (surfaceType){
+        $scope.setSurface = function (surfaceType) {
             Properties.setSelectedSurface(surfaceType);
             //console.log(Properties.getSelectedSurface());
         };
 
-        $scope.checkSelectedSurface = function (surface){
+        $scope.checkSelectedSurface = function (surface) {
             return surface == Properties.getSelectedSurface();
         };
 
-        $scope.setWeather = function (weather){
+        $scope.setWeather = function (weather) {
             Properties.setSelectedWeather(weather);
             //console.log(Properties.getSelectedWeather());
         };
 
-        $scope.checkSelectedWeather = function (weather){
+        $scope.checkSelectedWeather = function (weather) {
             return weather == Properties.getSelectedWeather();
+        };
+
+        $scope.startSimulation = function () {
+            Properties.setSpeed($scope.speed, $scope.units);
+            return Properties.getSimulation();
         }
     }]);

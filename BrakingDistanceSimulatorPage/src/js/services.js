@@ -3,10 +3,12 @@ angular.module('simulator.services',[])
         var surfaces = ['Asphalt','Grit','Sand','Ice','Mud'];
         var weather = ['Dry', 'Wet', 'Icy'];
 
-        var Properties = {
+        var Simulation = {
+            speed: 0,
+            units: 'km/h',
             surface: surfaces[0],
             weather: weather[0]
-        }
+        };
 
         return {
             getSurfaces: function() {
@@ -17,17 +19,24 @@ angular.module('simulator.services',[])
             },
 
             getSelectedSurface: function(){
-              return Properties.surface;
+              return Simulation.surface;
             },
             setSelectedSurface: function (surface) {
-                Properties.surface = surface;
+                Simulation.surface = surface;
             },
 
             getSelectedWeather: function(){
-                return Properties.weather;
+                return Simulation.weather;
             },
             setSelectedWeather: function(weather){
-                Properties.weather = weather;
+                Simulation.weather = weather;
+            },
+            setSpeed: function (speed, units) {
+                Simulation.speed = speed;
+                Simulation.units = units;
+            },
+            getSimulation: function(){
+                return Simulation;
             }
         }
     });

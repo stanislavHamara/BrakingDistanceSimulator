@@ -3,7 +3,7 @@ describe('PropertiesController', function () {
     var $controller;
     var $scope = {};
 
-    beforeEach(function() {
+    beforeEach(function () {
         module('simulator.services');
         module('simulator.controllers');
         inject(function (_$controller_) {
@@ -42,21 +42,40 @@ describe('PropertiesController', function () {
             expect($scope.checkSelectedSurface('Grid')).toBe(true);
         });
 
-        it('should not match other surfaces', function(){
+        it('should not match other surfaces', function () {
             $scope.setSurface('Grid');
             expect($scope.checkSelectedSurface('Asphalt')).toBe(false);
         });
     });
 
-    describe('weather control selection', function(){
-        it('should match selected weather in Properties', function(){
+    describe('weather control selection', function () {
+        it('should match selected weather in Properties', function () {
             $scope.setWeather('Dry');
             expect($scope.checkSelectedWeather('Dry')).toBe(true);
         });
 
-        it('should not match other weather', function(){
+        it('should not match other weather', function () {
             $scope.setWeather('Dry');
             expect($scope.checkSelectedWeather('Icy')).toBe(false);
+        });
+    });
+
+    describe('start simulation button', function () {
+        it('should return an object with all the simulation data', function () {
+            $scope.togglePreferences.imperial = true;
+            $scope.setUnits();
+            $scope.setSpeed(-10);
+            $scope.setSurface('Sand');
+            $scope.setWeather('Wet');
+
+            var Expected = {
+                speed: 30,
+                units: 'mph',
+                surface: 'Sand',
+                weather: 'Wet'
+            };
+
+            expect($scope.startSimulation()).toEqual(Expected);
         });
     });
 
