@@ -5,6 +5,7 @@ angular.module('simulator.services',[])
 
         var selectedSurface = "Asphalt";
         var selectedWeather = "Dry";
+        
         return {
             getSurfaces: function() {
                 return surfaces;

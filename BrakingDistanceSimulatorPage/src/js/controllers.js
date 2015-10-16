@@ -1,7 +1,6 @@
 angular.module('simulator.controllers', [])
     .controller('PropertiesController', ['$scope', 'Properties', function ($scope, Properties) {
 
-
         $scope.surfaces = Properties.getSurfaces();
         $scope.weather = Properties.getWeather();
         $scope.units = 'km/h';
@@ -30,7 +29,7 @@ angular.module('simulator.controllers', [])
 
         $scope.checkSelectedSurface = function (surface){
             return surface == Properties.getSelectedSurface();
-        }
+        };
 
         $scope.setWeather = function (weather){
             Properties.setSelectedWeather(weather);
