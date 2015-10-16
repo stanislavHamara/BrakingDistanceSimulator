@@ -4,6 +4,7 @@ angular.module('simulator.services',[])
         var weather = ['Dry', 'Wet', 'Icy'];
 
         var selectedSurface = "Asphalt";
+        var selectedWeather = "Dry";
         return {
             getSurfaces: function() {
                 return surfaces;
@@ -11,11 +12,19 @@ angular.module('simulator.services',[])
             getWeather: function(){
                 return weather;
             },
+
             getSelectedSurface: function(){
               return selectedSurface;
             },
             setSelectedSurface: function (surface) {
                 selectedSurface = surface;
+            },
+
+            getSelectedWeather: function(){
+                return selectedWeather;
+            },
+            setSelectedWeather: function(weather){
+                selectedWeather = weather;
             }
         }
     });

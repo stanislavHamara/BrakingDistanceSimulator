@@ -31,4 +31,13 @@ angular.module('simulator.controllers', [])
         $scope.checkSelectedSurface = function (surface){
             return surface == Properties.getSelectedSurface();
         }
+
+        $scope.setWeather = function (weather){
+            Properties.setSelectedWeather(weather);
+            //console.log(Properties.getSelectedWeather());
+        };
+
+        $scope.checkSelectedWeather = function (weather){
+            return weather == Properties.getSelectedWeather();
+        }
     }]);
