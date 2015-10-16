@@ -36,10 +36,27 @@ describe('PropertiesController', function () {
     });
 
     //find out how to do test cases
-    describe('surface control', function () {
-        it('should set the selected surface after being selected from the menu', function () {
+    describe('surface control selection', function () {
+        it('should match selected surface in Properties', function () {
             $scope.setSurface('Grid');
             expect($scope.checkSelectedSurface('Grid')).toBe(true);
+        });
+
+        it('should not match other surfaces', function(){
+            $scope.setSurface('Grid');
+            expect($scope.checkSelectedSurface('Asphalt')).toBe(false);
+        });
+    });
+
+    describe('weather control selection', function(){
+        it('should match selected weather in Properties', function(){
+            $scope.setWeather('Dry');
+            expect($scope.checkSelectedWeather('Dry')).toBe(true);
+        });
+
+        it('should not match other weather', function(){
+            $scope.setWeather('Dry');
+            expect($scope.checkSelectedWeather('Icy')).toBe(false);
         });
     });
 
