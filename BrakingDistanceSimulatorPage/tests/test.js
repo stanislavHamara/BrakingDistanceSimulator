@@ -3,15 +3,15 @@ describe('PropertiesController', function () {
     var $controller;
     var $scope = {};
 
-    beforeEach(function () {
+    beforeEach(function() {
         module('simulator.services');
         module('simulator.controllers');
-
-        inject(function (_$controller_, $compile) {
+        inject(function (_$controller_) {
             // The injector unwraps the underscores (_) from around the parameter names when matching
             $controller = _$controller_;
         });
         $controller('PropertiesController', {$scope: $scope});
+
     });
 
     describe('speed control', function () {
@@ -32,6 +32,14 @@ describe('PropertiesController', function () {
             $scope.togglePreferences.imperial = false;
             $scope.setUnits();
             expect($scope.units).toBe('km/h');
+        });
+    });
+
+    //find out how to do test cases
+    describe('surface control', function () {
+        it('should set the selected surface after being selected from the menu', function () {
+            $scope.setSurface('Grid');
+            expect($scope.checkSelectedSurface('Grid')).toBe(true);
         });
     });
 

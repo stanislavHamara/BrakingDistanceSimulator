@@ -159,3 +159,7 @@ BrakingDistanceSimulatorPage/node_modules/gulp-concat/node_modules/gulp-util/LIC
 BrakingDistanceSimulatorPage/node_modules/gulp-concat/node_modules/gulp-util/package.json
 BrakingDistanceSimulatorPage/node_modules/gulp-concat/node_modules/gulp-util/README.md
 BrakingDistanceSimulatorPage/node_modules/gulp-concat/node_modules/gulp-util/lib/buffer.js
+BrakingDistanceSimulatorPage/dist/css/controls.css
+BrakingDistanceSimulatorPage/dist/css/controls.min.css
+BrakingDistanceSimulatorPage/dist/css/style.css
+BrakingDistanceSimulatorPage/dist/css/style.min.css

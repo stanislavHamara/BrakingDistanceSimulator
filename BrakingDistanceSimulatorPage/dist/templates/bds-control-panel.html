@@ -17,7 +17,11 @@
     <div class="row"><h3>Surface</h3></div>
     <div class="row bds-controls">
         <div class="list-group">
-            <button type="button" class="list-group-item" ng-repeat="surface in surfaces">{{surface}}</button>
+            <button type="button"
+                    class="list-group-item"
+                    ng-repeat="surface in surfaces"
+                    ng-click="setSurface(surface)"
+                    ng-class="{active : checkSelectedSurface(surface)}">{{surface}}</button>
         </div>
     </div>
 

@@ -22,4 +22,13 @@ angular.module('simulator.controllers', [])
         $scope.setSpeed = function (speed) {
             $scope.speed += speed;
         };
+
+        $scope.setSurface = function (surfaceType){
+            Properties.setSelectedSurface(surfaceType);
+            //console.log(Properties.getSelectedSurface());
+        };
+
+        $scope.checkSelectedSurface = function (surface){
+            return surface == Properties.getSelectedSurface();
+        }
     }]);
