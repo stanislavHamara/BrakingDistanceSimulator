@@ -1,0 +1,65 @@
+<div id="bds-control-panel" class="col-lg-3" ng-controller="PropertiesController">
+
+    <!--speed-->
+    <div class="row bds-controls">
+        <div class="row"><h3>Speed</h3></div>
+        <div class="row bds-speed"><p>{{speed}}</p></div>
+        <div class="row bds-label"><p>{{units}}</p></div>
+        <div class="btn-group" role="group" aria-label="...">
+            <button type="button"
+                    class="btn btn-default"
+                    ng-repeat="button in speedButtons"
+                    ng-click="setSpeed(button)">{{(button<0?'':'+') + button}}</button>
+        </div>
+    </div>
+
+    <!--surface-->
+    <div class="row"><h3>Surface</h3></div>
+    <div class="row bds-controls">
+        <div class="list-group">
+            <button type="button"
+                    class="list-group-item"
+                    ng-repeat="surface in surfaces"
+                    ng-click="setSurface(surface)"
+                    ng-class="{active : checkSelectedSurface(surface)}">{{surface}}</button>
+        </div>
+    </div>
+
+    <!--weather-->
+    <div class="row"><h3 style="margin-top: 0">Weather</h3></div>
+    <div class="row bds-weather-control">
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary"
+                   ng-repeat="w in weather"
+                   ng-click="setWeather(w)"
+                   ng-class="{active: checkSelectedWeather(w)}">
+                <input type="radio" name="options" id="option1" autocomplete="off"> {{w}}
+            </label>
+        </div>
+    </div>
+
+    <!--OTHER-->
+    <div class="row"><h3 style="margin-top: 7%">Other</h3></div>
+    <div class="row">
+        <div class="bds-switch">
+            Imperial Units
+            <input bs-switch type="checkbox"
+                   name="my-checkbox"
+                   ng-model="togglePreferences.imperial"
+                   ng-change="setUnits()">
+        </div>
+    </div>
+    <div class="row">
+        <div class="bds-switch">
+            Look Around
+            <input bs-switch="" type="checkbox" name="my-checkbox" ng-model="togglePreferences.lookAround">
+        </div>
+    </div>
+    <div class="row">
+        <div class="btn-group btn-group-justified" id="bds-start-simulation" role="group" aria-label="...">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default" ng-click="startSimulation()">Start Simulation</button>
+            </div>
+        </div>
+    </div>
+</div>

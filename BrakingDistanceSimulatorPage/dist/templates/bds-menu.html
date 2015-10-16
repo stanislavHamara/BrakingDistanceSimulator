@@ -1,0 +1,36 @@
+<nav class="navbar navbar-default" ng-controller="PropertiesController">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">Braking Distance Simulator</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="bds-align-right" ng-click="startSimulation()">
+                    <a id="bds-start-button" >Start Simulation</a>
+                </li>
+                <li class="dropdown bds-align-right bds-hoverable">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Weather <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="w in weather" ng-click="setWeather(w)"><a href="#">{{w}}</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown bds-align-right bds-hoverable">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Surface <span class="caret"></span></a>
+                    <ul class="dropdown-menu" >
+                        <li ng-repeat="surface in surfaces" ng-click="setSurface(surface)"><a href="#">{{surface}}</a></li>
+                    </ul>
+                </li>
+                <li class="bds-speed-label bds-align-right" id="bds-offset"><span>{{units}}</span></li>
+                <li class="bds-speed-input bds-align-right">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="60" ng-model="speed">
+                    </div>
+                </li>
+                <li class="bds-speed-label bds-align-right"><span>Speed:</span></li>
+            </ul>
+        </div>
+        <!-- /.navbar-c-->
+    </div>
+</nav>
