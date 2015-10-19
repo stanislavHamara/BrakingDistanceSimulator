@@ -45,4 +45,47 @@ angular.module('simulator.controllers', [])
             console.log(Properties.getSimulation());
             return Properties.getSimulation();
         }
+    }])
+
+    .controller('CanvasController',['$scope', function($scope){
+        $scope.element = document.getElementById('bds-threejs-container');
+
+        var camera, scene, renderer;
+        var geometry, material, mesh;
+
+
+        $scope.init = function() {
+
+            camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
+            camera.position.z = 1000;
+
+            scene = new THREE.Scene();
+
+            geometry = new THREE.BoxGeometry( 200, 200, 200 );
+            material = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true} );
+
+            mesh = new THREE.Mesh( geometry, material );
+            scene.add( mesh );
+
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize( $scope.element.offsetWidth, $scope.element.offsetHeight );
+
+            $scope.element.appendChild( renderer.domElement );
+
+        };
+
+        $scope.animate = function() {
+
+            // note: three.js includes requestAnimationFrame shim
+            requestAnimationFrame( $scope.animate );
+
+            mesh.rotation.x += 0.01;
+            mesh.rotation.y += 0.02;
+
+            renderer.render( scene, camera );
+        };
+
+        $scope.init();
+        $scope.animate();
+
     }]);
