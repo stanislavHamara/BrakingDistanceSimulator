@@ -13,13 +13,8 @@ var source = require('vinyl-source-stream');
 
 // scripts task
 gulp.task('scripts', function() {
-    return gulp.src('./src/js/*.js')
+    return gulp.src('./src/js/**')
         .pipe(concat('app.js'))
-        .pipe(gulp.dest('./dist/js/'))
-        .pipe(uglify())
-        .pipe(rename({
-            suffix: '.min'
-        }))
         .pipe(gulp.dest('./dist/js/'));
 });
 

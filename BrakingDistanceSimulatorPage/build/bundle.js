@@ -1,14 +1,70 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 angular.module('simulator', ['simulator.directives',
-    'simulator.controllers',
+    'Properties', 'Scene',
     'simulator.services']);
 
 
-angular.module('simulator.controllers', ['rt.resize'])
-    .controller('PropertiesController', ['$scope', 'Properties', function ($scope, Properties) {
+angular.module('simulator.directives', [
+    'frapontillo.bootstrap-switch'])
+    .directive("bdsMenu", function () {
+        return {
+            restrict: 'E',
+            templateUrl: './dist/templates/bds-menu.html'
+        }
+    })
 
-        $scope.surfaces = Properties.getSurfaces();
-        $scope.weather = Properties.getWeather();
+    .directive('bdsControlPanel', function () {
+        return {
+            restrict: 'E',
+            templateUrl: './dist/templates/bds-control-panel.html'
+        }
+    });
+angular.module('simulator.services',[])
+    .factory('PropertiesService', function(){
+        var surfaces = ['Asphalt','Grit','Sand','Ice','Mud'];
+        var weather = ['Dry', 'Wet', 'Icy'];
+
+        var Simulation = {
+            speed: 0,
+            units: 'km/h',
+            surface: surfaces[0],
+            weather: weather[0]
+        };
+
+        return {
+            getSurfaces: function() {
+                return surfaces;
+            },
+            getWeather: function(){
+                return weather;
+            },
+
+            getSelectedSurface: function(){
+              return Simulation.surface;
+            },
+            setSelectedSurface: function (surface) {
+                Simulation.surface = surface;
+            },
+
+            getSelectedWeather: function(){
+                return Simulation.weather;
+            },
+            setSelectedWeather: function(weather){
+                Simulation.weather = weather;
+            },
+            setSpeed: function (speed, units) {
+                Simulation.speed = speed;
+                Simulation.units = units;
+            },
+            getSimulation: function(){
+                return Simulation;
+            }
+        }
+    });
+angular.module('Properties',[])
+    .controller('PropertiesController', ['$scope', 'PropertiesService', function ($scope, PropertiesService) {
+        $scope.surfaces = PropertiesService.getSurfaces();
+        $scope.weather = PropertiesService.getWeather();
         $scope.units = 'km/h';
         $scope.speed = 60;
 
@@ -29,31 +85,32 @@ angular.module('simulator.controllers', ['rt.resize'])
         };
 
         $scope.setSurface = function (surfaceType) {
-            Properties.setSelectedSurface(surfaceType);
-            //console.log(Properties.getSelectedSurface());
+            PropertiesService.setSelectedSurface(surfaceType);
+            //console.log(PropertiesService.getSelectedSurface());
         };
 
         $scope.checkSelectedSurface = function (surface) {
-            return surface == Properties.getSelectedSurface();
+            return surface == PropertiesService.getSelectedSurface();
         };
 
         $scope.setWeather = function (weather) {
-            Properties.setSelectedWeather(weather);
-            //console.log(Properties.getSelectedWeather());
+            PropertiesService.setSelectedWeather(weather);
+            //console.log(PropertiesService.getSelectedWeather());
         };
 
         $scope.checkSelectedWeather = function (weather) {
-            return weather == Properties.getSelectedWeather();
+            return weather == PropertiesService.getSelectedWeather();
         };
 
         $scope.startSimulation = function () {
-            Properties.setSpeed($scope.speed, $scope.units);
-            console.log(Properties.getSimulation());
-            return Properties.getSimulation();
+            PropertiesService.setSpeed($scope.speed, $scope.units);
+            console.log(PropertiesService.getSimulation());
+            return PropertiesService.getSimulation();
         }
-    }])
+    }]);
 
-    .controller('CanvasController', ['$scope', 'resize', function ($scope, resize) {
+angular.module('Scene', ['rt.resize'])
+    .controller('SceneController', ['$scope', 'resize', function ($scope, resize) {
 
         var OrbitControls = require('three-orbit-controls')(THREE);
 
@@ -109,63 +166,6 @@ angular.module('simulator.controllers', ['rt.resize'])
 
     }]);
 
-angular.module('simulator.directives', [
-    'frapontillo.bootstrap-switch'])
-    .directive("bdsMenu", function () {
-        return {
-            restrict: 'E',
-            templateUrl: './dist/templates/bds-menu.html'
-        }
-    })
-
-    .directive('bdsControlPanel', function () {
-        return {
-            restrict: 'E',
-            templateUrl: './dist/templates/bds-control-panel.html'
-        }
-    });
-angular.module('simulator.services',[])
-    .factory('Properties', function(){
-        var surfaces = ['Asphalt','Grit','Sand','Ice','Mud'];
-        var weather = ['Dry', 'Wet', 'Icy'];
-
-        var Simulation = {
-            speed: 0,
-            units: 'km/h',
-            surface: surfaces[0],
-            weather: weather[0]
-        };
-
-        return {
-            getSurfaces: function() {
-                return surfaces;
-            },
-            getWeather: function(){
-                return weather;
-            },
-
-            getSelectedSurface: function(){
-              return Simulation.surface;
-            },
-            setSelectedSurface: function (surface) {
-                Simulation.surface = surface;
-            },
-
-            getSelectedWeather: function(){
-                return Simulation.weather;
-            },
-            setSelectedWeather: function(weather){
-                Simulation.weather = weather;
-            },
-            setSpeed: function (speed, units) {
-                Simulation.speed = speed;
-                Simulation.units = units;
-            },
-            getSimulation: function(){
-                return Simulation;
-            }
-        }
-    });
 },{"three-orbit-controls":2}],2:[function(require,module,exports){
 module.exports = function(THREE) {
     var MOUSE = THREE.MOUSE
