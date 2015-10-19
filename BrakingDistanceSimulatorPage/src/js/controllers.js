@@ -48,9 +48,12 @@ angular.module('simulator.controllers', ['rt.resize'])
     }])
 
     .controller('CanvasController', ['$scope', 'resize', function ($scope, resize) {
+
+        var OrbitControls = require('three-orbit-controls')(THREE);
+
         $scope.element = document.getElementById('bds-threejs-container');
 
-        var camera, scene, renderer;
+        var camera, scene, renderer, controls;
         var geometry, material, mesh;
 
         $scope.initScene = function () {
@@ -59,6 +62,8 @@ angular.module('simulator.controllers', ['rt.resize'])
             camera.position.z = 1000;
 
             scene = new THREE.Scene();
+
+            controls = new OrbitControls(camera);
 
             geometry = new THREE.BoxGeometry(200, 200, 200);
             material = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});
