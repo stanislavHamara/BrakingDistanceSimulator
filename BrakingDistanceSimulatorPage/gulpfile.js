@@ -10,14 +10,6 @@ var uglify = require('gulp-uglify');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 
-gulp.task('default', ['scripts', 'styles'], function(){
-    return browserify('./dist/js/app.js')
-        .bundle()
-        //Pass desired output filename to vinyl-source-stream
-        .pipe(source('bundle.js'))
-        // Start piping stream to tasks!
-        .pipe(gulp.dest('./build/'));
-});
 
 // scripts task
 gulp.task('scripts', function() {
@@ -43,8 +35,18 @@ gulp.task('styles', function() {
         .pipe(gulp.dest('./dist/css/'));
 });
 
+//browserify
+gulp.task('browserify',['scripts'], function(){
+    return browserify('./dist/js/app.js')
+        .bundle()
+        //Pass desired output filename to vinyl-source-stream
+        .pipe(source('bundle.js'))
+        // Start piping stream to tasks!
+        .pipe(gulp.dest('./build/'));
+});
+
 // watch task
 gulp.task('watch', function() {
-    gulp.watch('./src/js/*.js', ['scripts']);
     gulp.watch('./src/less/*.less', ['styles']);
+    gulp.watch('./src/js/*.js', ['browserify']);
 });
