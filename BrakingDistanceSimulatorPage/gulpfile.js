@@ -7,8 +7,17 @@ var cssmin = require('gulp-minify-css');
 var rename = require("gulp-rename");
 var less = require('gulp-less');
 var uglify = require('gulp-uglify');
+var browserify = require('browserify');
+var source = require('vinyl-source-stream');
 
-gulp.task('default', ['scripts', 'styles']);
+gulp.task('default', ['scripts', 'styles'], function(){
+    return browserify('./dist/js/app.js')
+        .bundle()
+        //Pass desired output filename to vinyl-source-stream
+        .pipe(source('bundle.js'))
+        // Start piping stream to tasks!
+        .pipe(gulp.dest('./build/'));
+});
 
 // scripts task
 gulp.task('scripts', function() {
