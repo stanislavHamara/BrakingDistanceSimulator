@@ -43,5 +43,5 @@ gulp.task('browserify',['scripts'], function(){
 // watch task
 gulp.task('watch', function() {
     gulp.watch('./src/less/*.less', ['styles']);
-    gulp.watch('./src/js/*.js', ['browserify']);
+    gulp.watch('./src/js/**', ['browserify']);
 });
