@@ -13,6 +13,7 @@
     "angular-bootstrap-switch": "^0.4.1",
     "angular-mocks": "^1.4.7",
     "bootstrap": "^3.3.5",
+    "browserify": "^11.2.0",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-less": "^3.0.3",
@@ -23,6 +24,8 @@
     "jasmine-core": "^2.3.4",
     "karma": "^0.13.10",
     "karma-chrome-launcher": "^0.2.1",
-    "karma-jasmine": "^0.3.6"
+    "karma-jasmine": "^0.3.6",
+    "three-orbit-controls": "^71.1.0",
+    "vinyl-source-stream": "^1.1.0"
   }
 }

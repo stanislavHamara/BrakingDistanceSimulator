@@ -1,8 +1,7 @@
-angular.module('simulator.controllers', [])
-    .controller('PropertiesController', ['$scope', 'Properties', function ($scope, Properties) {
-
-        $scope.surfaces = Properties.getSurfaces();
-        $scope.weather = Properties.getWeather();
+angular.module('Properties',[])
+    .controller('PropertiesController', ['$scope', 'PropertiesService', function ($scope, PropertiesService) {
+        $scope.surfaces = PropertiesService.getSurfaces();
+        $scope.weather = PropertiesService.getWeather();
         $scope.units = 'km/h';
         $scope.speed = 60;
 
@@ -23,26 +22,26 @@ angular.module('simulator.controllers', [])
         };
 
         $scope.setSurface = function (surfaceType) {
-            Properties.setSelectedSurface(surfaceType);
-            //console.log(Properties.getSelectedSurface());
+            PropertiesService.setSelectedSurface(surfaceType);
+            //console.log(PropertiesService.getSelectedSurface());
         };
 
         $scope.checkSelectedSurface = function (surface) {
-            return surface == Properties.getSelectedSurface();
+            return surface == PropertiesService.getSelectedSurface();
         };
 
         $scope.setWeather = function (weather) {
-            Properties.setSelectedWeather(weather);
-            //console.log(Properties.getSelectedWeather());
+            PropertiesService.setSelectedWeather(weather);
+            //console.log(PropertiesService.getSelectedWeather());
         };
 
         $scope.checkSelectedWeather = function (weather) {
-            return weather == Properties.getSelectedWeather();
+            return weather == PropertiesService.getSelectedWeather();
         };
 
         $scope.startSimulation = function () {
-            Properties.setSpeed($scope.speed, $scope.units);
-            console.log(Properties.getSimulation());
-            return Properties.getSimulation();
+            PropertiesService.setSpeed($scope.speed, $scope.units);
+            console.log(PropertiesService.getSimulation());
+            return PropertiesService.getSimulation();
         }
     }]);
