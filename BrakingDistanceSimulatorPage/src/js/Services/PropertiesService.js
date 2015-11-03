@@ -1,4 +1,4 @@
-angular.module('simulator.services',[])
+angular.module('PropertiesService',[])
     .factory('PropertiesService', function(){
         var surfaces = ['Asphalt','Grit','Sand','Ice','Mud'];
         var weather = ['Dry', 'Wet', 'Icy'];

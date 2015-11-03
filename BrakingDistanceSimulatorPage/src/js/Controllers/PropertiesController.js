@@ -23,7 +23,6 @@ angular.module('Properties',[])
 
         $scope.setSurface = function (surfaceType) {
             PropertiesService.setSelectedSurface(surfaceType);
-            //console.log(PropertiesService.getSelectedSurface());
         };
 
         $scope.checkSelectedSurface = function (surface) {
@@ -32,7 +31,6 @@ angular.module('Properties',[])
 
         $scope.setWeather = function (weather) {
             PropertiesService.setSelectedWeather(weather);
-            //console.log(PropertiesService.getSelectedWeather());
         };
 
         $scope.checkSelectedWeather = function (weather) {

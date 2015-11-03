@@ -4,8 +4,8 @@ describe('PropertiesController', function () {
     var $scope = {};
 
     beforeEach(function () {
-        module('simulator.services');
         module('Properties');
+        module('PropertiesService');
         inject(function (_$controller_) {
             // The injector unwraps the underscores (_) from around the parameter names when matching
             $controller = _$controller_;
