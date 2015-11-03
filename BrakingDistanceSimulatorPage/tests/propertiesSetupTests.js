@@ -18,7 +18,7 @@ describe('PropertiesController', function () {
     describe('speed control', function () {
         it('should change when the control button is pressed', function () {
             $scope.setSpeed(5);
-            expect($scope.speed).toBe(65);
+            expect($scope.speed).toBe(45);
         });
     });
 

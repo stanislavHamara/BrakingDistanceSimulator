@@ -4,13 +4,13 @@ angular.module('Properties',[])
 
         $scope.surfaces = PropertiesService.getSurfaces();
         $scope.weather = PropertiesService.getWeather();
-        $scope.units = 'km/h';
-        $scope.speed = 60;
+        $scope.units = 'mph';
+        $scope.speed = 40;
 
         $scope.speedButtons = [-1, -5, -10, +10, +5, +1];
 
         $scope.togglePreferences = {
-            imperial: false,
+            imperial: true,
             lookAround: true
         };
 

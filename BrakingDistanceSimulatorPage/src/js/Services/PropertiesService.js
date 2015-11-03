@@ -5,7 +5,7 @@ angular.module('PropertiesService',[])
 
         var Simulation = {
             speed: 0,
-            imperial: false,
+            imperial: true,
             surface: surfaces[0],
             weather: weather[0]
         };
