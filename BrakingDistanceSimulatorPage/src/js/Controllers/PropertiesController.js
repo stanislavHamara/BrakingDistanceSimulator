@@ -3,7 +3,7 @@ angular.module('Properties',[])
         function ($scope, PropertiesService, PhysicsService) {
 
         $scope.surfaces = PropertiesService.getSurfaces();
-        $scope.weather = PropertiesService.getWeather();
+        $scope.condition = PropertiesService.getConditions();
         $scope.units = 'mph';
         $scope.speed = 40;
 
@@ -31,18 +31,21 @@ angular.module('Properties',[])
             return surface == PropertiesService.getSelectedSurface();
         };
 
-        $scope.setWeather = function (weather) {
-            PropertiesService.setSelectedWeather(weather);
+        $scope.setCondition = function (condition) {
+            PropertiesService.setSelectedCondition(condition);
         };
 
-        $scope.checkSelectedWeather = function (weather) {
-            return weather == PropertiesService.getSelectedWeather();
+        $scope.checkSelectedCondition = function (condition) {
+            return condition == PropertiesService.getSelectedCondition();
         };
 
         $scope.startSimulation = function () {
             PropertiesService.setSpeed($scope.speed, $scope.togglePreferences.imperial);
             var userInput = PropertiesService.getUserInput();
+
             console.log(PhysicsService.getStoppingDistance(userInput));
+            console.log(userInput);
+
             return userInput;
         }
     }]);
