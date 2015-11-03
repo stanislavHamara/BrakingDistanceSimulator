@@ -4,8 +4,9 @@ describe('PropertiesController', function () {
     var $scope = {};
 
     beforeEach(function () {
-        module('simulator.services');
         module('Properties');
+        module('PropertiesService');
+        module('PhysicsService');
         inject(function (_$controller_) {
             // The injector unwraps the underscores (_) from around the parameter names when matching
             $controller = _$controller_;
@@ -17,7 +18,7 @@ describe('PropertiesController', function () {
     describe('speed control', function () {
         it('should change when the control button is pressed', function () {
             $scope.setSpeed(5);
-            expect($scope.speed).toBe(65);
+            expect($scope.speed).toBe(45);
         });
     });
 
@@ -70,7 +71,7 @@ describe('PropertiesController', function () {
 
             var Expected = {
                 speed: 30,
-                units: 'mph',
+                imperial: true,
                 surface: 'Sand',
                 weather: 'Wet'
             };

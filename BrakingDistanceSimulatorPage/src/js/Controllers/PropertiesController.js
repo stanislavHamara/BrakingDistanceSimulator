@@ -1,14 +1,16 @@
 angular.module('Properties',[])
-    .controller('PropertiesController', ['$scope', 'PropertiesService', function ($scope, PropertiesService) {
+    .controller('PropertiesController', ['$scope', 'PropertiesService', 'PhysicsService',
+        function ($scope, PropertiesService, PhysicsService) {
+
         $scope.surfaces = PropertiesService.getSurfaces();
         $scope.weather = PropertiesService.getWeather();
-        $scope.units = 'km/h';
-        $scope.speed = 60;
+        $scope.units = 'mph';
+        $scope.speed = 40;
 
         $scope.speedButtons = [-1, -5, -10, +10, +5, +1];
 
         $scope.togglePreferences = {
-            imperial: false,
+            imperial: true,
             lookAround: true
         };
 
@@ -23,7 +25,6 @@ angular.module('Properties',[])
 
         $scope.setSurface = function (surfaceType) {
             PropertiesService.setSelectedSurface(surfaceType);
-            //console.log(PropertiesService.getSelectedSurface());
         };
 
         $scope.checkSelectedSurface = function (surface) {
@@ -32,7 +33,6 @@ angular.module('Properties',[])
 
         $scope.setWeather = function (weather) {
             PropertiesService.setSelectedWeather(weather);
-            //console.log(PropertiesService.getSelectedWeather());
         };
 
         $scope.checkSelectedWeather = function (weather) {
@@ -40,8 +40,9 @@ angular.module('Properties',[])
         };
 
         $scope.startSimulation = function () {
-            PropertiesService.setSpeed($scope.speed, $scope.units);
-            console.log(PropertiesService.getSimulation());
-            return PropertiesService.getSimulation();
+            PropertiesService.setSpeed($scope.speed, $scope.togglePreferences.imperial);
+            var userInput = PropertiesService.getUserInput();
+            console.log(PhysicsService.getStoppingDistance(userInput));
+            return userInput;
         }
     }]);

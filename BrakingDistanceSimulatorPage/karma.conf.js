@@ -19,6 +19,7 @@ module.exports = function (config) {
             'node_modules/angular-bootstrap-switch/dist/angular-bootstrap-switch.min.js',
             'node_modules/angular-mocks/angular-mocks.js',
             'node_modules/angular-resize/dist/angular-resize.min.js',
+            'src/js/Services/*.js',
             'src/js/Controllers/*.js',
             'src/js/*.js',
             'tests/*.js'
