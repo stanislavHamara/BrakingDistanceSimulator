@@ -40,8 +40,9 @@ angular.module('Properties',[])
         };
 
         $scope.startSimulation = function () {
-            PropertiesService.setSpeed($scope.speed, $scope.units);
-            console.log(PropertiesService.getSimulation());
-            return PropertiesService.getSimulation();
+            PropertiesService.setSpeed($scope.speed, $scope.togglePreferences.imperial);
+            var userInput = PropertiesService.getUserInput();
+            console.log(PhysicsService.getStoppingDistance(userInput));
+            return userInput;
         }
     }]);
