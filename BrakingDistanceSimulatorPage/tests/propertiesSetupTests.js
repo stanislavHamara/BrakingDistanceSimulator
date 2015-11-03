@@ -71,7 +71,7 @@ describe('PropertiesController', function () {
 
             var Expected = {
                 speed: 30,
-                units: 'mph',
+                imperial: true,
                 surface: 'Sand',
                 weather: 'Wet'
             };

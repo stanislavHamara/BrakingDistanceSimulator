@@ -5,7 +5,7 @@ angular.module('PropertiesService',[])
 
         var Simulation = {
             speed: 0,
-            units: 'km/h',
+            imperial: false,
             surface: surfaces[0],
             weather: weather[0]
         };
@@ -31,11 +31,11 @@ angular.module('PropertiesService',[])
             setSelectedWeather: function(weather){
                 Simulation.weather = weather;
             },
-            setSpeed: function (speed, units) {
+            setSpeed: function (speed, imperial) {
                 Simulation.speed = speed;
-                Simulation.units = units;
+                Simulation.imperial = imperial;
             },
-            getSimulation: function(){
+            getUserInput: function(){
                 return Simulation;
             }
         }
