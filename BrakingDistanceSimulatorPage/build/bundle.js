@@ -1,7 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 angular.module('simulator', ['simulator.directives',
     'Properties', 'Scene',
-    'PropertiesService']);
+    'PropertiesService', 'PhysicsService']);
 
 
 angular.module('simulator.directives', [
@@ -19,8 +19,56 @@ angular.module('simulator.directives', [
             templateUrl: './dist/templates/bds-control-panel.html'
         }
     });
+angular.module('PhysicsService',[])
+    .factory('PhysicsService', function(){
+
+    });
+angular.module('PropertiesService',[])
+    .factory('PropertiesService', function(){
+        var surfaces = ['Asphalt','Grit','Sand','Ice','Mud'];
+        var weather = ['Dry', 'Wet', 'Icy'];
+
+        var Simulation = {
+            speed: 0,
+            units: 'km/h',
+            surface: surfaces[0],
+            weather: weather[0]
+        };
+
+        return {
+            getSurfaces: function() {
+                return surfaces;
+            },
+            getWeather: function(){
+                return weather;
+            },
+
+            getSelectedSurface: function(){
+              return Simulation.surface;
+            },
+            setSelectedSurface: function (surface) {
+                Simulation.surface = surface;
+            },
+
+            getSelectedWeather: function(){
+                return Simulation.weather;
+            },
+            setSelectedWeather: function(weather){
+                Simulation.weather = weather;
+            },
+            setSpeed: function (speed, units) {
+                Simulation.speed = speed;
+                Simulation.units = units;
+            },
+            getSimulation: function(){
+                return Simulation;
+            }
+        }
+    });
 angular.module('Properties',[])
-    .controller('PropertiesController', ['$scope', 'PropertiesService', function ($scope, PropertiesService) {
+    .controller('PropertiesController', ['$scope', 'PropertiesService', 'PhysicsService',
+        function ($scope, PropertiesService, PhysicsService) {
+
         $scope.surfaces = PropertiesService.getSurfaces();
         $scope.weather = PropertiesService.getWeather();
         $scope.units = 'km/h';
@@ -142,48 +190,6 @@ angular.module('Scene', ['rt.resize'])
 
     }]);
 
-angular.module('PropertiesService',[])
-    .factory('PropertiesService', function(){
-        var surfaces = ['Asphalt','Grit','Sand','Ice','Mud'];
-        var weather = ['Dry', 'Wet', 'Icy'];
-
-        var Simulation = {
-            speed: 0,
-            units: 'km/h',
-            surface: surfaces[0],
-            weather: weather[0]
-        };
-
-        return {
-            getSurfaces: function() {
-                return surfaces;
-            },
-            getWeather: function(){
-                return weather;
-            },
-
-            getSelectedSurface: function(){
-              return Simulation.surface;
-            },
-            setSelectedSurface: function (surface) {
-                Simulation.surface = surface;
-            },
-
-            getSelectedWeather: function(){
-                return Simulation.weather;
-            },
-            setSelectedWeather: function(weather){
-                Simulation.weather = weather;
-            },
-            setSpeed: function (speed, units) {
-                Simulation.speed = speed;
-                Simulation.units = units;
-            },
-            getSimulation: function(){
-                return Simulation;
-            }
-        }
-    });
 },{"three-orbit-controls":2}],2:[function(require,module,exports){
 module.exports = function(THREE) {
     var MOUSE = THREE.MOUSE

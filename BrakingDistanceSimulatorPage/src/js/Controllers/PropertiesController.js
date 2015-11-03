@@ -1,5 +1,7 @@
 angular.module('Properties',[])
-    .controller('PropertiesController', ['$scope', 'PropertiesService', function ($scope, PropertiesService) {
+    .controller('PropertiesController', ['$scope', 'PropertiesService', 'PhysicsService',
+        function ($scope, PropertiesService, PhysicsService) {
+
         $scope.surfaces = PropertiesService.getSurfaces();
         $scope.weather = PropertiesService.getWeather();
         $scope.units = 'km/h';
