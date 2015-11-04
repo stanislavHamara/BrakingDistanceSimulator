@@ -18,6 +18,7 @@ angular.module('Scene', ['rt.resize'])
             scene = new THREE.Scene();
 
             controls = new OrbitControls(camera, $scope.element);
+            controls.maxPolarAngle = Math.PI/2
 
             boxMaterial = new THREE.MeshPhongMaterial({color: 0xff0000});
             boxGeometry = new THREE.BoxGeometry(200, 200, 200);
