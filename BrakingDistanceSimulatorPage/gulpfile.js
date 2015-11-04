@@ -9,6 +9,7 @@ var less = require('gulp-less');
 var uglify = require('gulp-uglify');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
+var jasmine = require('gulp-jasmine');
 
 
 // scripts task
@@ -38,6 +39,11 @@ gulp.task('browserify',['scripts'], function(){
         .pipe(source('bundle.js'))
         // Start piping stream to tasks!
         .pipe(gulp.dest('./build/'));
+});
+
+gulp.task('tests', function () {
+    return gulp.src('./tests/propertiesSetupTests.js')
+        .pipe(jasmine());
 });
 
 // watch task
