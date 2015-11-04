@@ -1,21 +1,21 @@
 angular.module('PropertiesService',[])
     .factory('PropertiesService', function(){
-        var surfaces = ['Asphalt','Grit','Sand','Ice','Mud'];
-        var weather = ['Dry', 'Wet', 'Icy'];
+        var surfaces = ['Asphalt','Gravel','Sand','Ice','Snow'];
+        var condition = ['Dry', 'Wet'];
 
         var Simulation = {
             speed: 0,
             imperial: true,
             surface: surfaces[0],
-            weather: weather[0]
+            condition: condition[0]
         };
 
         return {
             getSurfaces: function() {
                 return surfaces;
             },
-            getWeather: function(){
-                return weather;
+            getConditions: function(){
+                return condition;
             },
 
             getSelectedSurface: function(){
@@ -25,11 +25,11 @@ angular.module('PropertiesService',[])
                 Simulation.surface = surface;
             },
 
-            getSelectedWeather: function(){
-                return Simulation.weather;
+            getSelectedCondition: function(){
+                return Simulation.condition;
             },
-            setSelectedWeather: function(weather){
-                Simulation.weather = weather;
+            setSelectedCondition: function(condition){
+                Simulation.condition = condition;
             },
             setSpeed: function (speed, imperial) {
                 Simulation.speed = speed;

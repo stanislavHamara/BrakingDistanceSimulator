@@ -49,15 +49,15 @@ describe('PropertiesController', function () {
         });
     });
 
-    describe('weather control selection', function () {
-        it('should match selected weather in Properties', function () {
-            $scope.setWeather('Dry');
-            expect($scope.checkSelectedWeather('Dry')).toBe(true);
+    describe('condition control selection', function () {
+        it('should match selected condition in Properties', function () {
+            $scope.setCondition('Dry');
+            expect($scope.checkSelectedCondition('Dry')).toBe(true);
         });
 
-        it('should not match other weather', function () {
-            $scope.setWeather('Dry');
-            expect($scope.checkSelectedWeather('Icy')).toBe(false);
+        it('should not match other condition', function () {
+            $scope.setCondition('Dry');
+            expect($scope.checkSelectedCondition('Icy')).toBe(false);
         });
     });
 
@@ -67,13 +67,13 @@ describe('PropertiesController', function () {
             $scope.setUnits();
             $scope.setSpeed(-10);
             $scope.setSurface('Sand');
-            $scope.setWeather('Wet');
+            $scope.setCondition('Wet');
 
             var Expected = {
                 speed: 30,
                 imperial: true,
                 surface: 'Sand',
-                weather: 'Wet'
+                condition: 'Wet'
             };
 
             expect($scope.startSimulation()).toEqual(Expected);

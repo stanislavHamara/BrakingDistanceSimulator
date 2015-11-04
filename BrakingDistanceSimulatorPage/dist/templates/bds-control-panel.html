@@ -25,15 +25,15 @@
         </div>
     </div>
 
-    <!--weather-->
-    <div class="row"><h3 style="margin-top: 0">Weather</h3></div>
-    <div class="row bds-weather-control">
+    <!--condition-->
+    <div class="row"><h3 style="margin-top: 0">Condition</h3></div>
+    <div class="row bds-condition-control">
         <div class="btn-group" data-toggle="buttons">
             <label class="btn btn-primary"
-                   ng-repeat="w in weather"
-                   ng-click="setWeather(w)"
-                   ng-class="{active: checkSelectedWeather(w)}">
-                <input type="radio" name="options" id="option1" autocomplete="off"> {{w}}
+                   ng-repeat="c in condition"
+                   ng-click="setCondition(c)"
+                   ng-class="{active: checkSelectedCondition(c)}">
+                <input type="radio" name="options" id="option1" autocomplete="off"> {{c}}
             </label>
         </div>
     </div>
