@@ -13,7 +13,7 @@ angular.module('Scene', ['rt.resize'])
         $scope.initScene = function () {
 
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-            camera.position.z = 1000;
+            camera.position.z = 500;
 
             scene = new THREE.Scene();
 
@@ -21,7 +21,8 @@ angular.module('Scene', ['rt.resize'])
             controls.maxPolarAngle = Math.PI/2;
             controls.minPolarAngle = 1/3 * Math.PI;
             controls.minDistance = 300;
-            controls.maxDistance = 2000;
+            controls.maxDistance = 1000;
+            controls.noPan = true;
 
             boxMaterial = new THREE.MeshPhongMaterial({color: 0xff0000});
             boxGeometry = new THREE.BoxGeometry(200, 200, 200);
