@@ -1,6 +1,6 @@
 angular.module('PropertiesService',[])
     .factory('PropertiesService', function(){
-        var surfaces = ['Asphalt','Grit','Sand','Ice','Mud'];
+        var surfaces = ['Asphalt','Gravel','Sand','Ice','Snow'];
         var condition = ['Dry', 'Wet'];
 
         var Simulation = {
