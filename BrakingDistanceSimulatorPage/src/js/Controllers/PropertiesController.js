@@ -19,6 +19,11 @@ angular.module('Properties', [])
                 $scope.speed = $scope.togglePreferences.imperial ? 40 : 60;
             };
 
+            $scope.setControls = function() {
+                console.log('controls changed');
+                PropertiesService.setControls($scope.togglePreferences.lookAround);
+            };
+
             $scope.setSpeed = function (speed) {
                 $scope.speed += speed;
 

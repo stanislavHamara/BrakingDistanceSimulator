@@ -7,6 +7,7 @@ describe('PropertiesController', function () {
         module('Properties');
         module('PropertiesService');
         module('PhysicsService');
+        module('OrbitControlsService');
         inject(function (_$controller_) {
             // The injector unwraps the underscores (_) from around the parameter names when matching
             $controller = _$controller_;

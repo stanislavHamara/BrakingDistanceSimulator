@@ -1,5 +1,5 @@
-angular.module('PropertiesService',[])
-    .factory('PropertiesService', function(){
+angular.module('PropertiesService',['OrbitControlsService'])
+    .factory('PropertiesService', ['OrbitControlsService', function(OrbitControlsService){
         var surfaces = ['Asphalt','Gravel','Sand','Ice','Snow'];
         var condition = ['Dry', 'Wet'];
 
@@ -37,6 +37,10 @@ angular.module('PropertiesService',[])
             },
             getUserInput: function(){
                 return Simulation;
+            },
+            setControls: function(enabled){
+                OrbitControlsService.isEnabled(enabled);
+                console.log("controls: " + enabled);
             }
         }
-    });
+    }]);
