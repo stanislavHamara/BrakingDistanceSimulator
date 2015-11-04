@@ -52,7 +52,10 @@
     <div class="row">
         <div class="bds-switch">
             Look Around
-            <input bs-switch="" type="checkbox" name="my-checkbox" ng-model="togglePreferences.lookAround">
+            <input bs-switch="" type="checkbox"
+                   name="my-checkbox"
+                   ng-model="togglePreferences.lookAround"
+                   ng-change="setControls()">
         </div>
     </div>
     <div class="row">

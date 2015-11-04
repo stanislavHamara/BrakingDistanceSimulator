@@ -1,7 +1,6 @@
-angular.module('Scene', ['rt.resize'])
-    .controller('SceneController', ['$scope', 'resize', function ($scope, resize) {
-
-        var OrbitControls = require('three-orbit-controls')(THREE);
+angular.module('Scene', ['rt.resize', 'OrbitControlsService'])
+    .controller('SceneController', ['$scope', 'resize', 'OrbitControlsService',
+        function ($scope, resize, OrbitControlsService) {
 
         $scope.element = document.getElementById('bds-threejs-container');
 
@@ -13,11 +12,11 @@ angular.module('Scene', ['rt.resize'])
         $scope.initScene = function () {
 
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-            camera.position.z = 1000;
+            camera.position.z = 500;
 
             scene = new THREE.Scene();
 
-            controls = new OrbitControls(camera, $scope.element);
+            controls = OrbitControlsService.getControls(camera, $scope.element);
 
             boxMaterial = new THREE.MeshPhongMaterial({color: 0xff0000});
             boxGeometry = new THREE.BoxGeometry(200, 200, 200);
