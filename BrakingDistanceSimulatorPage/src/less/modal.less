@@ -1,0 +1,32 @@
+@import "colors";
+
+.modal-content{
+  background-color: @blue;
+  color: @terra;
+  font-size: 1.3vw;
+  text-align: center;
+  cursor: default;
+}
+
+.modal-header, .modal-footer{
+  border: none;
+}
+
+.close {
+  color: @terra;
+  opacity: 1;
+}
+
+.btn-default{
+  background-color: @terra;
+  color: @blue;
+  &:hover{
+    background-color: @darkblue;
+    color: @terra;
+    border-color: @darkblue;
+  }
+}
+
+#result{
+  font-size: 1.8vw;
+}
