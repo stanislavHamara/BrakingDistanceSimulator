@@ -42,7 +42,6 @@ angular.module('PhysicsService', [])
             getStoppingDistance: function (userInput) {
                 v = (userInput.imperial ? userInput.speed : userInput.speed / 1.6); //mph
                 cf = getCoefficient(userInput.surface, userInput.condition);
-                console.log(cf);
                 return {
                     thinkingDistance: getThinkingDistance(v),
                     brakingDistance: getBrakingDistance(v, cf) // coefficient of friction used for dry asphalt

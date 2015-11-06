@@ -12,4 +12,11 @@ angular.module('simulator.directives', [
             restrict: 'E',
             templateUrl: './dist/templates/bds-control-panel.html'
         }
+    })
+
+    .directive('bdsResultModal', function(){
+       return{
+           restrict: 'E',
+           templateUrl: './dist/templates/bds-result-modal.html'
+       }
     });

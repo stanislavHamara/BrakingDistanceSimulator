@@ -163,3 +163,6 @@ BrakingDistanceSimulatorPage/dist/css/controls.css
 BrakingDistanceSimulatorPage/dist/css/controls.min.css
 BrakingDistanceSimulatorPage/dist/css/style.css
 BrakingDistanceSimulatorPage/dist/css/style.min.css
+BrakingDistanceSimulatorPage/dist/css/modal.css
+BrakingDistanceSimulatorPage/dist/css/modal.min.css
+BrakingDistanceSimulatorPage/src/less/modal.css
