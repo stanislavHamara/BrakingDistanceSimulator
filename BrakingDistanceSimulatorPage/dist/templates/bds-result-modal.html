@@ -13,18 +13,18 @@
             </div>
             <div class="modal-body">
 
-                <p>Speed: 60 kph / 40 mph</p>
+                <p>Speed: {{getKphSpeed()}} kph / {{getMphSpeed()}} mph</p>
 
-                <p>Surface: Asphalt</p>
+                <p>Surface: {{userInput.surface}}</p>
 
-                <p>Condition: Dry</p>
+                <p>Condition: {{userInput.condition}}</p>
                 <br>
 
-                <p>Thinking distance: 12 m / 36 feet</p>
+                <p>Thinking distance: {{getDistances().thinkingDistance}}</p>
 
-                <p>Braking distance: 24 m / 60 feet</p>
+                <p>Braking distance: {{getDistances().brakingDistance}}</p>
 
-                <p id="result"><b>Total stopping distance: 306 m / 100 feet</b></p>
+                <p id="result"><b>Total stopping distance: {{getDistances().stoppingDistance}}</b></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
