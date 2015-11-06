@@ -1,6 +1,17 @@
 angular.module('PhysicsService', [])
     .factory('PhysicsService', function () {
 
+        /*
+        Coefficients of friction
+
+        Surface/Condition	Dry	 Wet
+        Asphalt	            0.7	 0.6
+        Gravel	            0.7	 0.75
+        Sand	            0.45 0.5
+        Ice	                0.1	 0.05
+        Snow	            0.3	 0.6
+        */
+
         var g = 9.81; //standard gravity value
         var v, cf; //velocity and coefficient of friction
 
