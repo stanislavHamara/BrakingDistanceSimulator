@@ -2,21 +2,32 @@ angular.module('PhysicsService', [])
     .factory('PhysicsService', function () {
 
         /*
-        Coefficients of friction
+         Coefficients of friction
 
-        Surface/Condition	Dry	 Wet
-        Asphalt	            0.7	 0.6
-        Gravel	            0.7	 0.75
-        Sand	            0.45 0.5
-        Ice	                0.1	 0.05
-        Snow	            0.3	 0.6
-        */
+         Surface/Condition	Dry	 Wet
+         Asphalt	        0.7	 0.6
+         Gravel	            0.7	 0.75
+         Sand	            0.45 0.5
+         Ice	            0.15 0.1
+         Snow	            0.3	 0.6
+         */
 
         var g = 9.81; //standard gravity value
         var v, cf; //velocity and coefficient of friction
 
-        var getCoefficient = function(surface, condition){
-            return 0.7;
+        //Associative arrays, roughly equivalent to Dictionaries or Hashmaps
+        var coefficients = [];
+        coefficients['Asphalt'] = [0.7, 0.6];
+        coefficients['Gravel'] = [0.7, 0.75];
+        coefficients['Sand'] = [0.45, 0.5];
+        coefficients['Ice'] = [0.15, 0.10];
+        coefficients['Snow'] = [0.3, 0.6];
+
+        var getCoefficient = function (surface, condition) {
+            if (condition == "Dry")
+                return coefficients[surface][0];
+            else
+                return coefficients[surface][1];
         };
 
         var getThinkingDistance = function (v) {
@@ -31,6 +42,7 @@ angular.module('PhysicsService', [])
             getStoppingDistance: function (userInput) {
                 v = (userInput.imperial ? userInput.speed : userInput.speed / 1.6); //mph
                 cf = getCoefficient(userInput.surface, userInput.condition);
+                console.log(cf);
                 return {
                     thinkingDistance: getThinkingDistance(v),
                     brakingDistance: getBrakingDistance(v, cf) // coefficient of friction used for dry asphalt
