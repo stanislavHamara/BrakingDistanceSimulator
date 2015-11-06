@@ -61,8 +61,10 @@
     <div class="row">
         <div class="btn-group btn-group-justified" id="bds-start-simulation" role="group" aria-label="...">
             <div class="btn-group" role="group">
-                <button type="button" class="btn btn-default" ng-click="startSimulation()">Start Simulation</button>
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#resultModal" ng-click="startSimulation()">Start Simulation</button>
             </div>
         </div>
     </div>
 </div>
+
+<bds-result-modal></bds-result-modal>
