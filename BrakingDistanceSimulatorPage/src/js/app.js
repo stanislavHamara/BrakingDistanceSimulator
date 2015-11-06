@@ -1,4 +1,4 @@
 angular.module('simulator', ['simulator.directives',
-    'Properties', 'Scene',
+    'Properties', 'Scene', 'ResultModal',
     'PropertiesService', 'PhysicsService']);
 
