@@ -41,7 +41,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService'])
                         side: THREE.DoubleSide
                     }));
                     zmesh.position.set(0, -220, -100);
-                    zmesh.scale.set(50, 50, 50);
+                    zmesh.scale.set(1, 1, 1);
                     zmesh.overdraw = true;
                     zmesh.castShadow = true;
                     scene.add(zmesh);
