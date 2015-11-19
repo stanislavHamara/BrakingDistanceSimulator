@@ -2,74 +2,97 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService'])
     .controller('SceneController', ['$scope', 'resize', 'OrbitControlsService',
         function ($scope, resize, OrbitControlsService) {
 
-        $scope.element = document.getElementById('bds-threejs-container');
+            $scope.element = document.getElementById('bds-threejs-container');
 
-        var camera, scene, renderer, controls;
-        var boxGeometry, boxMaterial, boxMesh;
-        var plane, planeMaterial, planeMesh;
-        var directionalLight;
+            var camera, scene, renderer, controls;
+            var boxGeometry, boxMaterial, boxMesh;
+            var plane, planeMaterial, planeMesh;
+            var directionalLight;
 
-        $scope.initScene = function () {
+            var initStats = function () {
+                var stats = new Stats();
+                stats.setMode( 0 ); // 0: fps, 1: ms, 2: mb
 
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-            camera.position.z = 500;
+                stats.domElement.style.position = 'absolute';
+                stats.domElement.style.left = '0px';
+                stats.domElement.style.top = '0px';
 
-            scene = new THREE.Scene();
+                $scope.element.appendChild( stats.domElement );
 
-            controls = OrbitControlsService.getControls(camera, $scope.element);
+                var update = function () {
 
-            boxMaterial = new THREE.MeshPhongMaterial({color: 0xff0000});
-            boxGeometry = new THREE.BoxGeometry(200, 200, 200);
-            boxMesh = new THREE.Mesh(boxGeometry, boxMaterial);
-            boxMesh.castShadow = true;
+                    stats.begin();
+                    stats.end();
+                    requestAnimationFrame( update );
 
-            plane = new THREE.PlaneGeometry(4000, 4000);
-            planeMaterial = new THREE.MeshPhongMaterial({color: 0xffffff, side: THREE.DoubleSide});
-            planeMesh = new THREE.Mesh(plane, planeMaterial);
-            planeMesh.rotation.x -= Math.PI / 2;
-            planeMesh.position.y -= 220;
-            planeMesh.receiveShadow = true;
+                };
 
-            directionalLight = new THREE.DirectionalLight(0xffffff);
-            directionalLight.position.set(200, 1000, 0);
-            directionalLight.target = boxMesh;
-            directionalLight.castShadow = true;
-            directionalLight.shadowCameraVisible = true;
+                requestAnimationFrame( update );
+            };
 
-            scene.add(boxMesh);
-            scene.add(planeMesh);
-            scene.add(directionalLight);
+            $scope.initScene = function () {
 
-            renderer = new THREE.WebGLRenderer({antialias: true});
-            renderer.setSize($scope.element.offsetWidth, $scope.element.offsetHeight);
-            renderer.shadowMapEnabled = true;
-            renderer.shadowMapType = THREE.PCFSoftShadowMap;
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+                camera.position.z = 500;
 
-            $scope.element.appendChild(renderer.domElement);
+                scene = new THREE.Scene();
 
-        };
+                controls = OrbitControlsService.getControls(camera, $scope.element);
 
-        $scope.animate = function () {
+                boxMaterial = new THREE.MeshPhongMaterial({color: 0xff0000});
+                boxGeometry = new THREE.BoxGeometry(200, 200, 200);
+                boxMesh = new THREE.Mesh(boxGeometry, boxMaterial);
+                boxMesh.castShadow = true;
 
-            // note: three.js includes requestAnimationFrame shim
-            requestAnimationFrame($scope.animate);
+                plane = new THREE.PlaneGeometry(4000, 4000);
+                planeMaterial = new THREE.MeshPhongMaterial({color: 0xffffff, side: THREE.DoubleSide});
+                planeMesh = new THREE.Mesh(plane, planeMaterial);
+                planeMesh.rotation.x -= Math.PI / 2;
+                planeMesh.position.y -= 220;
+                planeMesh.receiveShadow = true;
 
-            boxMesh.rotation.x += 0.01;
-            boxMesh.rotation.y += 0.02;
+                directionalLight = new THREE.DirectionalLight(0xffffff);
+                directionalLight.position.set(200, 1000, 0);
+                directionalLight.target = boxMesh;
+                directionalLight.castShadow = true;
+                directionalLight.shadowCameraVisible = true;
 
-            renderer.render(scene, camera);
-        };
+                scene.add(boxMesh);
+                scene.add(planeMesh);
+                scene.add(directionalLight);
 
-        resize($scope).call(function () {
+                renderer = new THREE.WebGLRenderer({antialias: true});
+                renderer.setSize($scope.element.offsetWidth, $scope.element.offsetHeight);
+                renderer.shadowMapEnabled = true;
+                renderer.shadowMapType = THREE.PCFSoftShadowMap;
 
-            camera.aspect = $scope.element.offsetWidth / $scope.element.offsetHeight;
-            camera.updateProjectionMatrix();
+                $scope.element.appendChild(renderer.domElement);
 
-            renderer.setSize($scope.element.offsetWidth, $scope.element.offsetHeight);
+                initStats();
 
-        });
+            };
 
-        $scope.initScene();
-        $scope.animate();
+            $scope.animate = function () {
 
-    }]);
+                // note: three.js includes requestAnimationFrame shim
+                requestAnimationFrame($scope.animate);
+
+                boxMesh.rotation.x += 0.01;
+                boxMesh.rotation.y += 0.02;
+
+                renderer.render(scene, camera);
+            };
+
+            resize($scope).call(function () {
+
+                camera.aspect = $scope.element.offsetWidth / $scope.element.offsetHeight;
+                camera.updateProjectionMatrix();
+
+                renderer.setSize($scope.element.offsetWidth, $scope.element.offsetHeight);
+
+            });
+
+            $scope.initScene();
+            $scope.animate();
+
+        }]);
