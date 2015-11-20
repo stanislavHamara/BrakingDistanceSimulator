@@ -8,7 +8,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService'])
             var camera, scene, renderer, controls;
             var boxGeometry, boxMaterial, boxMesh;
             var plane, planeMaterial, planeMesh;
-            var directionalLight;
+            var directionalLight, sky, sunSphere;
             var zmesh;
 
 
@@ -35,19 +35,14 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService'])
 
                 loadObject();
 
-                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000000);
                 camera.position.z = 500;
 
                 scene = new THREE.Scene();
 
                 controls = OrbitControlsService.getControls(camera, $scope.element, zmesh);
 
-                boxMaterial = new THREE.MeshPhongMaterial({color: 0xff0000});
-                boxGeometry = new THREE.BoxGeometry(200, 200, 200);
-                boxMesh = new THREE.Mesh(boxGeometry, boxMaterial);
-                boxMesh.castShadow = true;
-
-                plane = new THREE.PlaneGeometry(4000, 4000);
+                plane = new THREE.PlaneGeometry(40000, 40000);
                 planeMaterial = new THREE.MeshPhongMaterial({color: 0xffffff, side: THREE.DoubleSide});
                 planeMesh = new THREE.Mesh(plane, planeMaterial);
                 planeMesh.rotation.x -= Math.PI / 2;
@@ -55,12 +50,15 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService'])
                 planeMesh.receiveShadow = true;
 
                 directionalLight = new THREE.DirectionalLight(0xffffff);
-                directionalLight.position.set(200, 1000, 0);
-                directionalLight.target = boxMesh;
+                directionalLight.position.set(0, 1000, -500);
+                directionalLight.target = planeMesh;
                 directionalLight.castShadow = true;
                 directionalLight.shadowCameraVisible = true;
 
-                //scene.add(boxMesh);
+                sky = new THREE.Sky();
+                sky.uniforms.sunPosition.value = new THREE.Vector3(0,5000,-10000);
+                scene.add(sky.mesh);
+
                 scene.add(planeMesh);
                 scene.add(directionalLight);
 
@@ -80,10 +78,6 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService'])
 
                 // note: three.js includes requestAnimationFrame shim
                 requestAnimationFrame($scope.animate);
-
-                boxMesh.rotation.x += 0.01;
-                boxMesh.rotation.y += 0.02;
-
                 renderer.render(scene, camera);
             };
 

@@ -5,7 +5,7 @@ angular.module('OrbitControlsService', [])
         var controls;
 
         return {
-            getControls: function (camera, element, zmesh) {
+            getControls: function (camera, element) {
 
                 controls = new OrbitControls(camera, element);
                 controls.maxPolarAngle = Math.PI / 2;
@@ -13,7 +13,6 @@ angular.module('OrbitControlsService', [])
                 controls.minDistance = 500;
                 controls.maxDistance = 700;
                 controls.noPan = true;
-                //console.log(zmesh);
                 controls.target =  new THREE.Vector3(0,0,0);
 
                 return controls;
