@@ -1,6 +1,6 @@
-angular.module('Scene', ['rt.resize', 'OrbitControlsService'])
-    .controller('SceneController', ['$scope', 'resize', 'OrbitControlsService',
-        function ($scope, resize, OrbitControlsService) {
+angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService'])
+    .controller('SceneController', ['$scope', 'resize', 'OrbitControlsService', 'StatsService',
+        function ($scope, resize, OrbitControlsService, StatsService) {
 
             $scope.element = document.getElementById('bds-threejs-container');
             $scope.zmesh;
@@ -11,26 +11,6 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService'])
             var directionalLight;
             var zmesh;
 
-            var initStats = function () {
-                var stats = new Stats();
-                stats.setMode(0); // 0: fps, 1: ms, 2: mb
-
-                stats.domElement.style.position = 'absolute';
-                stats.domElement.style.left = '0px';
-                stats.domElement.style.top = '0px';
-
-                $scope.element.appendChild(stats.domElement);
-
-                var update = function () {
-
-                    stats.begin();
-                    stats.end();
-                    requestAnimationFrame(update);
-
-                };
-
-                requestAnimationFrame(update);
-            };
 
             var loadObject = function () {
                 var loader = new THREE.JSONLoader();
@@ -91,8 +71,8 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService'])
 
                 $scope.element.appendChild(renderer.domElement);
 
-                initStats();
-
+                //add Stats
+                $scope.element.appendChild(StatsService.getStats().domElement);
 
             };
 
