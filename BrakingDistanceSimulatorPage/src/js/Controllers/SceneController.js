@@ -13,13 +13,11 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService'])
 
 
             var loadObject = function () {
-                var loader = new THREE.JSONLoader();
+               /* var loader = new THREE.JSONLoader();
 
-                var createMesh = function (geometry) {
-                    var zmesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({
-                        color: 0x00ff00,
-                        side: THREE.DoubleSide
-                    }));
+                var createMesh = function (geometry, materials) {
+                    console.log(materials);
+                    var zmesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
                     zmesh.position.set(0, -220, -100);
                     zmesh.scale.set(1, 1, 1);
                     zmesh.overdraw = true;
@@ -28,7 +26,31 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService'])
 
                 };
 
-                loader.load("dist/js/models/mesh.js", createMesh);
+                loader.load("dist/js/models/mesh.js", createMesh);*/
+
+                var loader = new THREE.OBJMTLLoader();
+                loader.load(
+                    // OBJ resource URL
+                    'dist/js/models/mesh.obj',
+                    // MTL resource URL
+                    'dist/js/models/mesh.mtl',
+                    // Function when both resources are loaded
+                    function ( object ) {
+                        object.castShadow = true;
+                        object.traverse( function( node ) { if ( node instanceof THREE.Mesh ) { node.castShadow = true; } } );
+                        object.position.y = -220;
+                        scene.add( object );
+                        console.log(object);
+                    },
+                    // Function called when downloads progress
+                    function ( xhr ) {
+                        console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+                    },
+                    // Function called when downloads error
+                    function ( xhr ) {
+                        console.log( 'An error happened' );
+                    }
+                );
             };
 
             $scope.initScene = function () {
@@ -50,13 +72,15 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService'])
                 planeMesh.receiveShadow = true;
 
                 directionalLight = new THREE.DirectionalLight(0xffffff);
-                directionalLight.position.set(0, 1000, -500);
+                directionalLight.position.set(0, 500, 0);
                 directionalLight.target = planeMesh;
                 directionalLight.castShadow = true;
                 directionalLight.shadowCameraVisible = true;
+                directionalLight.shadowMapWidth = 2048;
+                directionalLight.shadowMapHeight= 2048;
 
                 sky = new THREE.Sky();
-                sky.uniforms.sunPosition.value = new THREE.Vector3(0,5000,-10000);
+                sky.uniforms.sunPosition.value = new THREE.Vector3(0, 5000, -10000);
                 scene.add(sky.mesh);
 
                 scene.add(planeMesh);
