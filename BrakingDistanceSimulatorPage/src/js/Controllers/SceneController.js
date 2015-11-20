@@ -12,22 +12,29 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService'])
             var zmesh;
 
 
-            var loadObject = function () {
-               /* var loader = new THREE.JSONLoader();
+            function JSONLoad() {
+                var loader = new THREE.JSONLoader();
 
                 var createMesh = function (geometry, materials) {
                     console.log(materials);
                     var zmesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-                    zmesh.position.set(0, -220, -100);
+                    zmesh.position.set(0, -220, -200);
                     zmesh.scale.set(1, 1, 1);
                     zmesh.overdraw = true;
                     zmesh.castShadow = true;
+                    zmesh.traverse( function( node ) {
+                        if( node.material ) {
+                            node.material.side = THREE.DoubleSide;
+                        }
+                    });
                     scene.add(zmesh);
 
                 };
 
-                loader.load("dist/js/models/mesh.js", createMesh);*/
+                loader.load("dist/js/models/mesh.js", createMesh);
+            }
 
+            function OBJLoad() {
                 var loader = new THREE.OBJMTLLoader();
                 loader.load(
                     // OBJ resource URL
@@ -35,22 +42,35 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService'])
                     // MTL resource URL
                     'dist/js/models/mesh.mtl',
                     // Function when both resources are loaded
-                    function ( object ) {
+                    function (object) {
                         object.castShadow = true;
-                        object.traverse( function( node ) { if ( node instanceof THREE.Mesh ) { node.castShadow = true; } } );
+                        object.traverse(function (node) {
+                            if (node instanceof THREE.Mesh) {
+                                node.castShadow = true;
+                            }
+                            if( node.material ) {
+                                node.material.side = THREE.DoubleSide;
+                            }
+                        });
                         object.position.y = -220;
-                        scene.add( object );
+                        scene.add(object);
                         console.log(object);
                     },
                     // Function called when downloads progress
-                    function ( xhr ) {
-                        console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+                    function (xhr) {
+                        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
                     },
                     // Function called when downloads error
-                    function ( xhr ) {
-                        console.log( 'An error happened' );
+                    function (xhr) {
+                        console.log('An error happened');
                     }
                 );
+            }
+
+
+            var loadObject = function () {
+                //JSONLoad();
+                OBJLoad();
             };
 
             $scope.initScene = function () {
