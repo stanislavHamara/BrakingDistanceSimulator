@@ -177,7 +177,7 @@
 	"colorDiffuse" : [0.0, 0.22, 0.29],
 	"colorSpecular" : [0.0, 0.0, 0.0],
 	"illumination" : 2,
-	"opacity" : 0.2,
+	"opacity" : 0.3,
 	"opticalDensity" : 1.5,
 	"specularCoef" : 10.0,
 	"transparent" : true

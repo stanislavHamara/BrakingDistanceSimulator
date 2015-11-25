@@ -6,9 +6,8 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService'])
             $scope.zmesh;
 
             var camera, scene, renderer, controls;
-            var boxGeometry, boxMaterial, boxMesh;
             var plane, planeMaterial, planeMesh;
-            var directionalLight, sky, sunSphere;
+            var directionalLight, sky;
             var zmesh;
 
 
@@ -18,7 +17,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService'])
                 var createMesh = function (geometry, materials) {
                     console.log(materials);
                     var zmesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-                    zmesh.position.set(0, -220, -200);
+                    zmesh.position.set(0, -220, -100);
                     zmesh.scale.set(1, 1, 1);
                     zmesh.overdraw = true;
                     zmesh.castShadow = true;
@@ -27,6 +26,9 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService'])
                             node.material.side = THREE.DoubleSide;
                         }
                     });
+                    for(var i = 0; i < materials.length; i++){
+                        materials[i].side = THREE.DoubleSide;
+                    }
                     scene.add(zmesh);
 
                 };
@@ -34,48 +36,9 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService'])
                 loader.load("dist/js/models/mesh.js", createMesh);
             }
 
-            function OBJLoad() {
-                var loader = new THREE.OBJMTLLoader();
-                loader.load(
-                    // OBJ resource URL
-                    'dist/js/models/mesh.obj',
-                    // MTL resource URL
-                    'dist/js/models/mesh.mtl',
-                    // Function when both resources are loaded
-                    function (object) {
-                        object.castShadow = true;
-                        object.traverse(function (node) {
-                            if (node instanceof THREE.Mesh) {
-                                node.castShadow = true;
-                            }
-                            if( node.material ) {
-                                node.material.side = THREE.DoubleSide;
-                            }
-                        });
-                        object.position.y = -220;
-                        scene.add(object);
-                        console.log(object);
-                    },
-                    // Function called when downloads progress
-                    function (xhr) {
-                        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-                    },
-                    // Function called when downloads error
-                    function (xhr) {
-                        console.log('An error happened');
-                    }
-                );
-            }
-
-
-            var loadObject = function () {
-                //JSONLoad();
-                OBJLoad();
-            };
-
             $scope.initScene = function () {
 
-                loadObject();
+                JSONLoad();
 
                 camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000000);
                 camera.position.z = 500;
