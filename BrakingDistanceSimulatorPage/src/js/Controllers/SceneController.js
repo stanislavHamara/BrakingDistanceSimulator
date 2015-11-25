@@ -1,9 +1,9 @@
-angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService'])
-    .controller('SceneController', ['$scope', 'resize', 'OrbitControlsService', 'StatsService',
-        function ($scope, resize, OrbitControlsService, StatsService) {
+angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'CarService'])
+    .controller('SceneController', ['$scope', 'resize', 'OrbitControlsService', 'StatsService', 'CarService',
+        function ($scope, resize, OrbitControlsService, StatsService, CarService) {
 
             $scope.element = document.getElementById('bds-threejs-container');
-            $scope.zmesh;
+
 
             var camera, scene, renderer, controls;
             var plane, planeMaterial, planeMesh;
@@ -11,37 +11,10 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService'])
             var zmesh;
 
 
-            function JSONLoad() {
-                var loader = new THREE.JSONLoader();
-
-                var createMesh = function (geometry, materials) {
-                    console.log(materials);
-                    var zmesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-                    zmesh.position.set(0, -220, -100);
-                    zmesh.scale.set(0.1, 0.1, 0.1);
-                    zmesh.overdraw = true;
-                    zmesh.castShadow = true;
-                    zmesh.traverse( function( node ) {
-                        if( node.material ) {
-                            node.material.side = THREE.DoubleSide;
-                        }
-                    });
-                    for(var i = 0; i < materials.length; i++){
-                        materials[i].side = THREE.DoubleSide;
-                    }
-                    scene.add(zmesh);
-
-                };
-
-                loader.load("dist/js/models/mesh.js", createMesh);
-            }
-
             $scope.initScene = function () {
 
-                JSONLoad();
-
                 camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000000);
-                camera.position.z = 500;
+                camera.position.z = 470;
 
                 scene = new THREE.Scene();
 
@@ -79,6 +52,8 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService'])
                 //add Stats
                 $scope.element.appendChild(StatsService.getStats().domElement);
 
+                //load the car
+                CarService.getCar(scene);
             };
 
             $scope.animate = function () {

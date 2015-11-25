@@ -8,10 +8,10 @@ angular.module('OrbitControlsService', [])
             getControls: function (camera, element) {
 
                 controls = new OrbitControls(camera, element);
-                controls.maxPolarAngle = Math.PI / 2;
-                controls.minPolarAngle = 1 / 4 * Math.PI;
-                controls.minDistance = 500;
-                controls.maxDistance = 700;
+                controls.maxPolarAngle = Math.PI / 1.7;
+                controls.minPolarAngle = 1 / 2.5 * Math.PI;
+                controls.minDistance = 450;
+                controls.maxDistance = 600;
                 controls.noPan = true;
                 controls.target =  new THREE.Vector3(0,0,0);
 
