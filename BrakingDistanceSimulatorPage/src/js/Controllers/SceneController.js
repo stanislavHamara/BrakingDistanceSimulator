@@ -18,7 +18,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService'])
                     console.log(materials);
                     var zmesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
                     zmesh.position.set(0, -220, -100);
-                    zmesh.scale.set(1, 1, 1);
+                    zmesh.scale.set(0.1, 0.1, 0.1);
                     zmesh.overdraw = true;
                     zmesh.castShadow = true;
                     zmesh.traverse( function( node ) {
@@ -55,7 +55,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService'])
                 planeMesh.receiveShadow = true;
 
                 directionalLight = new THREE.DirectionalLight(0xffffff);
-                directionalLight.position.set(0, 500, 0);
+                directionalLight.position.set(-100, 500, -300);
                 directionalLight.target = planeMesh;
                 directionalLight.castShadow = true;
                 directionalLight.shadowCameraVisible = true;
