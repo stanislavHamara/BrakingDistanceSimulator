@@ -1,75 +1,103 @@
-angular.module('Scene', ['rt.resize', 'OrbitControlsService'])
-    .controller('SceneController', ['$scope', 'resize', 'OrbitControlsService',
-        function ($scope, resize, OrbitControlsService) {
+angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService'])
+    .controller('SceneController', ['$scope', 'resize', 'OrbitControlsService', 'StatsService',
+        function ($scope, resize, OrbitControlsService, StatsService) {
 
-        $scope.element = document.getElementById('bds-threejs-container');
+            $scope.element = document.getElementById('bds-threejs-container');
+            $scope.zmesh;
 
-        var camera, scene, renderer, controls;
-        var boxGeometry, boxMaterial, boxMesh;
-        var plane, planeMaterial, planeMesh;
-        var directionalLight;
+            var camera, scene, renderer, controls;
+            var plane, planeMaterial, planeMesh;
+            var directionalLight, sky;
+            var zmesh;
 
-        $scope.initScene = function () {
 
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-            camera.position.z = 500;
+            function JSONLoad() {
+                var loader = new THREE.JSONLoader();
 
-            scene = new THREE.Scene();
+                var createMesh = function (geometry, materials) {
+                    console.log(materials);
+                    var zmesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+                    zmesh.position.set(0, -220, -100);
+                    zmesh.scale.set(0.1, 0.1, 0.1);
+                    zmesh.overdraw = true;
+                    zmesh.castShadow = true;
+                    zmesh.traverse( function( node ) {
+                        if( node.material ) {
+                            node.material.side = THREE.DoubleSide;
+                        }
+                    });
+                    for(var i = 0; i < materials.length; i++){
+                        materials[i].side = THREE.DoubleSide;
+                    }
+                    scene.add(zmesh);
 
-            controls = OrbitControlsService.getControls(camera, $scope.element);
+                };
 
-            boxMaterial = new THREE.MeshPhongMaterial({color: 0xff0000});
-            boxGeometry = new THREE.BoxGeometry(200, 200, 200);
-            boxMesh = new THREE.Mesh(boxGeometry, boxMaterial);
-            boxMesh.castShadow = true;
+                loader.load("dist/js/models/mesh.js", createMesh);
+            }
 
-            plane = new THREE.PlaneGeometry(4000, 4000);
-            planeMaterial = new THREE.MeshPhongMaterial({color: 0xffffff, side: THREE.DoubleSide});
-            planeMesh = new THREE.Mesh(plane, planeMaterial);
-            planeMesh.rotation.x -= Math.PI / 2;
-            planeMesh.position.y -= 220;
-            planeMesh.receiveShadow = true;
+            $scope.initScene = function () {
 
-            directionalLight = new THREE.DirectionalLight(0xffffff);
-            directionalLight.position.set(200, 1000, 0);
-            directionalLight.target = boxMesh;
-            directionalLight.castShadow = true;
-            directionalLight.shadowCameraVisible = true;
+                JSONLoad();
 
-            scene.add(boxMesh);
-            scene.add(planeMesh);
-            scene.add(directionalLight);
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000000);
+                camera.position.z = 500;
 
-            renderer = new THREE.WebGLRenderer({antialias: true});
-            renderer.setSize($scope.element.offsetWidth, $scope.element.offsetHeight);
-            renderer.shadowMapEnabled = true;
-            renderer.shadowMapType = THREE.PCFSoftShadowMap;
+                scene = new THREE.Scene();
 
-            $scope.element.appendChild(renderer.domElement);
+                controls = OrbitControlsService.getControls(camera, $scope.element, zmesh);
 
-        };
+                plane = new THREE.PlaneGeometry(40000, 40000);
+                planeMaterial = new THREE.MeshPhongMaterial({color: 0xffffff, side: THREE.DoubleSide});
+                planeMesh = new THREE.Mesh(plane, planeMaterial);
+                planeMesh.rotation.x -= Math.PI / 2;
+                planeMesh.position.y -= 220;
+                planeMesh.receiveShadow = true;
 
-        $scope.animate = function () {
+                directionalLight = new THREE.DirectionalLight(0xffffff);
+                directionalLight.position.set(-100, 500, -300);
+                directionalLight.target = planeMesh;
+                directionalLight.castShadow = true;
+                directionalLight.shadowCameraVisible = true;
+                directionalLight.shadowMapWidth = 2048;
+                directionalLight.shadowMapHeight= 2048;
 
-            // note: three.js includes requestAnimationFrame shim
-            requestAnimationFrame($scope.animate);
+                sky = new THREE.Sky();
+                sky.uniforms.sunPosition.value = new THREE.Vector3(0, 5000, -10000);
+                scene.add(sky.mesh);
 
-            boxMesh.rotation.x += 0.01;
-            boxMesh.rotation.y += 0.02;
+                scene.add(planeMesh);
+                scene.add(directionalLight);
 
-            renderer.render(scene, camera);
-        };
+                renderer = new THREE.WebGLRenderer({antialias: true});
+                renderer.setSize($scope.element.offsetWidth, $scope.element.offsetHeight);
+                renderer.shadowMapEnabled = true;
+                renderer.shadowMapType = THREE.PCFSoftShadowMap;
 
-        resize($scope).call(function () {
+                $scope.element.appendChild(renderer.domElement);
 
-            camera.aspect = $scope.element.offsetWidth / $scope.element.offsetHeight;
-            camera.updateProjectionMatrix();
+                //add Stats
+                $scope.element.appendChild(StatsService.getStats().domElement);
 
-            renderer.setSize($scope.element.offsetWidth, $scope.element.offsetHeight);
+            };
 
-        });
+            $scope.animate = function () {
 
-        $scope.initScene();
-        $scope.animate();
+                // note: three.js includes requestAnimationFrame shim
+                requestAnimationFrame($scope.animate);
+                renderer.render(scene, camera);
+            };
 
-    }]);
+            resize($scope).call(function () {
+
+                camera.aspect = $scope.element.offsetWidth / $scope.element.offsetHeight;
+                camera.updateProjectionMatrix();
+
+                renderer.setSize($scope.element.offsetWidth, $scope.element.offsetHeight);
+
+            });
+
+            $scope.initScene();
+            $scope.animate();
+
+        }]);
