@@ -17,7 +17,6 @@ angular.module('PropertiesService',['OrbitControlsService'])
             getConditions: function(){
                 return condition;
             },
-
             getSelectedSurface: function(){
               return Simulation.surface;
             },
