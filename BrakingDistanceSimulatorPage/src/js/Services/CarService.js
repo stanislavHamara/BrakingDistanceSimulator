@@ -38,7 +38,7 @@ angular.module('CarService',['OrbitControlsService'])
                 object.bodyMaterials[1] = new THREE.MeshPhongMaterial({
                     color: 0x000033,
                     specular: 0xeeeeee,
-                    shininess: 100
+                    shininess: 100,
                 } );
                 object.bodyMaterials[2] = new THREE.MeshPhongMaterial({
                     color: 0xffffff,
@@ -56,7 +56,6 @@ angular.module('CarService',['OrbitControlsService'])
             oControls.target = object.root.position;
 
             scene.add(object.root);
-            console.log(object);
 
             animate();
             render();
@@ -151,7 +150,6 @@ angular.module('CarService',['OrbitControlsService'])
                 loadCar(scene);
             },
             getCarCamera: function (){
-                console.log(carCamera);
                 return carCamera;
             },
             getEnvControls: function(){

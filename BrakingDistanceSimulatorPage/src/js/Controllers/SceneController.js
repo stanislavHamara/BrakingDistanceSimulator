@@ -14,16 +14,22 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 controls = CarService.getEnvControls();
                 directionalLight = CarService.getCarLight();
                 envLight = new THREE.DirectionalLight(0xffffff);
-                envLight.position.set(0,1000,0);
+                envLight.position.set(0, 1000, 0);
 
                 scene = new THREE.Scene();
 
                 plane = new THREE.PlaneGeometry(40000, 40000);
-                planeMaterial = new THREE.MeshPhongMaterial({color: 0xffffff, side: THREE.DoubleSide});
+                var texture = THREE.ImageUtils.loadTexture("dist/js/models/asphalt.jpg");
+                texture.wrapS = THREE.RepeatWrapping;
+                texture.wrapT = THREE.RepeatWrapping;
+                texture.repeat.set(300, 300);
+                planeMaterial = new THREE.MeshLambertMaterial({map: texture});
                 planeMesh = new THREE.Mesh(plane, planeMaterial);
                 planeMesh.rotation.x -= Math.PI / 2;
                 planeMesh.position.y += 2;
                 planeMesh.receiveShadow = true;
+                planeMesh.castShadow = true;
+                console.log(planeMesh);
 
                 sky = new THREE.Sky();
                 sky.uniforms.sunPosition.value = new THREE.Vector3(0, 5000, 10000);
@@ -35,8 +41,8 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
 
                 renderer = new THREE.WebGLRenderer({antialias: true});
                 renderer.setSize($scope.element.offsetWidth, $scope.element.offsetHeight);
-                renderer.shadowMapEnabled = true;
-                renderer.shadowMapType = THREE.PCFSoftShadowMap;
+                renderer.shadowMap.enabled = true;
+                renderer.shadowMap.type = THREE.BasicShadowMap;
 
                 $scope.element.appendChild(renderer.domElement);
 
