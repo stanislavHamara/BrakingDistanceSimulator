@@ -12,13 +12,9 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
 
             $scope.initScene = function () {
 
-                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000000);
-                camera.position.z = 470;
-                camera.position.y = 100;
-
+                camera = CarService.getCarCamera();
                 scene = new THREE.Scene();
-
-                controls = OrbitControlsService.getControls(camera, $scope.element);
+                controls = CarService.getEnvControls();
 
                 plane = new THREE.PlaneGeometry(40000, 40000);
                 planeMaterial = new THREE.MeshPhongMaterial({color: 0xffffff, side: THREE.DoubleSide});
@@ -30,7 +26,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 directionalLight = new THREE.DirectionalLight(0xffffff);
                 directionalLight.position.set(300, 500, 300);
                 directionalLight.target = planeMesh;
-                directionalLight.castShadow = true;
+                //directionalLight.castShadow = true;
                 directionalLight.shadowCameraVisible = true;
                 directionalLight.shadowMapWidth = 2048;
                 directionalLight.shadowMapHeight= 2048;
@@ -54,7 +50,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 $scope.element.appendChild(StatsService.getStats().domElement);
 
                 //load the car
-                CarService.getCar(scene, camera);
+                CarService.getCar(scene);
             };
 
             $scope.animate = function () {

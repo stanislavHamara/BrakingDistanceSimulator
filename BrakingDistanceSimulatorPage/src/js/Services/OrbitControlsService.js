@@ -13,8 +13,6 @@ angular.module('OrbitControlsService', [])
                 controls.minDistance = 400;
                 controls.maxDistance = 600;
                 controls.noPan = true;
-
-
                 return controls;
             },
             isEnabled: function (enabled) {
