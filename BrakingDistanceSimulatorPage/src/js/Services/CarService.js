@@ -8,6 +8,12 @@ angular.module('CarService',['OrbitControlsService'])
 
         var oControls = OrbitControlsService.getControls(carCamera, document.getElementById('bds-threejs-container'));
 
+        var carLight = new THREE.DirectionalLight(0xffffff);
+        carLight.position.set(300, 2000, 300);
+        carLight.castShadow = true;
+        carLight.shadowMapWidth = 2048;
+        carLight.shadowMapHeight= 2048;
+
         var controlsCar = {
 
             moveForward: false,
@@ -29,6 +35,17 @@ angular.module('CarService',['OrbitControlsService'])
             car.loadPartsJSON("dist/js/models/body.js", "dist/js/models/wheel.js");
             car.callback = function (object) {
                 addCar(object, 0, 0, 0, scene);
+                object.bodyMaterials[1] = new THREE.MeshPhongMaterial({
+                    color: 0x000033,
+                    specular: 0xeeeeee,
+                    shininess: 100
+                } );
+                object.bodyMaterials[2] = new THREE.MeshPhongMaterial({
+                    color: 0xffffff,
+                    specular: 0xeeeeee,
+                    shininess: 100
+                } );
+                carLight.target = object.root;
             }
         }
 
@@ -139,6 +156,9 @@ angular.module('CarService',['OrbitControlsService'])
             },
             getEnvControls: function(){
                 return oControls;
+            },
+            getCarLight: function(){
+                return carLight;
             }
         }
     }]);

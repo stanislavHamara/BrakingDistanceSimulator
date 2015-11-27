@@ -4,17 +4,19 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
 
             $scope.element = document.getElementById('bds-threejs-container');
 
-
             var camera, scene, renderer, controls;
             var plane, planeMaterial, planeMesh;
-            var directionalLight, sky;
-
+            var directionalLight, sky, envLight;
 
             $scope.initScene = function () {
 
                 camera = CarService.getCarCamera();
-                scene = new THREE.Scene();
                 controls = CarService.getEnvControls();
+                directionalLight = CarService.getCarLight();
+                envLight = new THREE.DirectionalLight(0xffffff);
+                envLight.position.set(0,1000,0);
+
+                scene = new THREE.Scene();
 
                 plane = new THREE.PlaneGeometry(40000, 40000);
                 planeMaterial = new THREE.MeshPhongMaterial({color: 0xffffff, side: THREE.DoubleSide});
@@ -23,21 +25,13 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 planeMesh.position.y += 2;
                 planeMesh.receiveShadow = true;
 
-                directionalLight = new THREE.DirectionalLight(0xffffff);
-                directionalLight.position.set(300, 500, 300);
-                directionalLight.target = planeMesh;
-                //directionalLight.castShadow = true;
-                directionalLight.shadowCameraVisible = true;
-                directionalLight.shadowMapWidth = 2048;
-                directionalLight.shadowMapHeight= 2048;
-
                 sky = new THREE.Sky();
                 sky.uniforms.sunPosition.value = new THREE.Vector3(0, 5000, 10000);
                 scene.add(sky.mesh);
 
                 scene.add(planeMesh);
                 scene.add(directionalLight);
-
+                scene.add(envLight);
 
                 renderer = new THREE.WebGLRenderer({antialias: true});
                 renderer.setSize($scope.element.offsetWidth, $scope.element.offsetHeight);
@@ -66,10 +60,8 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 camera.updateProjectionMatrix();
 
                 renderer.setSize($scope.element.offsetWidth, $scope.element.offsetHeight);
-
             });
 
             $scope.initScene();
             $scope.animate();
-
         }]);
