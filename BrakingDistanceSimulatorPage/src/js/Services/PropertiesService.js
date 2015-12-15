@@ -4,13 +4,16 @@ angular.module('PropertiesService',['OrbitControlsService'])
         var condition = ['Dry', 'Wet'];
 
         var Simulation = {
-            speed: 0,
+            speed: 40,
             imperial: true,
             surface: surfaces[0],
             condition: condition[0]
         };
 
         return {
+            getSpeed: function(){
+                return Simulation.speed;
+            },
             getSurfaces: function() {
                 return surfaces;
             },

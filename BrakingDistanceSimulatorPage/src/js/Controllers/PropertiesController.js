@@ -5,7 +5,7 @@ angular.module('Properties', [])
             $scope.surfaces = PropertiesService.getSurfaces();
             $scope.condition = PropertiesService.getConditions();
             $scope.units = 'mph';
-            $scope.speed = 40;
+            $scope.speed = PropertiesService.getSpeed();
 
             $scope.speedButtons = [-1, -5, -10, +10, +5, +1];
 
@@ -29,6 +29,7 @@ angular.module('Properties', [])
 
                 if ($scope.speed < 1) $scope.speed = 1;
                 else if ($scope.speed > 200) $scope.speed = 200;
+                PropertiesService.setSpeed($scope.speed, $scope.togglePreferences.imperial);
 
             };
 
@@ -50,9 +51,8 @@ angular.module('Properties', [])
 
             $scope.startSimulation = function () {
                 if(validateSpeed()) {
-                    PropertiesService.setSpeed($scope.speed, $scope.togglePreferences.imperial);
                     var userInput = PropertiesService.getUserInput();
-                    CarService.startSimulation($scope.speed, $scope.togglePreferences.imperial);
+                    CarService.startSimulation(PropertiesService.getSpeed(), $scope.togglePreferences.imperial);
 
                     console.log(PhysicsService.getStoppingDistance(userInput));
                     console.log(userInput);
