@@ -30,5 +30,4 @@ angular.module('ResultModal', [])
             var formatNumber = function (n) {
                 return parseFloat(n).toFixed(2);
             }
-
         }]);

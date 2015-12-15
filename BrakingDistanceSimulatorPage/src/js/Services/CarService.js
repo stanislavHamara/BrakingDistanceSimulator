@@ -34,7 +34,7 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
                 car = new THREE.Car();
                 car.modelScale = 0.1;
                 car.backWheelOffset = 60;
-                car.FRONT_ACCELERATION = 200;
+                car.FRONT_ACCELERATION = 500;
                 car.MAX_SPEED = 6000; // equivalent to 60 kmph => 1kmph = 100 units
                 car.loadPartsJSON("dist/js/models/body.js", "dist/js/models/wheel.js");
                 car.callback = function (object) {
@@ -143,14 +143,16 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
                     controlsCar.moveForward = false;
                     controlsCar.moveBackward = true;
                     decelerate = true;
+                    //stop the wheels
+                    car.wheelsLocked = true;
                 }
 
                 if(car.speed < 0 && decelerate){
-                    //stop the wheels
                     //calculate and set deceleration
                     controlsCar.moveBackward = false;
                     car.speed = 0;
                     decelerate = false;
+                    car.wheelsLocked = false;
                 }
 
             }
@@ -175,10 +177,11 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
                 getCarLight: function () {
                     return carLight;
                 },
-                startSimulation: function (maxSpeed, imperial) {
+                startSimulation: function () {
+                    var maxSpeed = PropertiesService.getSpeed();
                     controlsCar.moveForward = true;
                     controlsCar.moveLeft = true;
-                    car.MAX_SPEED = imperial ? (maxSpeed * 62.5) : (maxSpeed * 100);
+                    car.MAX_SPEED = PropertiesService.getUnits() ? (maxSpeed * 62.5) : (maxSpeed * 100);
                 }
             }
         }]);

@@ -44,6 +44,8 @@ THREE.Car = function () {
 	this.MAX_TILT_SIDES = 0.1;
 	this.MAX_TILT_FRONTBACK = 0.035;
 
+	this.wheelsLocked = false;
+
 	// internal control variables
 
 	this.speed = 0;
@@ -237,7 +239,7 @@ THREE.Car = function () {
 
 		var wheelDelta = forwardDelta * angularSpeedRatio;
 
-		if ( this.loaded ) {
+		if ( this.loaded && !this.wheelsLocked) {
 
 			this.frontLeftWheelMesh.rotation.x += wheelDelta;
 			this.frontRightWheelMesh.rotation.x += wheelDelta;
