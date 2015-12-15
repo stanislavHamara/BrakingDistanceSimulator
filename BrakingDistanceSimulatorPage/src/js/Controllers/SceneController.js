@@ -19,11 +19,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 scene = new THREE.Scene();
 
                 plane = new THREE.PlaneGeometry(40000, 40000);
-                var texture = THREE.ImageUtils.loadTexture("dist/js/models/asphalt.jpg");
-                texture.wrapS = THREE.RepeatWrapping;
-                texture.wrapT = THREE.RepeatWrapping;
-                texture.repeat.set(300, 300);
-                planeMaterial = new THREE.MeshLambertMaterial({map: texture});
+                planeMaterial = new THREE.MeshLambertMaterial({color: 0x111111});
                 planeMesh = new THREE.Mesh(plane, planeMaterial);
                 planeMesh.rotation.x -= Math.PI / 2;
                 planeMesh.position.y += 2;
