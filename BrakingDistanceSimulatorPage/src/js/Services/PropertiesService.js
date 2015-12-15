@@ -14,6 +14,9 @@ angular.module('PropertiesService',['OrbitControlsService'])
             getSpeed: function(){
                 return Simulation.speed;
             },
+            getUnits: function(){
+                return Simulation.imperial;
+            },
             getSurfaces: function() {
                 return surfaces;
             },
