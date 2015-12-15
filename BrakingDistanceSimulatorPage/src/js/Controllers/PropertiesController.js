@@ -52,7 +52,7 @@ angular.module('Properties', [])
                 if(validateSpeed()) {
                     PropertiesService.setSpeed($scope.speed, $scope.togglePreferences.imperial);
                     var userInput = PropertiesService.getUserInput();
-                    CarService.startSimulation();
+                    CarService.startSimulation($scope.speed, $scope.togglePreferences.imperial);
 
                     console.log(PhysicsService.getStoppingDistance(userInput));
                     console.log(userInput);

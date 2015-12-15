@@ -134,7 +134,6 @@ angular.module('CarService',['OrbitControlsService'])
         }
 
         function animate() {
-
             requestAnimationFrame(animate);
             render();
 
@@ -160,8 +159,10 @@ angular.module('CarService',['OrbitControlsService'])
             getCarLight: function(){
                 return carLight;
             },
-            startSimulation: function(){
+            startSimulation: function(maxSpeed, imperial){
                 controlsCar.moveForward = true;
+                controlsCar.moveLeft = true;
+                car.MAX_SPEED = imperial ? (maxSpeed * 31.25) : (maxSpeed * 50);
             }
         }
     }]);
