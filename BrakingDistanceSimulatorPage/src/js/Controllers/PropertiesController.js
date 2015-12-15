@@ -1,6 +1,6 @@
 angular.module('Properties', [])
-    .controller('PropertiesController', ['$scope', 'PropertiesService', 'PhysicsService',
-        function ($scope, PropertiesService, PhysicsService) {
+    .controller('PropertiesController', ['$scope', 'PropertiesService', 'PhysicsService', 'CarService',
+        function ($scope, PropertiesService, PhysicsService, CarService) {
 
             $scope.surfaces = PropertiesService.getSurfaces();
             $scope.condition = PropertiesService.getConditions();
@@ -52,6 +52,7 @@ angular.module('Properties', [])
                 if(validateSpeed()) {
                     PropertiesService.setSpeed($scope.speed, $scope.togglePreferences.imperial);
                     var userInput = PropertiesService.getUserInput();
+                    CarService.startSimulation();
 
                     console.log(PhysicsService.getStoppingDistance(userInput));
                     console.log(userInput);

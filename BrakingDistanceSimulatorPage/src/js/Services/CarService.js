@@ -32,6 +32,8 @@ angular.module('CarService',['OrbitControlsService'])
             car = new THREE.Car();
             car.modelScale = 0.1;
             car.backWheelOffset = 60;
+            car.FRONT_ACCELERATION = 500;
+            car.MAX_SPEED = 3000; // equivalent to 60 kmph => 1kmph = 50 units
             car.loadPartsJSON("dist/js/models/body.js", "dist/js/models/wheel.js");
             car.callback = function (object) {
                 addCar(object, 0, 0, 0, scene);
@@ -157,6 +159,9 @@ angular.module('CarService',['OrbitControlsService'])
             },
             getCarLight: function(){
                 return carLight;
+            },
+            startSimulation: function(){
+                controlsCar.moveForward = true;
             }
         }
     }]);
