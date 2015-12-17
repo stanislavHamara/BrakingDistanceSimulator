@@ -41,7 +41,7 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
                 car.loadPartsJSON("dist/js/models/body.js", "dist/js/models/wheel.js");
                 car.callback = function (object) {
                     addCar(object, 0, 0, 0, scene);
-                    addTextures(object,reflection);
+                    addTextures(object, reflection);
                     carLight.target = object.root;
                 }
             }
@@ -63,18 +63,52 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
                 render();
             }
 
-            function addTextures(object, reflection){
+            function addTextures(object, reflection) {
+                console.log(object.wheelMaterials);
+                //body
                 object.bodyMaterials[1] = new THREE.MeshLambertMaterial({
                     color: 0x000033,
                     envMap: reflection,
                     combine: THREE.MixOperation,
                     reflectivity: 0.4
                 });
-                object.bodyMaterials[2] = new THREE.MeshPhongMaterial({
+                //carbon
+                object.bodyMaterials[2] = new THREE.MeshLambertMaterial({
                     color: 0xffffff,
-                    specular: 0xeeeeee,
-                    shininess: 100
+                    envMap: reflection,
+                    combine: THREE.MixOperation,
+                    reflectivity: 0.3
                 });
+                //mirror
+                object.bodyMaterials[4] = new THREE.MeshLambertMaterial({
+                    color: 0xffffff,
+                    envMap: reflection,
+                    combine: THREE.MixOperation,
+                    reflectivity: 1
+                });
+                //windows
+                object.bodyMaterials[5] = new THREE.MeshLambertMaterial({
+                    color: 0x111111,
+                    envMap: reflection,
+                    combine: THREE.MixOperation,
+                    reflectivity: 0.6
+                });
+                //backlight
+                object.bodyMaterials[6] = new THREE.MeshLambertMaterial({
+                    color: 0x440000,
+                    envMap: reflection,
+                    combine: THREE.MixOperation,
+                    reflectivity: 0.1
+                });
+
+                object.wheelMaterials[1] = new THREE.MeshLambertMaterial({
+                    color: 0xffffff,
+                    envMap: reflection,
+                    combine: THREE.MixOperation,
+                    reflectivity: 0.7
+                });
+
+                object.wheelMaterials[3] = object.wheelMaterials[2] = object.wheelMaterials[1];
             }
 
             function onKeyDown(event) {
