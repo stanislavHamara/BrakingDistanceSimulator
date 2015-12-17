@@ -180,8 +180,8 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
                     loadCar(scene);
                 },
                 getCarCamera: function () {
-                    //return carCamera;
-                    return carCamera2;
+                    return carCamera;
+                    //return carCamera2;
                 },
                 getEnvControls: function () {
                     return oControls;
