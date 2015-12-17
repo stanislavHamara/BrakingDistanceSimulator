@@ -2,21 +2,23 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
     .factory('CarService', ['OrbitControlsService', 'PropertiesService',
         function (OrbitControlsService, PropertiesService) {
             var car;
-            var carCamera;
+            var carCamera, carCamera2;
             carCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000000);
+            carCamera2 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000000);
             carCamera.position.x = 470;
             carCamera.position.y = 100;
 
             var oControls = OrbitControlsService.getControls(carCamera, document.getElementById('bds-threejs-container'));
 
             var carLight = new THREE.DirectionalLight(0xffffff);
-            carLight.position.set(300, 2000, 300);
+            carLight.position.set(300, 1000, 300);
             carLight.castShadow = true;
             carLight.shadowMapWidth = 2048;
             carLight.shadowMapHeight = 2048;
 
-            var controlsCar = {
+            console.log(carLight);
 
+            var controlsCar = {
                 moveForward: false,
                 moveBackward: false,
                 moveLeft: false,
@@ -58,6 +60,11 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
                 object.root.position.set(x, y, z);
                 object.enableShadows(true);
                 oControls.target = object.root.position;
+
+                carCamera2.position.x = object.root.position.x + 200;
+                carCamera2.position.z = object.root.position.z;
+
+                carCamera2.position.y = 100;
 
                 scene.add(object.root);
 
@@ -161,6 +168,10 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
                 var delta = clock.getDelta();
                 car.updateCarModel(delta, controlsCar);
                 carCamera.lookAt(car.root.position);
+
+                carCamera2.position.x = car.root.position.x + 500;
+                carCamera2.position.z = car.root.position.z;
+                carCamera2.lookAt(car.root.position);
             }
 
 
@@ -169,7 +180,8 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
                     loadCar(scene);
                 },
                 getCarCamera: function () {
-                    return carCamera;
+                    //return carCamera;
+                    return carCamera2;
                 },
                 getEnvControls: function () {
                     return oControls;
@@ -180,7 +192,7 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
                 startSimulation: function () {
                     var maxSpeed = PropertiesService.getSpeed();
                     controlsCar.moveForward = true;
-                    controlsCar.moveLeft = true;
+                    //controlsCar.moveLeft = true;
                     car.MAX_SPEED = PropertiesService.getUnits() ? (maxSpeed * 62.5) : (maxSpeed * 100);
                 }
             }
