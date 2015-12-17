@@ -78,7 +78,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 sceneCube.add(skyMesh);
 
                 //load the car
-                CarService.getCar(scene);
+                CarService.getCar(scene, reflectionCube);
 
             };
 
