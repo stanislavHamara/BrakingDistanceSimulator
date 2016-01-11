@@ -32,7 +32,7 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
             document.addEventListener('keydown', onKeyDown, false);
             document.addEventListener('keyup', onKeyUp, false);
 
-            function loadCar(scene) {
+            function loadCar(scene, reflection) {
                 car = new THREE.Car();
                 car.modelScale = 0.1;
                 car.backWheelOffset = 60;
@@ -41,16 +41,7 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
                 car.loadPartsJSON("dist/js/models/body.js", "dist/js/models/wheel.js");
                 car.callback = function (object) {
                     addCar(object, 0, 0, 0, scene);
-                    object.bodyMaterials[1] = new THREE.MeshPhongMaterial({
-                        color: 0x000033,
-                        specular: 0xeeeeee,
-                        shininess: 100
-                    });
-                    object.bodyMaterials[2] = new THREE.MeshPhongMaterial({
-                        color: 0xffffff,
-                        specular: 0xeeeeee,
-                        shininess: 100
-                    });
+                    addTextures(object, reflection);
                     carLight.target = object.root;
                 }
             }
@@ -70,6 +61,54 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
 
                 animate();
                 render();
+            }
+
+            function addTextures(object, reflection) {
+                console.log(object.wheelMaterials);
+                //body
+                object.bodyMaterials[1] = new THREE.MeshLambertMaterial({
+                    color: 0x000033,
+                    envMap: reflection,
+                    combine: THREE.MixOperation,
+                    reflectivity: 0.4
+                });
+                //carbon
+                object.bodyMaterials[2] = new THREE.MeshLambertMaterial({
+                    color: 0xffffff,
+                    envMap: reflection,
+                    combine: THREE.MixOperation,
+                    reflectivity: 0.3
+                });
+                //mirror
+                object.bodyMaterials[4] = new THREE.MeshLambertMaterial({
+                    color: 0xffffff,
+                    envMap: reflection,
+                    combine: THREE.MixOperation,
+                    reflectivity: 1
+                });
+                //windows
+                object.bodyMaterials[5] = new THREE.MeshLambertMaterial({
+                    color: 0x111111,
+                    envMap: reflection,
+                    combine: THREE.MixOperation,
+                    reflectivity: 0.6
+                });
+                //backlight
+                object.bodyMaterials[6] = new THREE.MeshLambertMaterial({
+                    color: 0x440000,
+                    envMap: reflection,
+                    combine: THREE.MixOperation,
+                    reflectivity: 0.1
+                });
+
+                object.wheelMaterials[1] = new THREE.MeshLambertMaterial({
+                    color: 0xffffff,
+                    envMap: reflection,
+                    combine: THREE.MixOperation,
+                    reflectivity: 0.7
+                });
+
+                object.wheelMaterials[3] = object.wheelMaterials[2] = object.wheelMaterials[1];
             }
 
             function onKeyDown(event) {
@@ -146,7 +185,7 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
                 requestAnimationFrame(animate);
                 render();
 
-                if(car.speed === car.MAX_SPEED){
+                if (car.speed === car.MAX_SPEED) {
                     controlsCar.moveForward = false;
                     controlsCar.moveBackward = true;
                     decelerate = true;
@@ -154,7 +193,7 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
                     car.wheelsLocked = true;
                 }
 
-                if(car.speed < 0 && decelerate){
+                if (car.speed < 0 && decelerate) {
                     //calculate and set deceleration
                     controlsCar.moveBackward = false;
                     car.speed = 0;
@@ -176,12 +215,12 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
 
 
             return {
-                getCar: function (scene) {
-                    loadCar(scene);
+                getCar: function (scene, reflection) {
+                    loadCar(scene, reflection);
                 },
                 getCarCamera: function () {
-                    //return carCamera;
-                    return carCamera2;
+                    return carCamera;
+                    //return carCamera2;
                 },
                 getEnvControls: function () {
                     return oControls;
