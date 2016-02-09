@@ -3,7 +3,6 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService', 'Came
         function (OrbitControlsService, PropertiesService, CameraService) {
             var car;
             var carCamera =  CameraService.getCamera();
-            var carCamera2 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000000);;
 
             var oControls = OrbitControlsService.getControls(carCamera, document.getElementById('bds-threejs-container'));
 
@@ -48,11 +47,6 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService', 'Came
                 object.root.position.set(x, y, z);
                 object.enableShadows(true);
                 oControls.target = object.root.position;
-
-                carCamera2.position.x = object.root.position.x + 200;
-                carCamera2.position.z = object.root.position.z;
-
-                carCamera2.position.y = 100;
 
                 scene.add(object.root);
 
@@ -205,9 +199,6 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService', 'Came
                 car.updateCarModel(delta, controlsCar);
                 carCamera.lookAt(car.root.position);
 
-                carCamera2.position.x = car.root.position.x + 500;
-                carCamera2.position.z = car.root.position.z;
-                carCamera2.lookAt(car.root.position);
             }
 
 
@@ -217,7 +208,6 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService', 'Came
                 },
                 getCarCamera: function () {
                     return carCamera;
-                    //return carCamera2;
                 },
                 getEnvControls: function () {
                     return oControls;
