@@ -1,12 +1,9 @@
-angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
-    .factory('CarService', ['OrbitControlsService', 'PropertiesService',
-        function (OrbitControlsService, PropertiesService) {
+angular.module('CarService', ['OrbitControlsService', 'PropertiesService', 'CameraService'])
+    .factory('CarService', ['OrbitControlsService', 'PropertiesService', 'CameraService',
+        function (OrbitControlsService, PropertiesService, CameraService) {
             var car;
-            var carCamera, carCamera2;
-            carCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000000);
-            carCamera2 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000000);
-            carCamera.position.x = 470;
-            carCamera.position.y = 100;
+            var carCamera =  CameraService.getCamera();
+            var carCamera2 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000000);;
 
             var oControls = OrbitControlsService.getControls(carCamera, document.getElementById('bds-threejs-container'));
 
