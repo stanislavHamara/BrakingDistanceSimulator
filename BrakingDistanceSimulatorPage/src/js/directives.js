@@ -1,5 +1,5 @@
 angular.module('simulator.directives', [
-    'frapontillo.bootstrap-switch'])
+        'frapontillo.bootstrap-switch'])
     .directive("bdsMenu", function () {
         return {
             restrict: 'E',
@@ -14,9 +14,16 @@ angular.module('simulator.directives', [
         }
     })
 
-    .directive('bdsResultModal', function(){
-       return{
-           restrict: 'E',
-           templateUrl: './dist/templates/bds-result-modal.html'
-       }
+    .directive('bdsResultModal', function () {
+        return {
+            restrict: 'E',
+            templateUrl: './dist/templates/bds-result-modal.html'
+        }
+    })
+
+    .directive('bdsCameraControls', function () {
+        return {
+            restrict: 'E',
+            templateUrl: './dist/templates/bds-camera-controls.html'
+        }
     });
