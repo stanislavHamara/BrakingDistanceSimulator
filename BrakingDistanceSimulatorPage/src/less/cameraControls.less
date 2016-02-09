@@ -1,20 +1,31 @@
 @import "colors";
 
-.bds-camera-controls{
+.bds-camera-controls {
   position: absolute;
   top: 0;
   left: 0;
+  border: 0;
 
-  .not-round{
+  .not-round {
     border-radius: 0 !important;
   }
 
-  span{
+  span {
     font-size: 16pt;
   }
 
-  sub{
+  sub {
     font-size: 12pt;
+  }
+
+  .active {
+    background-color: @darkblue;
+    color: @terra;
+    border: 0;
+    &:hover {
+      background-color: @darkblue;
+      color: @terra;
+    }
   }
 }
 
