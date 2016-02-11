@@ -1,10 +1,10 @@
-angular.module('CarService', ['OrbitControlsService', 'PropertiesService', 'CameraService'])
-    .factory('CarService', ['OrbitControlsService', 'PropertiesService', 'CameraService',
-        function (OrbitControlsService, PropertiesService, CameraService) {
+angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
+    .factory('CarService', ['OrbitControlsService', 'PropertiesService',
+        function (OrbitControlsService, PropertiesService) {
             var car;
-            var carCamera =  CameraService.getCamera();
+            var carCamera;
 
-            var oControls = OrbitControlsService.getControls(carCamera, document.getElementById('bds-threejs-container'));
+            var oControls;
 
             var carLight = new THREE.DirectionalLight(0xffffff);
             carLight.position.set(300, 1000, 300);
@@ -19,7 +19,6 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService', 'Came
                 moveBackward: false,
                 moveLeft: false,
                 moveRight: false
-
             };
 
             var clock = new THREE.Clock();
@@ -28,7 +27,7 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService', 'Came
             document.addEventListener('keydown', onKeyDown, false);
             document.addEventListener('keyup', onKeyUp, false);
 
-            function loadCar(scene, reflection) {
+            function loadCar(scene, reflection, camera) {
                 car = new THREE.Car();
                 car.modelScale = 0.1;
                 car.backWheelOffset = 60;
@@ -36,6 +35,8 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService', 'Came
                 car.MAX_SPEED = 6000; // equivalent to 60 kmph => 1kmph = 100 units
                 car.loadPartsJSON("dist/js/models/body.js", "dist/js/models/wheel.js");
                 car.callback = function (object) {
+                    carCamera = camera;
+                    oControls = OrbitControlsService.getControls(carCamera, document.getElementById('bds-threejs-container'));
                     addCar(object, 0, 0, 0, scene);
                     addTextures(object, reflection);
                     carLight.target = object.root;
@@ -203,8 +204,8 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService', 'Came
 
 
             return {
-                getCar: function (scene, reflection) {
-                    loadCar(scene, reflection);
+                getCar: function (scene, reflection, camera) {
+                    loadCar(scene, reflection, camera);
                 },
                 getCarCamera: function () {
                     return carCamera;

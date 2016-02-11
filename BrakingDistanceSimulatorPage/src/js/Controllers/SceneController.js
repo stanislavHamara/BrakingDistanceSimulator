@@ -1,16 +1,16 @@
-angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'CarService'])
-    .controller('SceneController', ['$scope', 'resize', 'OrbitControlsService', 'StatsService', 'CarService',
-        function ($scope, resize, OrbitControlsService, StatsService, CarService) {
+angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'CarService', 'CameraService'])
+    .controller('SceneController', ['$scope', 'resize', 'OrbitControlsService', 'StatsService', 'CarService', 'CameraService',
+        function ($scope, resize, OrbitControlsService, StatsService, CarService, CameraService) {
 
             $scope.element = document.getElementById('bds-threejs-container');
 
             var camera, cameraCube, scene, sceneCube, renderer, controls;
             var plane, planeMaterial, planeMesh;
-            var directionalLight, sky, envLight;
+            var directionalLight, envLight;
 
             $scope.initScene = function () {
 
-                camera = CarService.getCarCamera();
+                camera = CameraService.getCamera();
                 controls = CarService.getEnvControls();
                 directionalLight = CarService.getCarLight();
                 envLight = new THREE.DirectionalLight(0xffffff);
@@ -78,7 +78,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 sceneCube.add(skyMesh);
 
                 //load the car
-                CarService.getCar(scene, reflectionCube);
+                CarService.getCar(scene, reflectionCube, camera);
 
             };
 
