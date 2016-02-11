@@ -8,29 +8,16 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
             var plane, planeMaterial, planeMesh;
             var directionalLight, envLight;
 
+
+
             $scope.initScene = function () {
 
                 controls = OrbitControlsService.getControls(CameraService.getCamera(), document.getElementById('bds-threejs-container'));;
 
-                directionalLight = new THREE.DirectionalLight(0xffffff);
-                directionalLight.position.set(300, 1000, 300);
-                directionalLight.castShadow = true;
-                directionalLight.shadowMapWidth = 2048;
-                directionalLight.shadowMapHeight = 2048;
-
-                envLight = new THREE.DirectionalLight(0xffffff);
-                envLight.position.set(0, 1000, 0);
+                createLights();
+                createGroundPlane();
 
                 scene = new THREE.Scene();
-
-                plane = new THREE.PlaneGeometry(40000, 40000);
-                planeMaterial = new THREE.MeshLambertMaterial({color: 0x111111});
-                planeMesh = new THREE.Mesh(plane, planeMaterial);
-                planeMesh.rotation.x -= Math.PI / 2;
-                planeMesh.receiveShadow = true;
-                planeMesh.castShadow = true;
-                console.log(planeMesh);
-
                 scene.add(planeMesh);
                 scene.add(directionalLight);
                 scene.add(envLight);
@@ -114,5 +101,26 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
             $scope.initScene();
             $scope.animate();
             $scope.render();
+
+            function createLights() {
+                directionalLight = new THREE.DirectionalLight(0xffffff);
+                directionalLight.position.set(300, 1000, 300);
+                directionalLight.castShadow = true;
+                directionalLight.shadowMapWidth = 2048;
+                directionalLight.shadowMapHeight = 2048;
+
+                envLight = new THREE.DirectionalLight(0xffffff);
+                envLight.position.set(0, 1000, 0);
+            }
+
+            function createGroundPlane() {
+                plane = new THREE.PlaneGeometry(40000, 40000);
+                planeMaterial = new THREE.MeshLambertMaterial({color: 0x111111});
+                planeMesh = new THREE.Mesh(plane, planeMaterial);
+                planeMesh.rotation.x -= Math.PI / 2;
+                planeMesh.receiveShadow = true;
+                planeMesh.castShadow = true;
+                console.log(planeMesh);
+            }
 
         }]);
