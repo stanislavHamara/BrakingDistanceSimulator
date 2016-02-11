@@ -1,29 +1,14 @@
-angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
-    .factory('CarService', ['OrbitControlsService', 'PropertiesService',
-        function (OrbitControlsService, PropertiesService) {
+angular.module('CarService', ['OrbitControlsService', 'PropertiesService', 'CameraService'])
+    .factory('CarService', ['OrbitControlsService', 'PropertiesService', 'CameraService',
+        function (OrbitControlsService, PropertiesService, CameraService) {
             var car;
-            var carCamera, carCamera2;
-            carCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000000);
-            carCamera2 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000000);
-            carCamera.position.x = 470;
-            carCamera.position.y = 100;
-
-            var oControls = OrbitControlsService.getControls(carCamera, document.getElementById('bds-threejs-container'));
-
-            var carLight = new THREE.DirectionalLight(0xffffff);
-            carLight.position.set(300, 1000, 300);
-            carLight.castShadow = true;
-            carLight.shadowMapWidth = 2048;
-            carLight.shadowMapHeight = 2048;
-
-            console.log(carLight);
+            var oControls;
 
             var controlsCar = {
                 moveForward: false,
                 moveBackward: false,
                 moveLeft: false,
                 moveRight: false
-
             };
 
             var clock = new THREE.Clock();
@@ -32,7 +17,7 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
             document.addEventListener('keydown', onKeyDown, false);
             document.addEventListener('keyup', onKeyUp, false);
 
-            function loadCar(scene, reflection) {
+            function loadCar(scene, reflection, controls) {
                 car = new THREE.Car();
                 car.modelScale = 0.1;
                 car.backWheelOffset = 60;
@@ -40,9 +25,10 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
                 car.MAX_SPEED = 6000; // equivalent to 60 kmph => 1kmph = 100 units
                 car.loadPartsJSON("dist/js/models/body.js", "dist/js/models/wheel.js");
                 car.callback = function (object) {
+                    oControls = controls;
                     addCar(object, 0, 0, 0, scene);
                     addTextures(object, reflection);
-                    carLight.target = object.root;
+                    CameraService.setTarget(object);
                 }
             }
 
@@ -51,11 +37,6 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
                 object.root.position.set(x, y, z);
                 object.enableShadows(true);
                 oControls.target = object.root.position;
-
-                carCamera2.position.x = object.root.position.x + 200;
-                carCamera2.position.z = object.root.position.z;
-
-                carCamera2.position.y = 100;
 
                 scene.add(object.root);
 
@@ -206,32 +187,15 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
             function render() {
                 var delta = clock.getDelta();
                 car.updateCarModel(delta, controlsCar);
-                carCamera.lookAt(car.root.position);
-
-                carCamera2.position.x = car.root.position.x + 500;
-                carCamera2.position.z = car.root.position.z;
-                carCamera2.lookAt(car.root.position);
             }
 
-
             return {
-                getCar: function (scene, reflection) {
-                    loadCar(scene, reflection);
-                },
-                getCarCamera: function () {
-                    return carCamera;
-                    //return carCamera2;
-                },
-                getEnvControls: function () {
-                    return oControls;
-                },
-                getCarLight: function () {
-                    return carLight;
+                getCar: function (scene, reflection, controls) {
+                    loadCar(scene, reflection, controls);
                 },
                 startSimulation: function () {
                     var maxSpeed = PropertiesService.getSpeed();
                     controlsCar.moveForward = true;
-                    //controlsCar.moveLeft = true;
                     car.MAX_SPEED = PropertiesService.getUnits() ? (maxSpeed * 62.5) : (maxSpeed * 100);
                 }
             }

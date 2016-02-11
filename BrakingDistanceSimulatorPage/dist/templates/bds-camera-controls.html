@@ -1,0 +1,10 @@
+<div class="bds-camera-controls" ng-controller="CameraController">
+    <div class="btn-group-vertical" role="group" aria-label="...">
+        <button type="button" class="btn btn-default not-round"
+                ng-repeat="i in [1, 2, 3]"
+                ng-click="setCamera(i)"
+                ng-class="{active: checkSelectedCamera(i)}">
+            <span class="glyphicon glyphicon-camera"></span><sub>{{i}}</sub>
+        </button>
+    </div>
+</div>

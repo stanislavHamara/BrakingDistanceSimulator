@@ -1,18 +1,23 @@
-angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'CarService'])
-    .controller('SceneController', ['$scope', 'resize', 'OrbitControlsService', 'StatsService', 'CarService',
-        function ($scope, resize, OrbitControlsService, StatsService, CarService) {
+angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'CarService', 'CameraService'])
+    .controller('SceneController', ['$scope', 'resize', 'OrbitControlsService', 'StatsService', 'CarService', 'CameraService',
+        function ($scope, resize, OrbitControlsService, StatsService, CarService, CameraService) {
 
             $scope.element = document.getElementById('bds-threejs-container');
 
-            var camera, cameraCube, scene, sceneCube, renderer, controls;
+            var cameraCube, scene, sceneCube, renderer, controls;
             var plane, planeMaterial, planeMesh;
-            var directionalLight, sky, envLight;
+            var directionalLight, envLight;
 
             $scope.initScene = function () {
 
-                camera = CarService.getCarCamera();
-                controls = CarService.getEnvControls();
-                directionalLight = CarService.getCarLight();
+                controls = OrbitControlsService.getControls(CameraService.getCamera(), document.getElementById('bds-threejs-container'));;
+
+                directionalLight = new THREE.DirectionalLight(0xffffff);
+                directionalLight.position.set(300, 1000, 300);
+                directionalLight.castShadow = true;
+                directionalLight.shadowMapWidth = 2048;
+                directionalLight.shadowMapHeight = 2048;
+
                 envLight = new THREE.DirectionalLight(0xffffff);
                 envLight.position.set(0, 1000, 0);
 
@@ -25,8 +30,6 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 planeMesh.receiveShadow = true;
                 planeMesh.castShadow = true;
                 console.log(planeMesh);
-
-
 
                 scene.add(planeMesh);
                 scene.add(directionalLight);
@@ -78,7 +81,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 sceneCube.add(skyMesh);
 
                 //load the car
-                CarService.getCar(scene, reflectionCube);
+                CarService.getCar(scene, reflectionCube, controls);
 
             };
 
@@ -91,16 +94,16 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
             };
 
             $scope.render = function () {
-
-                cameraCube.rotation.copy(camera.rotation);
+                CameraService.updateCamera();
+                cameraCube.rotation.copy(CameraService.getCamera().rotation);
                 renderer.render(sceneCube, cameraCube);
-                renderer.render(scene, camera);
+                renderer.render(scene, CameraService.getCamera());
             };
 
             resize($scope).call(function () {
 
-                camera.aspect = $scope.element.offsetWidth / $scope.element.offsetHeight;
-                camera.updateProjectionMatrix();
+                CameraService.getCamera().aspect = $scope.element.offsetWidth / $scope.element.offsetHeight;
+                CameraService.getCamera().updateProjectionMatrix();
 
                 cameraCube.aspect = $scope.element.offsetWidth / $scope.element.offsetHeight;
                 cameraCube.updateProjectionMatrix();
