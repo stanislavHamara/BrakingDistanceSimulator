@@ -1,10 +1,8 @@
-angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
-    .factory('CarService', ['OrbitControlsService', 'PropertiesService',
-        function (OrbitControlsService, PropertiesService) {
+angular.module('CarService', ['OrbitControlsService', 'PropertiesService', 'CameraService'])
+    .factory('CarService', ['OrbitControlsService', 'PropertiesService', 'CameraService',
+        function (OrbitControlsService, PropertiesService, CameraService) {
             var car;
             var oControls;
-
-            console.log(carLight);
 
             var controlsCar = {
                 moveForward: false,
@@ -30,6 +28,7 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
                     oControls = controls;
                     addCar(object, 0, 0, 0, scene);
                     addTextures(object, reflection);
+                    CameraService.setTarget(object);
                 }
             }
 
@@ -197,7 +196,6 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService'])
                 startSimulation: function () {
                     var maxSpeed = PropertiesService.getSpeed();
                     controlsCar.moveForward = true;
-                    //controlsCar.moveLeft = true;
                     car.MAX_SPEED = PropertiesService.getUnits() ? (maxSpeed * 62.5) : (maxSpeed * 100);
                 }
             }

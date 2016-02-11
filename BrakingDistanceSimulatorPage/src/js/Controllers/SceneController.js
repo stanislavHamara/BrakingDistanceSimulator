@@ -3,7 +3,6 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
         function ($scope, resize, OrbitControlsService, StatsService, CarService, CameraService) {
 
             $scope.element = document.getElementById('bds-threejs-container');
-            $scope.camera = CameraService.getCamera();
 
             var cameraCube, scene, sceneCube, renderer, controls;
             var plane, planeMaterial, planeMesh;
@@ -11,7 +10,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
 
             $scope.initScene = function () {
 
-                controls = OrbitControlsService.getControls($scope.camera, document.getElementById('bds-threejs-container'));;
+                controls = OrbitControlsService.getControls(CameraService.getCamera(), document.getElementById('bds-threejs-container'));;
 
                 directionalLight = new THREE.DirectionalLight(0xffffff);
                 directionalLight.position.set(300, 1000, 300);
@@ -95,16 +94,16 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
             };
 
             $scope.render = function () {
-
-                cameraCube.rotation.copy($scope.camera.rotation);
+                CameraService.updateCamera();
+                cameraCube.rotation.copy(CameraService.getCamera().rotation);
                 renderer.render(sceneCube, cameraCube);
-                renderer.render(scene, $scope.camera);
+                renderer.render(scene, CameraService.getCamera());
             };
 
             resize($scope).call(function () {
 
-                $scope.camera.aspect = $scope.element.offsetWidth / $scope.element.offsetHeight;
-                $scope.camera.updateProjectionMatrix();
+                CameraService.getCamera().aspect = $scope.element.offsetWidth / $scope.element.offsetHeight;
+                CameraService.getCamera().updateProjectionMatrix();
 
                 cameraCube.aspect = $scope.element.offsetWidth / $scope.element.offsetHeight;
                 cameraCube.updateProjectionMatrix();
