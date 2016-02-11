@@ -50,8 +50,12 @@ angular.module('CameraService', [])
                             currentCamera.lookAt(cameraTarget.root.position);
                             break;
                         case 2:
+                            currentCamera.position.x = cameraTarget.root.position.x;
+                            currentCamera.position.z = cameraTarget.root.position.z;
                             break;
                         case 3:
+                            currentCamera.position.x = cameraTarget.root.position.x;
+                            currentCamera.position.z = cameraTarget.root.position.z - 600;
                             break;
                         default:
                             break;
