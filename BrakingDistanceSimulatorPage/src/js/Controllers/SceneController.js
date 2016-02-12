@@ -112,13 +112,19 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
             }
 
             function createGroundPlane() {
+
+                var texture = THREE.ImageUtils.loadTexture( "dist/textures/nx.jpg" );
+                texture.wrapS = THREE.RepeatWrapping;
+                texture.wrapT = THREE.RepeatWrapping;
+                texture.repeat.set( 4, 4 );
+
                 plane = new THREE.PlaneGeometry(40000, 40000);
-                planeMaterial = new THREE.MeshLambertMaterial({color: 0x111111});
+                //planeMaterial = new THREE.MeshPhongMaterial({map: texture});
+                planeMaterial = new THREE.MeshPhongMaterial({color: 0x111111});
                 planeMesh = new THREE.Mesh(plane, planeMaterial);
                 planeMesh.rotation.x -= Math.PI / 2;
                 planeMesh.receiveShadow = true;
                 planeMesh.castShadow = true;
-                console.log(planeMesh);
 
                 scene.add(planeMesh);
             }
