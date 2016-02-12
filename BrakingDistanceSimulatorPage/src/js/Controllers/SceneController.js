@@ -8,19 +8,14 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
             var plane, planeMaterial, planeMesh;
             var directionalLight, envLight;
 
-
-
             $scope.initScene = function () {
 
-                controls = OrbitControlsService.getControls(CameraService.getCamera(), document.getElementById('bds-threejs-container'));;
-
-                createLights();
-                createGroundPlane();
+                controls = OrbitControlsService.getControls(CameraService.getCamera(), document.getElementById('bds-threejs-container'));
 
                 scene = new THREE.Scene();
-                scene.add(planeMesh);
-                scene.add(directionalLight);
-                scene.add(envLight);
+                createGroundPlane();
+                createLights();
+                createPoles();
 
                 renderer = new THREE.WebGLRenderer({antialias: true});
                 renderer.setSize($scope.element.offsetWidth, $scope.element.offsetHeight);
@@ -73,7 +68,6 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
             };
 
             $scope.animate = function () {
-
                 // note: three.js includes requestAnimationFrame shim
                 requestAnimationFrame($scope.animate);
                 $scope.render();
@@ -109,8 +103,12 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 directionalLight.shadowMapWidth = 2048;
                 directionalLight.shadowMapHeight = 2048;
 
+                scene.add(directionalLight);
+
                 envLight = new THREE.DirectionalLight(0xffffff);
                 envLight.position.set(0, 1000, 0);
+
+                scene.add(envLight);
             }
 
             function createGroundPlane() {
@@ -121,6 +119,27 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 planeMesh.receiveShadow = true;
                 planeMesh.castShadow = true;
                 console.log(planeMesh);
+
+                scene.add(planeMesh);
+            }
+
+            function createPoles() {
+                var poleGeometry;
+                var poleMaterial = new THREE.MeshLambertMaterial({color: 0xbbbbbb});
+                var pole;
+
+
+                for (var i = -2; i < 25; i++) {
+                    var randomHeight = Math.random() * (800 - 100) + 100;
+                    poleGeometry = new THREE.BoxGeometry(40, randomHeight, 40);
+                    pole = new THREE.Mesh(poleGeometry, poleMaterial);
+                    pole.position.x = -200;
+                    pole.position.z = 500 * i;
+                    pole.receiveShadow = true;
+                    pole.castShadow = true;
+                    scene.add(pole);
+                }
+
             }
 
         }]);
