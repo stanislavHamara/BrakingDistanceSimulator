@@ -1,6 +1,6 @@
 angular.module('CameraService', [])
     .factory('CameraService', function () {
-        var carCamera, carCamera2, carCamera3, currentCamera, cameraTarget, targetIndex;
+        var carCamera, carCamera2, carCamera3, cubeCamera,  currentCamera, cameraTarget, targetIndex;
         var element = document.getElementById('bds-threejs-container');
         console.log(element);
 
@@ -17,12 +17,17 @@ angular.module('CameraService', [])
         carCamera3.position.z = -200;
         carCamera3.rotation.y = Math.PI;
 
+        cubeCamera = cameraCube = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000000);
+
         currentCamera = carCamera;
         targetIndex = 1;
 
         return {
             getCamera: function () {
                 return currentCamera;
+            },
+            getCubeCamera: function () {
+                return cubeCamera;
             },
             setCamera: function (index) {
                 switch (index) {
@@ -59,6 +64,7 @@ angular.module('CameraService', [])
                             break;
                     }
                     currentCamera.lookAt(cameraTarget.root.position);
+                    cubeCamera.rotation.copy(currentCamera.rotation);
                 }
 
             }

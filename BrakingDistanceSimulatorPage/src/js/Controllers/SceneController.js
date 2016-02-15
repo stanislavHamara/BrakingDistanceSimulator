@@ -4,7 +4,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
 
             $scope.element = document.getElementById('bds-threejs-container');
 
-            var cameraCube, scene, sceneCube, renderer, controls;
+            var scene, sceneCube, renderer, controls;
             var plane, planeMaterial, planeMesh;
             var directionalLight;
 
@@ -29,7 +29,6 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 $scope.element.appendChild(StatsService.getStats().domElement);
 
                 //reflection for a car
-                cameraCube = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000000);
                 sceneCube = new THREE.Scene();
 
                 var path = "dist/textures/";
@@ -76,8 +75,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
 
             $scope.render = function () {
                 CameraService.updateCamera();
-                cameraCube.rotation.copy(CameraService.getCamera().rotation);
-                renderer.render(sceneCube, cameraCube);
+                renderer.render(sceneCube, CameraService.getCubeCamera());
                 renderer.render(scene, CameraService.getCamera());
             };
 
@@ -86,8 +84,8 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 CameraService.getCamera().aspect = $scope.element.offsetWidth / $scope.element.offsetHeight;
                 CameraService.getCamera().updateProjectionMatrix();
 
-                cameraCube.aspect = $scope.element.offsetWidth / $scope.element.offsetHeight;
-                cameraCube.updateProjectionMatrix();
+                CameraService.getCubeCamera().aspect = $scope.element.offsetWidth / $scope.element.offsetHeight;
+                CameraService.getCubeCamera().updateProjectionMatrix();
 
                 renderer.setSize($scope.element.offsetWidth, $scope.element.offsetHeight);
             });
@@ -104,7 +102,6 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 directionalLight.shadowMapWidth = 2048;
                 directionalLight.shadowMapHeight = 2048;
                 scene.add(directionalLight);
-                console.log(directionalLight);
 
                 var envLight = new THREE.DirectionalLight(0xffffff);
                 envLight.position.set(0, 1000, 0);
