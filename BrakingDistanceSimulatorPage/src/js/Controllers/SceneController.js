@@ -20,7 +20,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 renderer = new THREE.WebGLRenderer({antialias: true});
                 renderer.setSize($scope.element.offsetWidth, $scope.element.offsetHeight);
                 renderer.shadowMap.enabled = true;
-                renderer.shadowMap.type = THREE.BasicShadowMap;
+                renderer.shadowMap.type = THREE.PCFSoftShadowMap;
                 renderer.autoClear = false;
 
                 $scope.element.appendChild(renderer.domElement);
@@ -113,14 +113,14 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
 
             function createGroundPlane() {
 
-                var texture = THREE.ImageUtils.loadTexture( "dist/textures/nx.jpg" );
+                var texture = THREE.ImageUtils.loadTexture( "dist/textures/asphalt.jpg" );
                 texture.wrapS = THREE.RepeatWrapping;
                 texture.wrapT = THREE.RepeatWrapping;
-                texture.repeat.set( 4, 4 );
+                texture.repeat.set( 400, 400 );
 
                 plane = new THREE.PlaneGeometry(40000, 40000);
-                //planeMaterial = new THREE.MeshPhongMaterial({map: texture});
-                planeMaterial = new THREE.MeshPhongMaterial({color: 0x111111});
+                planeMaterial = new THREE.MeshLambertMaterial({map: texture});
+                //planeMaterial = new THREE.MeshPhongMaterial({color: 0x111111});
                 planeMesh = new THREE.Mesh(plane, planeMaterial);
                 planeMesh.rotation.x -= Math.PI / 2;
                 planeMesh.receiveShadow = true;
