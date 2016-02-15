@@ -75,6 +75,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
 
             $scope.render = function () {
                 CameraService.updateCamera();
+                directionalLight = CarService.getCarLight();
                 renderer.render(sceneCube, CameraService.getCubeCamera());
                 renderer.render(scene, CameraService.getCamera());
             };
@@ -96,11 +97,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
 
             function createLights() {
 
-                directionalLight = new THREE.DirectionalLight(0xffffff);
-                directionalLight.position.set(300, 1000, 300);
-                directionalLight.castShadow = true;
-                directionalLight.shadowMapWidth = 2048;
-                directionalLight.shadowMapHeight = 2048;
+                directionalLight = CarService.getCarLight();
                 scene.add(directionalLight);
 
                 var envLight = new THREE.DirectionalLight(0xffffff);

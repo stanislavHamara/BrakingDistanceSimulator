@@ -11,6 +11,13 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService', 'Came
                 moveRight: false
             };
 
+            var directionalLight = new THREE.DirectionalLight(0xffffff);
+            directionalLight.position.set(0, 200, 0);
+            directionalLight.castShadow = true;
+            directionalLight.shadowMapWidth = 2048;
+            directionalLight.shadowMapHeight = 2048;
+
+
             var clock = new THREE.Clock();
             var decelerate = false;
 
@@ -29,7 +36,7 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService', 'Came
                     addCar(object, 0, 0, 0, scene);
                     addTextures(object, reflection);
                     CameraService.setTarget(object);
-                }
+                };
             }
 
             function addCar(object, x, y, z, scene) {
@@ -45,7 +52,6 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService', 'Came
             }
 
             function addTextures(object, reflection) {
-                console.log(object.wheelMaterials);
                 //body
                 object.bodyMaterials[1] = new THREE.MeshLambertMaterial({
                     color: 0x000033,
@@ -182,16 +188,26 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService', 'Came
                     car.wheelsLocked = false;
                 }
 
+                directionalLight.target = car.root;
+                directionalLight.position.x = car.root.position.x + 100;
+                directionalLight.position.z = car.root.position.z + 100;
+
+                console.log(car.root.position);
+                console.log(directionalLight.target.position);
+                console.log(directionalLight.position);
+
             }
 
             function render() {
                 var delta = clock.getDelta();
                 car.updateCarModel(delta, controlsCar);
             }
-
             return {
                 getCar: function (scene, reflection, controls) {
                     loadCar(scene, reflection, controls);
+                },
+                getCarLight: function() {
+                    return directionalLight;
                 },
                 startSimulation: function () {
                     var maxSpeed = PropertiesService.getSpeed();
