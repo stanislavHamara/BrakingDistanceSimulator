@@ -10,6 +10,7 @@ angular.module('CameraService', [])
 
         carCamera2 = new THREE.PerspectiveCamera(75, element.offsetWidth / element.offsetHeight, 1, 2000000);
         carCamera2.position.y = 500;
+        carCamera2.position.z = -200;
 
         carCamera3 = new THREE.PerspectiveCamera(75, element.offsetWidth / element.offsetHeight, 1, 2000000);
         carCamera3.position.y = 120;
@@ -30,16 +31,14 @@ angular.module('CameraService', [])
                         break;
                     case 2:
                         currentCamera = carCamera2;
-                        currentCamera.lookAt(cameraTarget.root.position);
                         break;
                     case 3:
                         currentCamera = carCamera3;
                         break;
-
                     default:
                         break;
                 }
-
+                currentCamera.lookAt(cameraTarget.root.position);
                 targetIndex = index;
             },
             setTarget: function (target) {
@@ -48,12 +47,9 @@ angular.module('CameraService', [])
             updateCamera: function () {
                 if (cameraTarget) {
                     switch (targetIndex) {
-                        case 1:
-                            currentCamera.lookAt(cameraTarget.root.position);
-                            break;
                         case 2:
                             currentCamera.position.x = cameraTarget.root.position.x;
-                            currentCamera.position.z = cameraTarget.root.position.z;
+                            currentCamera.position.z = cameraTarget.root.position.z - 200;
                             break;
                         case 3:
                             currentCamera.position.x = cameraTarget.root.position.x;
@@ -62,7 +58,9 @@ angular.module('CameraService', [])
                         default:
                             break;
                     }
+                    currentCamera.lookAt(cameraTarget.root.position);
                 }
+
             }
         }
     });

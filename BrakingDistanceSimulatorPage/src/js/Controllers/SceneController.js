@@ -6,7 +6,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
 
             var cameraCube, scene, sceneCube, renderer, controls;
             var plane, planeMaterial, planeMesh;
-            var directionalLight, envLight;
+            var directionalLight;
 
             $scope.initScene = function () {
 
@@ -97,15 +97,16 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
             $scope.render();
 
             function createLights() {
+
                 directionalLight = new THREE.DirectionalLight(0xffffff);
                 directionalLight.position.set(300, 1000, 300);
                 directionalLight.castShadow = true;
                 directionalLight.shadowMapWidth = 2048;
                 directionalLight.shadowMapHeight = 2048;
-
                 scene.add(directionalLight);
+                console.log(directionalLight);
 
-                envLight = new THREE.DirectionalLight(0xffffff);
+                var envLight = new THREE.DirectionalLight(0xffffff);
                 envLight.position.set(0, 1000, 0);
 
                 scene.add(envLight);
@@ -113,14 +114,13 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
 
             function createGroundPlane() {
 
-                var texture = THREE.ImageUtils.loadTexture( "dist/textures/asphalt.jpg" );
+                var texture = THREE.ImageUtils.loadTexture("dist/textures/asphalt.jpg");
                 texture.wrapS = THREE.RepeatWrapping;
                 texture.wrapT = THREE.RepeatWrapping;
-                texture.repeat.set( 400, 400 );
+                texture.repeat.set(400, 400);
 
                 plane = new THREE.PlaneGeometry(40000, 40000);
                 planeMaterial = new THREE.MeshLambertMaterial({map: texture});
-                //planeMaterial = new THREE.MeshPhongMaterial({color: 0x111111});
                 planeMesh = new THREE.Mesh(plane, planeMaterial);
                 planeMesh.rotation.x -= Math.PI / 2;
                 planeMesh.receiveShadow = true;
