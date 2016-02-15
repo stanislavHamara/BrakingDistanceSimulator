@@ -33,7 +33,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 sceneCube = new THREE.Scene();
 
                 var path = "dist/textures/";
-                var format = ".jpg";
+                var format = ".png";
                 var urls = [
                     path + 'px' + format, path + 'nx' + format,
                     path + 'py' + format, path + 'ny' + format,

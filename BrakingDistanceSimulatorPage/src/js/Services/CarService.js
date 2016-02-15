@@ -51,7 +51,7 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService', 'Came
                     color: 0x000033,
                     envMap: reflection,
                     combine: THREE.MixOperation,
-                    reflectivity: 0.4
+                    reflectivity: 0.2
                 });
                 //carbon
                 object.bodyMaterials[2] = new THREE.MeshLambertMaterial({
