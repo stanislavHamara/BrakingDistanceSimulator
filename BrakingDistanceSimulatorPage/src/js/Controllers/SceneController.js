@@ -4,41 +4,23 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
 
             $scope.element = document.getElementById('bds-threejs-container');
 
-            var cameraCube, scene, sceneCube, renderer, controls;
+            var scene, sceneCube, renderer, controls;
             var plane, planeMaterial, planeMesh;
-            var directionalLight, envLight;
+            var directionalLight;
 
             $scope.initScene = function () {
 
-                controls = OrbitControlsService.getControls(CameraService.getCamera(), document.getElementById('bds-threejs-container'));;
-
-                directionalLight = new THREE.DirectionalLight(0xffffff);
-                directionalLight.position.set(300, 1000, 300);
-                directionalLight.castShadow = true;
-                directionalLight.shadowMapWidth = 2048;
-                directionalLight.shadowMapHeight = 2048;
-
-                envLight = new THREE.DirectionalLight(0xffffff);
-                envLight.position.set(0, 1000, 0);
+                controls = OrbitControlsService.getControls(CameraService.getCamera(), document.getElementById('bds-threejs-container'));
 
                 scene = new THREE.Scene();
-
-                plane = new THREE.PlaneGeometry(40000, 40000);
-                planeMaterial = new THREE.MeshLambertMaterial({color: 0x111111});
-                planeMesh = new THREE.Mesh(plane, planeMaterial);
-                planeMesh.rotation.x -= Math.PI / 2;
-                planeMesh.receiveShadow = true;
-                planeMesh.castShadow = true;
-                console.log(planeMesh);
-
-                scene.add(planeMesh);
-                scene.add(directionalLight);
-                scene.add(envLight);
+                createGroundPlane();
+                createLights();
+                createPoles();
 
                 renderer = new THREE.WebGLRenderer({antialias: true});
                 renderer.setSize($scope.element.offsetWidth, $scope.element.offsetHeight);
                 renderer.shadowMap.enabled = true;
-                renderer.shadowMap.type = THREE.BasicShadowMap;
+                renderer.shadowMap.type = THREE.PCFSoftShadowMap;
                 renderer.autoClear = false;
 
                 $scope.element.appendChild(renderer.domElement);
@@ -47,11 +29,10 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 $scope.element.appendChild(StatsService.getStats().domElement);
 
                 //reflection for a car
-                cameraCube = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000000);
                 sceneCube = new THREE.Scene();
 
                 var path = "dist/textures/";
-                var format = ".jpg";
+                var format = ".png";
                 var urls = [
                     path + 'px' + format, path + 'nx' + format,
                     path + 'py' + format, path + 'ny' + format,
@@ -86,7 +67,6 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
             };
 
             $scope.animate = function () {
-
                 // note: three.js includes requestAnimationFrame shim
                 requestAnimationFrame($scope.animate);
                 $scope.render();
@@ -95,8 +75,8 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
 
             $scope.render = function () {
                 CameraService.updateCamera();
-                cameraCube.rotation.copy(CameraService.getCamera().rotation);
-                renderer.render(sceneCube, cameraCube);
+                directionalLight = CarService.getCarLight();
+                renderer.render(sceneCube, CameraService.getCubeCamera());
                 renderer.render(scene, CameraService.getCamera());
             };
 
@@ -105,8 +85,8 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 CameraService.getCamera().aspect = $scope.element.offsetWidth / $scope.element.offsetHeight;
                 CameraService.getCamera().updateProjectionMatrix();
 
-                cameraCube.aspect = $scope.element.offsetWidth / $scope.element.offsetHeight;
-                cameraCube.updateProjectionMatrix();
+                CameraService.getCubeCamera().aspect = $scope.element.offsetWidth / $scope.element.offsetHeight;
+                CameraService.getCubeCamera().updateProjectionMatrix();
 
                 renderer.setSize($scope.element.offsetWidth, $scope.element.offsetHeight);
             });
@@ -114,5 +94,52 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
             $scope.initScene();
             $scope.animate();
             $scope.render();
+
+            function createLights() {
+
+                directionalLight = CarService.getCarLight();
+                scene.add(directionalLight);
+
+                var envLight = new THREE.AmbientLight(0x404040);
+                envLight.position.set(0, 1000, 0);
+
+                scene.add(envLight);
+            }
+
+            function createGroundPlane() {
+
+                var texture = THREE.ImageUtils.loadTexture("dist/textures/asphalt.jpg");
+                texture.wrapS = THREE.RepeatWrapping;
+                texture.wrapT = THREE.RepeatWrapping;
+                texture.repeat.set(400, 400);
+
+                plane = new THREE.PlaneGeometry(40000, 40000);
+                planeMaterial = new THREE.MeshLambertMaterial({map: texture});
+                planeMesh = new THREE.Mesh(plane, planeMaterial);
+                planeMesh.rotation.x -= Math.PI / 2;
+                planeMesh.receiveShadow = true;
+                planeMesh.castShadow = true;
+
+                scene.add(planeMesh);
+            }
+
+            function createPoles() {
+                var poleGeometry;
+                var poleMaterial = new THREE.MeshLambertMaterial({color: 0xbbbbbb});
+                var pole;
+
+
+                for (var i = -2; i < 25; i++) {
+                    var randomHeight = Math.random() * (800 - 100) + 100;
+                    poleGeometry = new THREE.BoxGeometry(40, randomHeight, 40);
+                    pole = new THREE.Mesh(poleGeometry, poleMaterial);
+                    pole.position.x = -200;
+                    pole.position.z = 500 * i;
+                    pole.receiveShadow = true;
+                    pole.castShadow = true;
+                    scene.add(pole);
+                }
+
+            }
 
         }]);
