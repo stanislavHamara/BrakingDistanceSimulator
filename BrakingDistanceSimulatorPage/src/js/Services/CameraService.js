@@ -6,7 +6,8 @@ angular.module('CameraService', [])
 
         carCamera = new THREE.PerspectiveCamera(75, element.offsetWidth / element.offsetHeight, 1, 2000000);
         carCamera.position.x = 470;
-        carCamera.position.y = 100;
+        carCamera.position.y = 200;
+        carCamera.position.z = -100;
 
         carCamera2 = new THREE.PerspectiveCamera(75, element.offsetWidth / element.offsetHeight, 1, 2000000);
         carCamera2.position.y = 500;
@@ -52,6 +53,10 @@ angular.module('CameraService', [])
             updateCamera: function () {
                 if (cameraTarget) {
                     switch (targetIndex) {
+                        case 1:
+                            currentCamera.position.x = cameraTarget.root.position.x + 470;
+                            currentCamera.position.z = cameraTarget.root.position.z - 100;
+                            break;
                         case 2:
                             currentCamera.position.x = cameraTarget.root.position.x;
                             currentCamera.position.z = cameraTarget.root.position.z - 200;

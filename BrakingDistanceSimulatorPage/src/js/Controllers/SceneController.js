@@ -100,7 +100,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 directionalLight = CarService.getCarLight();
                 scene.add(directionalLight);
 
-                var envLight = new THREE.DirectionalLight(0xffffff);
+                var envLight = new THREE.AmbientLight(0x404040);
                 envLight.position.set(0, 1000, 0);
 
                 scene.add(envLight);

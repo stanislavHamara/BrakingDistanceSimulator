@@ -12,11 +12,17 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService', 'Came
             };
 
             var directionalLight = new THREE.DirectionalLight(0xffffff);
-            directionalLight.position.set(0, 200, 0);
+            directionalLight.position.set(200, 500, 200);
             directionalLight.castShadow = true;
             directionalLight.shadowMapWidth = 2048;
             directionalLight.shadowMapHeight = 2048;
 
+            var d = 1024;
+
+            directionalLight.shadowCameraTop = d;
+            directionalLight.shadowCameraBottom = -d;
+            directionalLight.shadowCameraLeft = -d;
+            directionalLight.shadowCameraRight = d;
 
             var clock = new THREE.Clock();
             var decelerate = false;
@@ -189,12 +195,8 @@ angular.module('CarService', ['OrbitControlsService', 'PropertiesService', 'Came
                 }
 
                 directionalLight.target = car.root;
-                directionalLight.position.x = car.root.position.x + 100;
-                directionalLight.position.z = car.root.position.z + 100;
-
-                console.log(car.root.position);
-                console.log(directionalLight.target.position);
-                console.log(directionalLight.position);
+                directionalLight.position.x = car.root.position.x + 200;
+                directionalLight.position.z = car.root.position.z + 200;
 
             }
 
