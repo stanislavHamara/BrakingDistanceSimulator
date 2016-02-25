@@ -1,7 +1,7 @@
 angular.module('OrbitControlsService', [])
     .factory('OrbitControlsService', function () {
 
-        var OrbitControls = require('three-orbit-controls')(THREE);
+        var OrbitControls;
         var controls;
 
         return {
