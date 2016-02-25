@@ -41,11 +41,6 @@ gulp.task('browserify',['scripts'], function(){
         .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('tests', function () {
-    return gulp.src('./tests/propertiesSetupTests.js')
-        .pipe(jasmine());
-});
-
 // watch task
 gulp.task('watch', function() {
     gulp.watch('./src/less/*.less', ['styles']);
