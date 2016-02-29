@@ -1,6 +1,6 @@
-angular.module('CarService', ['OrbitControlsService', 'PropertiesService', 'CameraService'])
-    .factory('CarService', ['OrbitControlsService', 'PropertiesService', 'CameraService',
-        function (OrbitControlsService, PropertiesService, CameraService) {
+angular.module('CarService', [ 'PropertiesService', 'CameraService'])
+    .factory('CarService', ['PropertiesService', 'CameraService',
+        function (PropertiesService, CameraService) {
             var car;
             var oControls;
 

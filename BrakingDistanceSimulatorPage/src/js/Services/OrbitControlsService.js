@@ -1,7 +1,6 @@
 angular.module('OrbitControlsService', [])
     .factory('OrbitControlsService', function () {
 
-        var OrbitControls;
         var controls;
 
         return {

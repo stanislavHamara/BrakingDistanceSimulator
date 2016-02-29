@@ -1,6 +1,6 @@
 angular.module('Properties', [])
-    .controller('PropertiesController', ['$scope', 'PropertiesService', 'PhysicsService', 'CarService',
-        function ($scope, PropertiesService, PhysicsService, CarService) {
+    .controller('PropertiesController', ['$scope', 'PropertiesService', 'CarService',
+        function ($scope, PropertiesService, CarService) {
 
             $scope.surfaces = PropertiesService.getSurfaces();
             $scope.condition = PropertiesService.getConditions();
@@ -51,13 +51,8 @@ angular.module('Properties', [])
 
             $scope.startSimulation = function () {
                 if(validateSpeed()) {
-                    var userInput = PropertiesService.getUserInput();
                     CarService.startSimulation();
-
-                    console.log(PhysicsService.getStoppingDistance(userInput));
-                    console.log(userInput);
-
-                    return userInput;
+                    console.log(PropertiesService.getUserInput());
                 } else {
                     alert ('Invalid value. Speed must be a number between 1 and 200');
                 }
