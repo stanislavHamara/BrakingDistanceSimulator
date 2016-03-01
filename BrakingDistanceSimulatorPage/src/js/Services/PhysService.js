@@ -1,5 +1,5 @@
-angular.module('PhysicsService', [])
-    .factory('PhysicsService', function () {
+angular.module('PhysicsService', ['PropertiesService'])
+    .factory('PhysicsService', ['PropertiesService', function (PropertiesService) {
 
         /*
          Coefficients of friction
@@ -14,6 +14,7 @@ angular.module('PhysicsService', [])
 
         var g = 9.81; //standard gravity value
         var v, cf; //velocity and coefficient of friction
+        var userInput =  PropertiesService.getUserInput();
 
         //Associative arrays, roughly equivalent to Dictionaries or Hashmaps
         var coefficients = [];
@@ -39,13 +40,14 @@ angular.module('PhysicsService', [])
         };
 
         return {
-            getStoppingDistance: function (userInput) {
+            getPhysicsData: function () {
                 v = (userInput.imperial ? userInput.speed : userInput.speed / 1.6); //mph
                 cf = getCoefficient(userInput.surface, userInput.condition);
                 return {
                     thinkingDistance: getThinkingDistance(v),
-                    brakingDistance: getBrakingDistance(v, cf) // coefficient of friction used for dry asphalt
+                    brakingDistance: getBrakingDistance(v, cf), // coefficient of friction used for dry asphalt
+                    userInput: userInput
                 };
             }
         };
-    });
+    }]);
