@@ -1,6 +1,6 @@
-angular.module('CarService', [ 'PropertiesService', 'CameraService'])
-    .factory('CarService', ['PropertiesService', 'CameraService',
-        function (PropertiesService, CameraService) {
+angular.module('CarService', [ 'PhysicsService', 'CameraService'])
+    .factory('CarService', ['PhysicsService', 'CameraService',
+        function (PhysicsService, CameraService) {
             var car;
             var oControls;
 
@@ -10,6 +10,9 @@ angular.module('CarService', [ 'PropertiesService', 'CameraService'])
                 moveLeft: false,
                 moveRight: false
             };
+
+            var carPhysics = PhysicsService.getPhysicsData();
+            console.log(carPhysics);
 
             var directionalLight = new THREE.DirectionalLight(0xffffff);
             directionalLight.position.set(200, 500, 200);
@@ -212,9 +215,9 @@ angular.module('CarService', [ 'PropertiesService', 'CameraService'])
                     return directionalLight;
                 },
                 startSimulation: function () {
-                    var maxSpeed = PropertiesService.getSpeed();
+                    var maxSpeed = carPhysics.userInput.speed;
                     controlsCar.moveForward = true;
-                    car.MAX_SPEED = PropertiesService.getUnits() ? (maxSpeed * 62.5) : (maxSpeed * 100);
+                    car.MAX_SPEED = carPhysics.userInput.imperial ? (maxSpeed * 62.5) : (maxSpeed * 100);
                 }
             }
         }]);
