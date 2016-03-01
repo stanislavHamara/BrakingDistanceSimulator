@@ -42,10 +42,6 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 var reflectionCube = THREE.ImageUtils.loadTextureCube(urls);
                 reflectionCube.format = THREE.RGBFormat;
 
-                var refractionCube = new THREE.ImageUtils.loadTextureCube(urls);
-                refractionCube.mapping = THREE.CubeRefractionMapping;
-                refractionCube.format = THREE.RGBFormat;
-
                 //Skybox
                 var shader = THREE.ShaderLib['cube'];
                 shader.uniforms["tCube"].value = reflectionCube;
