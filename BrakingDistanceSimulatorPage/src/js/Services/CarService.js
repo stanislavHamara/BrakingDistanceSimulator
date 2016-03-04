@@ -1,4 +1,4 @@
-angular.module('CarService', [ 'PhysicsService', 'CameraService'])
+angular.module('CarService', ['PhysicsService', 'CameraService'])
     .factory('CarService', ['PhysicsService', 'CameraService',
         function (PhysicsService, CameraService) {
             var car;
@@ -28,7 +28,10 @@ angular.module('CarService', [ 'PhysicsService', 'CameraService'])
             directionalLight.shadowCameraRight = d;
 
             var clock = new THREE.Clock();
+
             var decelerate = false;
+            var simulate = false;
+            var thinkingTime;
 
             document.addEventListener('keydown', onKeyDown, false);
             document.addEventListener('keyup', onKeyUp, false);
@@ -107,6 +110,47 @@ angular.module('CarService', [ 'PhysicsService', 'CameraService'])
                 object.wheelMaterials[3] = object.wheelMaterials[2] = object.wheelMaterials[1];
             }
 
+            function animate() {
+                requestAnimationFrame(animate);
+                render();
+                
+                //start simulation
+                if (car.speed === car.MAX_SPEED && simulate) {
+                    console.log("reach max speed");
+                    decelerate = true;
+                    simulate = false;
+
+                    //reaction distance
+                    setTimeout(function () {
+                        controlsCar.moveForward = false;
+                        controlsCar.moveBackward = true;
+                        console.log("thinking time:" + thinkingTime);
+
+                        //TODO: calculate and set deceleration
+                        //start braking
+                        car.wheelsLocked = true;
+                    }, thinkingTime);
+                }
+
+                //once car stopped restart its properties
+                if (car.speed < 0 && decelerate) {
+                    controlsCar.moveBackward = false;
+                    car.speed = 0;
+                    decelerate = false;
+                    car.wheelsLocked = false;
+                }
+
+                directionalLight.target = car.root;
+                directionalLight.position.x = car.root.position.x + 200;
+                directionalLight.position.z = car.root.position.z + 200;
+
+            }
+
+            function render() {
+                var delta = clock.getDelta();
+                car.updateCarModel(delta, controlsCar);
+            }
+
             function onKeyDown(event) {
 
                 switch (event.keyCode) {
@@ -177,45 +221,17 @@ angular.module('CarService', [ 'PhysicsService', 'CameraService'])
 
             }
 
-            function animate() {
-                requestAnimationFrame(animate);
-                render();
-
-                if (car.speed === car.MAX_SPEED) {
-                    controlsCar.moveForward = false;
-                    controlsCar.moveBackward = true;
-                    decelerate = true;
-                    //stop the wheels
-                    car.wheelsLocked = true;
-                }
-
-                if (car.speed < 0 && decelerate) {
-                    //calculate and set deceleration
-                    controlsCar.moveBackward = false;
-                    car.speed = 0;
-                    decelerate = false;
-                    car.wheelsLocked = false;
-                }
-
-                directionalLight.target = car.root;
-                directionalLight.position.x = car.root.position.x + 200;
-                directionalLight.position.z = car.root.position.z + 200;
-
-            }
-
-            function render() {
-                var delta = clock.getDelta();
-                car.updateCarModel(delta, controlsCar);
-            }
             return {
                 getCar: function (scene, reflection, controls) {
                     loadCar(scene, reflection, controls);
                 },
-                getCarLight: function() {
+                getCarLight: function () {
                     return directionalLight;
                 },
                 startSimulation: function () {
                     var maxSpeed = carPhysics.userInput.speed;
+                    simulate = true;
+                    thinkingTime = 1500;
                     controlsCar.moveForward = true;
                     car.MAX_SPEED = carPhysics.userInput.imperial ? (maxSpeed * 62.5) : (maxSpeed * 100);
                 }

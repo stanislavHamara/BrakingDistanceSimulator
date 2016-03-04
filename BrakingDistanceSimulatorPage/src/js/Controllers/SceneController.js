@@ -123,9 +123,9 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 var poleGeometry;
                 var poleMaterial = new THREE.MeshLambertMaterial({color: 0xbbbbbb});
                 var pole;
-
-
-                for (var i = -2; i < 25; i++) {
+                var poleCount = 26;
+                
+                for (var i = -1; i < poleCount; i++) {
                     var randomHeight = Math.random() * (800 - 100) + 100;
                     poleGeometry = new THREE.BoxGeometry(40, randomHeight, 40);
                     pole = new THREE.Mesh(poleGeometry, poleMaterial);
