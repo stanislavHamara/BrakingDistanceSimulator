@@ -107,12 +107,13 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 var texture = THREE.ImageUtils.loadTexture("dist/textures/asphalt.jpg");
                 texture.wrapS = THREE.RepeatWrapping;
                 texture.wrapT = THREE.RepeatWrapping;
-                texture.repeat.set(400, 400);
+                texture.repeat.set(400, 1500);
 
-                plane = new THREE.PlaneGeometry(40000, 40000);
+                plane = new THREE.PlaneGeometry(40000, 150000);
                 planeMaterial = new THREE.MeshLambertMaterial({map: texture});
                 planeMesh = new THREE.Mesh(plane, planeMaterial);
                 planeMesh.rotation.x -= Math.PI / 2;
+                planeMesh.position.z = 70000;
                 planeMesh.receiveShadow = true;
                 planeMesh.castShadow = true;
 
@@ -123,7 +124,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 var poleGeometry;
                 var poleMaterial = new THREE.MeshLambertMaterial({color: 0xbbbbbb});
                 var pole;
-                var poleCount = 26;
+                var poleCount = 290;
                 
                 for (var i = -1; i < poleCount; i++) {
                     var randomHeight = Math.random() * (800 - 100) + 100;

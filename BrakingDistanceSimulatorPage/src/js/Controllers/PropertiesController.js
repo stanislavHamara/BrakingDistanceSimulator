@@ -27,8 +27,15 @@ angular.module('Properties', [])
             $scope.setSpeed = function (speed) {
                 $scope.speed += speed;
 
-                if ($scope.speed < 1) $scope.speed = 1;
-                else if ($scope.speed > 200) $scope.speed = 200;
+                if($scope.togglePreferences.imperial){
+                    if ($scope.speed < 1) $scope.speed = 1;
+                    else if ($scope.speed > 100) $scope.speed = 100;
+                } else {
+                    if ($scope.speed < 1) $scope.speed = 1;
+                    else if ($scope.speed > 140) $scope.speed = 140;
+                }
+
+
                 PropertiesService.setSpeed($scope.speed, $scope.togglePreferences.imperial);
 
             };
@@ -61,6 +68,6 @@ angular.module('Properties', [])
             };
 
             var validateSpeed = function () {
-                return $scope.speed > 0 && $scope.speed < 201;
+                return $scope.togglePreferences.imperial ? ($scope.speed > 0 && $scope.speed < 101) : ($scope.speed > 0 && $scope.speed < 141);
             }
         }]);

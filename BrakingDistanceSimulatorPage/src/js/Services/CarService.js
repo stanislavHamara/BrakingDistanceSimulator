@@ -12,7 +12,6 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
             };
 
             var carPhysics = PhysicsService.getPhysicsData();
-            console.log(carPhysics);
 
             var directionalLight = new THREE.DirectionalLight(0xffffff);
             directionalLight.position.set(200, 500, 200);
@@ -41,7 +40,7 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                 car.modelScale = 0.1;
                 car.backWheelOffset = 60;
                 car.FRONT_ACCELERATION = 500; //equivalent to 9.4 m/s^2
-                car.MAX_SPEED = 6000; // equivalent to 60 kmph => 1kmph = 100 units
+                car.MAX_SPEED = 6000; // 62.5 = 1mph
                 car.loadPartsJSON("dist/js/models/body.js", "dist/js/models/wheel.js");
                 car.callback = function (object) {
                     oControls = controls;
@@ -232,8 +231,7 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                     var maxSpeed = carPhysics.userInput.speed;
                     simulate = true;
                     controlsCar.moveForward = true;
-                    car.MAX_SPEED = carPhysics.userInput.imperial ? (maxSpeed * 62.5) : (maxSpeed * 100);
-                    //TODO: calculate and set deceleration
+                    car.MAX_SPEED = carPhysics.userInput.imperial ? (maxSpeed * 62.5) : (maxSpeed / 1.6  * 62.5);
                     car.BACK_ACCELERATION = PhysicsService.getDeceleration();
                 }
             }
