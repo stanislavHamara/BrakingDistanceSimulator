@@ -40,7 +40,7 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                 car = new THREE.Car();
                 car.modelScale = 0.1;
                 car.backWheelOffset = 60;
-                car.FRONT_ACCELERATION = 500;
+                car.FRONT_ACCELERATION = 500; //equivalent to 9.4 m/s^2
                 car.MAX_SPEED = 6000; // equivalent to 60 kmph => 1kmph = 100 units
                 car.loadPartsJSON("dist/js/models/body.js", "dist/js/models/wheel.js");
                 car.callback = function (object) {
@@ -116,17 +116,15 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
 
                 //start simulation
                 if (car.speed === car.MAX_SPEED && simulate) {
-                    console.log("reach max speed");
+                    console.log("Max speed " + car.root.position.z);
                     decelerate = true;
                     simulate = false;
 
                     //reaction distance
                     setTimeout(function () {
+                        console.log("After reaction " + car.root.position.z);
                         controlsCar.moveForward = false;
                         controlsCar.moveBackward = true;
-                        console.log("thinking time:" + thinkingTime);
-
-                        //TODO: calculate and set deceleration
                         //start braking
                         car.wheelsLocked = true;
                     }, thinkingTime);
@@ -138,6 +136,7 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                     car.speed = 0;
                     decelerate = false;
                     car.wheelsLocked = false;
+                    console.log("Stopped " + car.root.position.z);
                 }
 
                 directionalLight.target = car.root;
@@ -229,10 +228,13 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                     return directionalLight;
                 },
                 startSimulation: function () {
+                    console.log("Start simulation: " + car.root.position.z);
                     var maxSpeed = carPhysics.userInput.speed;
                     simulate = true;
                     controlsCar.moveForward = true;
                     car.MAX_SPEED = carPhysics.userInput.imperial ? (maxSpeed * 62.5) : (maxSpeed * 100);
+                    //TODO: calculate and set deceleration
+                    car.BACK_ACCELERATION = PhysicsService.getDeceleration();
                 }
             }
         }]);

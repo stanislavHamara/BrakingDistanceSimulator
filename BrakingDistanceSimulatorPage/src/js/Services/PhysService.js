@@ -48,6 +48,10 @@ angular.module('PhysicsService', ['PropertiesService'])
                     brakingDistance: getBrakingDistance(v, cf), // coefficient of friction used for dry asphalt
                     userInput: userInput
                 };
+            },
+            getDeceleration: function(){
+                cf = getCoefficient(userInput.surface, userInput.condition);
+                return 1400 * cf / 0.7;
             }
         };
     }]);
