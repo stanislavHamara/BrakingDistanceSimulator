@@ -3,6 +3,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
         function ($scope, resize, OrbitControlsService, StatsService, CarService, CameraService) {
 
             $scope.element = document.getElementById('bds-threejs-container');
+            THREE.Cache.enabled = true;
 
             var scene, sceneCube, renderer, controls;
             var plane, planeMaterial, planeMesh;
