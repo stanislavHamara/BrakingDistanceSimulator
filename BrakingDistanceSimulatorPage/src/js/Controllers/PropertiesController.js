@@ -5,7 +5,7 @@ angular.module('Properties', [])
             $scope.surfaces = PropertiesService.getSurfaces();
             $scope.condition = PropertiesService.getConditions();
             $scope.units = PropertiesService.getUnits() ? 'mph' : 'km/h';
-            $scope.speed = PropertiesService.getSpeed();
+            $scope.speed = 40; // not taken from the service because of the responsive menu binding
 
             $scope.speedButtons = [-1, -5, -10, +10, +5, +1];
 
@@ -53,6 +53,8 @@ angular.module('Properties', [])
                 if(validateSpeed()) {
                     CarService.startSimulation();
                     console.log(PropertiesService.getUserInput());
+                    //for responsive menu
+                    PropertiesService.setSpeed($scope.speed, $scope.togglePreferences.imperial);
                 } else {
                     alert ('Invalid value. Speed must be a number between 1 and 200');
                 }
