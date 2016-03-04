@@ -31,7 +31,7 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
 
             var decelerate = false;
             var simulate = false;
-            var thinkingTime;
+            var thinkingTime = 670; //http://www.brake.org.uk/rsw/15-facts-a-resources/facts/1255-speed
 
             document.addEventListener('keydown', onKeyDown, false);
             document.addEventListener('keyup', onKeyUp, false);
@@ -113,7 +113,7 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
             function animate() {
                 requestAnimationFrame(animate);
                 render();
-                
+
                 //start simulation
                 if (car.speed === car.MAX_SPEED && simulate) {
                     console.log("reach max speed");
@@ -231,7 +231,6 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                 startSimulation: function () {
                     var maxSpeed = carPhysics.userInput.speed;
                     simulate = true;
-                    thinkingTime = 1500;
                     controlsCar.moveForward = true;
                     car.MAX_SPEED = carPhysics.userInput.imperial ? (maxSpeed * 62.5) : (maxSpeed * 100);
                 }

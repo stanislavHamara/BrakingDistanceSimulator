@@ -2,8 +2,6 @@ angular.module('ResultModal', [])
     .controller('ResultModalController', ['$scope', 'PhysicsService',
         function ($scope, PhysicsService) {
             $scope.physicsData = PhysicsService.getPhysicsData();
-            $scope.thinkingDistance = $scope.physicsData.thinkingDistance;
-            $scope.brakingDistance = $scope.physicsData.brakingDistance;
             $scope.userInput = $scope.physicsData.userInput;
 
             $scope.getKphSpeed = function () {
@@ -15,6 +13,9 @@ angular.module('ResultModal', [])
             };
 
             $scope.getDistances = function () {
+                $scope.physicsData = PhysicsService.getPhysicsData();
+                $scope.thinkingDistance = $scope.physicsData.thinkingDistance;
+                $scope.brakingDistance = $scope.physicsData.brakingDistance;
                 return {
                     thinkingDistance: formatNumber($scope.thinkingDistance) + ' m / '
                     + formatNumber($scope.thinkingDistance * 3.3) + ' feet',
