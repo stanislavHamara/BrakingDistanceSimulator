@@ -1,4 +1,4 @@
-angular.module('CarService', [ 'PhysicsService', 'CameraService'])
+angular.module('CarService', ['PhysicsService', 'CameraService'])
     .factory('CarService', ['PhysicsService', 'CameraService',
         function (PhysicsService, CameraService) {
             var car;
@@ -11,8 +11,9 @@ angular.module('CarService', [ 'PhysicsService', 'CameraService'])
                 moveRight: false
             };
 
+            var modal;
+
             var carPhysics = PhysicsService.getPhysicsData();
-            console.log(carPhysics);
 
             var directionalLight = new THREE.DirectionalLight(0xffffff);
             directionalLight.position.set(200, 500, 200);
@@ -28,7 +29,10 @@ angular.module('CarService', [ 'PhysicsService', 'CameraService'])
             directionalLight.shadowCameraRight = d;
 
             var clock = new THREE.Clock();
+
             var decelerate = false;
+            var simulate = false;
+            var thinkingTime = 670; //http://www.brake.org.uk/rsw/15-facts-a-resources/facts/1255-speed
 
             document.addEventListener('keydown', onKeyDown, false);
             document.addEventListener('keyup', onKeyUp, false);
@@ -37,8 +41,8 @@ angular.module('CarService', [ 'PhysicsService', 'CameraService'])
                 car = new THREE.Car();
                 car.modelScale = 0.1;
                 car.backWheelOffset = 60;
-                car.FRONT_ACCELERATION = 500;
-                car.MAX_SPEED = 6000; // equivalent to 60 kmph => 1kmph = 100 units
+                car.FRONT_ACCELERATION = 500; //equivalent to 9.4 m/s^2
+                car.MAX_SPEED = 6000; // 62.5 = 1mph
                 car.loadPartsJSON("dist/js/models/body.js", "dist/js/models/wheel.js");
                 car.callback = function (object) {
                     oControls = controls;
@@ -105,6 +109,53 @@ angular.module('CarService', [ 'PhysicsService', 'CameraService'])
                 });
 
                 object.wheelMaterials[3] = object.wheelMaterials[2] = object.wheelMaterials[1];
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                render();
+
+                //start simulation
+                if (car.speed === car.MAX_SPEED && simulate) {
+                    console.log("Max speed " + car.root.position.z);
+                    decelerate = true;
+                    simulate = false;
+
+                    //reaction distance
+                    setTimeout(function () {
+                        console.log("After reaction " + car.root.position.z);
+                        controlsCar.moveForward = false;
+                        controlsCar.moveBackward = true;
+                        //start braking
+                        car.wheelsLocked = true;
+                    }, thinkingTime);
+                }
+
+                //once car stopped restart its properties
+                if (car.speed < 0 && decelerate) {
+                    controlsCar.moveBackward = false;
+                    car.speed = 0;
+                    decelerate = false;
+                    car.wheelsLocked = false;
+                    console.log("Stopped " + car.root.position.z);
+
+                    if (modal) {
+                        setTimeout(function () {
+                            modal.style.visibility = "visible";
+                        }, 1000);
+
+                    }
+                }
+
+                directionalLight.target = car.root;
+                directionalLight.position.x = car.root.position.x + 200;
+                directionalLight.position.z = car.root.position.z + 200;
+
+            }
+
+            function render() {
+                var delta = clock.getDelta();
+                car.updateCarModel(delta, controlsCar);
             }
 
             function onKeyDown(event) {
@@ -177,47 +228,29 @@ angular.module('CarService', [ 'PhysicsService', 'CameraService'])
 
             }
 
-            function animate() {
-                requestAnimationFrame(animate);
-                render();
-
-                if (car.speed === car.MAX_SPEED) {
-                    controlsCar.moveForward = false;
-                    controlsCar.moveBackward = true;
-                    decelerate = true;
-                    //stop the wheels
-                    car.wheelsLocked = true;
-                }
-
-                if (car.speed < 0 && decelerate) {
-                    //calculate and set deceleration
-                    controlsCar.moveBackward = false;
-                    car.speed = 0;
-                    decelerate = false;
-                    car.wheelsLocked = false;
-                }
-
-                directionalLight.target = car.root;
-                directionalLight.position.x = car.root.position.x + 200;
-                directionalLight.position.z = car.root.position.z + 200;
-
-            }
-
-            function render() {
-                var delta = clock.getDelta();
-                car.updateCarModel(delta, controlsCar);
-            }
             return {
                 getCar: function (scene, reflection, controls) {
                     loadCar(scene, reflection, controls);
                 },
-                getCarLight: function() {
+                getCarLight: function () {
                     return directionalLight;
                 },
                 startSimulation: function () {
+                    modal = document.getElementById("resultModal");
+                    modal.style.visibility = "hidden";
+                    console.log(modal.toString());
+
+                    //restart car's position
+                    car.root.position.x = 0;
+                    car.root.position.y = 0;
+                    car.root.position.z = 0;
+
+                    console.log("Start simulation: " + car.root.position.z);
                     var maxSpeed = carPhysics.userInput.speed;
+                    simulate = true;
                     controlsCar.moveForward = true;
-                    car.MAX_SPEED = carPhysics.userInput.imperial ? (maxSpeed * 62.5) : (maxSpeed * 100);
+                    car.MAX_SPEED = carPhysics.userInput.imperial ? (maxSpeed * 62.5) : (maxSpeed / 1.6 * 62.5);
+                    car.BACK_ACCELERATION = PhysicsService.getDeceleration();
                 }
             }
         }]);
