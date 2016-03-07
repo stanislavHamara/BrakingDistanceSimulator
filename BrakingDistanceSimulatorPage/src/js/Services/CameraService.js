@@ -6,7 +6,7 @@ angular.module('CameraService', [])
 
         carCamera = new THREE.PerspectiveCamera(75, element.offsetWidth / element.offsetHeight, 1, 2000000);
         carCamera.position.x = 470;
-        carCamera.position.y = 200;
+        carCamera.position.y = 100;
         carCamera.position.z = -100;
 
         carCamera2 = new THREE.PerspectiveCamera(75, element.offsetWidth / element.offsetHeight, 1, 2000000);

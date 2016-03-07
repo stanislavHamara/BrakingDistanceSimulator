@@ -108,7 +108,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 var texture = THREE.ImageUtils.loadTexture("dist/textures/asphalt.jpg");
                 texture.wrapS = THREE.RepeatWrapping;
                 texture.wrapT = THREE.RepeatWrapping;
-                texture.repeat.set(400, 1500);
+                texture.repeat.set(100, 375);
 
                 plane = new THREE.PlaneGeometry(40000, 150000);
                 planeMaterial = new THREE.MeshLambertMaterial({map: texture});
