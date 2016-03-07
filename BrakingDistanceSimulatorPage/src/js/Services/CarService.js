@@ -227,6 +227,11 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                     return directionalLight;
                 },
                 startSimulation: function () {
+                    //restart car's position
+                    car.root.position.x = 0;
+                    car.root.position.y = 0;
+                    car.root.position.z = 0;
+
                     console.log("Start simulation: " + car.root.position.z);
                     var maxSpeed = carPhysics.userInput.speed;
                     simulate = true;
