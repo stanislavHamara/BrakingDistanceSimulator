@@ -11,6 +11,8 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                 moveRight: false
             };
 
+            var modal;
+
             var carPhysics = PhysicsService.getPhysicsData();
 
             var directionalLight = new THREE.DirectionalLight(0xffffff);
@@ -136,6 +138,13 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                     decelerate = false;
                     car.wheelsLocked = false;
                     console.log("Stopped " + car.root.position.z);
+
+                    if (modal) {
+                        setTimeout(function () {
+                            modal.style.visibility = "visible";
+                        }, 1000);
+
+                    }
                 }
 
                 directionalLight.target = car.root;
@@ -227,6 +236,10 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                     return directionalLight;
                 },
                 startSimulation: function () {
+                    modal = document.getElementById("resultModal");
+                    modal.style.visibility = "hidden";
+                    console.log(modal.toString());
+
                     //restart car's position
                     car.root.position.x = 0;
                     car.root.position.y = 0;
@@ -236,7 +249,7 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                     var maxSpeed = carPhysics.userInput.speed;
                     simulate = true;
                     controlsCar.moveForward = true;
-                    car.MAX_SPEED = carPhysics.userInput.imperial ? (maxSpeed * 62.5) : (maxSpeed / 1.6  * 62.5);
+                    car.MAX_SPEED = carPhysics.userInput.imperial ? (maxSpeed * 62.5) : (maxSpeed / 1.6 * 62.5);
                     car.BACK_ACCELERATION = PhysicsService.getDeceleration();
                 }
             }

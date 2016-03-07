@@ -8,6 +8,12 @@
   cursor: default;
 }
 
+.modal-dialog{
+  margin-top: 100px;
+  margin-left: 17.5%;
+  width: 40%;
+}
+
 .modal-header, .modal-footer{
   border: none;
 }
@@ -24,5 +30,15 @@
     background-color: @darkblue;
     color: @terra;
     border-color: @darkblue;
+  }
+}
+
+.modal-backdrop{
+  visibility: hidden;
+}
+@media (max-width: 1199px), (max-height: 845px){
+  .modal-dialog{
+    margin-left: 25%;
+    width: 50%;
   }
 }
