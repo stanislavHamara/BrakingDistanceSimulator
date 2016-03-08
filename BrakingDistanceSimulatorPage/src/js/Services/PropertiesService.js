@@ -45,7 +45,6 @@ angular.module('PropertiesService',['OrbitControlsService'])
             },
             setControls: function(enabled){
                 OrbitControlsService.isEnabled(enabled);
-                console.log("controls: " + enabled);
             }
         }
     }]);

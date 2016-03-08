@@ -117,13 +117,11 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
 
                 //start simulation
                 if (car.speed === car.MAX_SPEED && simulate) {
-                    console.log("Max speed " + car.root.position.z);
                     decelerate = true;
                     simulate = false;
 
                     //reaction distance
                     setTimeout(function () {
-                        console.log("After reaction " + car.root.position.z);
                         controlsCar.moveForward = false;
                         controlsCar.moveBackward = true;
                         //start braking
@@ -137,7 +135,6 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                     car.speed = 0;
                     decelerate = false;
                     car.wheelsLocked = false;
-                    console.log("Stopped " + car.root.position.z);
 
                     if (modal) {
                         setTimeout(function () {
@@ -150,7 +147,6 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                 directionalLight.target = car.root;
                 directionalLight.position.x = car.root.position.x + 200;
                 directionalLight.position.z = car.root.position.z + 200;
-
             }
 
             function render() {
@@ -238,14 +234,12 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                 startSimulation: function () {
                     modal = document.getElementById("resultModal");
                     modal.style.visibility = "hidden";
-                    console.log(modal.toString());
 
                     //restart car's position
                     car.root.position.x = 0;
                     car.root.position.y = 0;
                     car.root.position.z = 0;
 
-                    console.log("Start simulation: " + car.root.position.z);
                     var maxSpeed = carPhysics.userInput.speed;
                     simulate = true;
                     controlsCar.moveForward = true;

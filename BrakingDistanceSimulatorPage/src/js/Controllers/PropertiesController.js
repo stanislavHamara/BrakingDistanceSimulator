@@ -20,7 +20,6 @@ angular.module('Properties', [])
             };
 
             $scope.setControls = function() {
-                console.log('controls changed');
                 PropertiesService.setControls($scope.togglePreferences.lookAround);
             };
 
@@ -34,8 +33,6 @@ angular.module('Properties', [])
                     if ($scope.speed < 1) $scope.speed = 1;
                     else if ($scope.speed > 140) $scope.speed = 140;
                 }
-
-
                 PropertiesService.setSpeed($scope.speed, $scope.togglePreferences.imperial);
 
             };
@@ -59,7 +56,6 @@ angular.module('Properties', [])
             $scope.startSimulation = function () {
                 if(validateSpeed()) {
                     CarService.startSimulation();
-                    console.log(PropertiesService.getUserInput());
                     //for responsive menu
                     PropertiesService.setSpeed($scope.speed, $scope.togglePreferences.imperial);
                 } else {

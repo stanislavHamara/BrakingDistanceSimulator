@@ -2,7 +2,6 @@ angular.module('CameraService', [])
     .factory('CameraService', function () {
         var carCamera, carCamera2, carCamera3, cubeCamera,  currentCamera, cameraTarget, targetIndex;
         var element = document.getElementById('bds-threejs-container');
-        console.log(element);
 
         carCamera = new THREE.PerspectiveCamera(75, element.offsetWidth / element.offsetHeight, 1, 2000000);
         carCamera.position.x = 470;
