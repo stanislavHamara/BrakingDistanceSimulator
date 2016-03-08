@@ -158,72 +158,71 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
             }
 
             function onKeyDown(event) {
+                if (drivingEnabled)
+                    switch (event.keyCode) {
 
-                switch (event.keyCode) {
+                        case 38: /*up*/
+                            controlsCar.moveForward = true;
+                            break;
+                        case 87: /*W*/
+                            controlsCar.moveForward = true;
+                            break;
 
-                    case 38: /*up*/
-                        controlsCar.moveForward = true;
-                        break;
-                    case 87: /*W*/
-                        controlsCar.moveForward = true;
-                        break;
+                        case 40: /*down*/
+                            controlsCar.moveBackward = true;
+                            break;
+                        case 83: /*S*/
+                            controlsCar.moveBackward = true;
+                            break;
 
-                    case 40: /*down*/
-                        controlsCar.moveBackward = true;
-                        break;
-                    case 83: /*S*/
-                        controlsCar.moveBackward = true;
-                        break;
+                        case 37: /*left*/
+                            controlsCar.moveLeft = true;
+                            break;
+                        case 65: /*A*/
+                            controlsCar.moveLeft = true;
+                            break;
 
-                    case 37: /*left*/
-                        controlsCar.moveLeft = true;
-                        break;
-                    case 65: /*A*/
-                        controlsCar.moveLeft = true;
-                        break;
-
-                    case 39: /*right*/
-                        controlsCar.moveRight = true;
-                        break;
-                    case 68: /*D*/
-                        controlsCar.moveRight = true;
-                        break;
-                }
-
+                        case 39: /*right*/
+                            controlsCar.moveRight = true;
+                            break;
+                        case 68: /*D*/
+                            controlsCar.moveRight = true;
+                            break;
+                    }
             }
 
             function onKeyUp(event) {
+                if (drivingEnabled)
+                    switch (event.keyCode) {
 
-                switch (event.keyCode) {
+                        case 38: /*up*/
+                            controlsCar.moveForward = false;
+                            break;
+                        case 87: /*W*/
+                            controlsCar.moveForward = false;
+                            break;
 
-                    case 38: /*up*/
-                        controlsCar.moveForward = false;
-                        break;
-                    case 87: /*W*/
-                        controlsCar.moveForward = false;
-                        break;
+                        case 40: /*down*/
+                            controlsCar.moveBackward = false;
+                            break;
+                        case 83: /*S*/
+                            controlsCar.moveBackward = false;
+                            break;
 
-                    case 40: /*down*/
-                        controlsCar.moveBackward = false;
-                        break;
-                    case 83: /*S*/
-                        controlsCar.moveBackward = false;
-                        break;
+                        case 37: /*left*/
+                            controlsCar.moveLeft = false;
+                            break;
+                        case 65: /*A*/
+                            controlsCar.moveLeft = false;
+                            break;
 
-                    case 37: /*left*/
-                        controlsCar.moveLeft = false;
-                        break;
-                    case 65: /*A*/
-                        controlsCar.moveLeft = false;
-                        break;
-
-                    case 39: /*right*/
-                        controlsCar.moveRight = false;
-                        break;
-                    case 68: /*D*/
-                        controlsCar.moveRight = false;
-                        break;
-                }
+                        case 39: /*right*/
+                            controlsCar.moveRight = false;
+                            break;
+                        case 68: /*D*/
+                            controlsCar.moveRight = false;
+                            break;
+                    }
 
             }
 
