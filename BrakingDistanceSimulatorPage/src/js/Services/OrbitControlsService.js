@@ -11,7 +11,7 @@ angular.module('OrbitControlsService', [])
                 controls.minPolarAngle = Math.PI / 3;
                 controls.minDistance = 400;
                 controls.maxDistance = 600;
-                controls.noPan = true;
+                controls.enablePan = false;
                 return controls;
             },
             isEnabled: function (enabled) {

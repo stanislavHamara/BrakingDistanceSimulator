@@ -40,7 +40,8 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                     path + 'pz' + format, path + 'nz' + format
                 ];
 
-                var reflectionCube = THREE.ImageUtils.loadTextureCube(urls);
+                var cubeLoader = new THREE.CubeTextureLoader();
+                var reflectionCube = cubeLoader.load(urls);
                 reflectionCube.format = THREE.RGBFormat;
 
                 //Skybox
@@ -104,21 +105,26 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
             }
 
             function createGroundPlane() {
+                var loader = new THREE.TextureLoader();
 
-                var texture = THREE.ImageUtils.loadTexture("dist/textures/asphalt.jpg");
-                texture.wrapS = THREE.RepeatWrapping;
-                texture.wrapT = THREE.RepeatWrapping;
-                texture.repeat.set(100, 375);
+                loader.load(
+                    "dist/textures/asphalt.jpg",
+                    function ( texture ) {
+                        texture.wrapS = THREE.RepeatWrapping;
+                        texture.wrapT = THREE.RepeatWrapping;
+                        texture.repeat.set(100, 375);
 
-                plane = new THREE.PlaneGeometry(40000, 150000);
-                planeMaterial = new THREE.MeshLambertMaterial({map: texture});
-                planeMesh = new THREE.Mesh(plane, planeMaterial);
-                planeMesh.rotation.x -= Math.PI / 2;
-                planeMesh.position.z = 70000;
-                planeMesh.receiveShadow = true;
-                planeMesh.castShadow = true;
+                        plane = new THREE.PlaneGeometry(40000, 150000);
+                        planeMaterial = new THREE.MeshLambertMaterial({map: texture});
+                        planeMesh = new THREE.Mesh(plane, planeMaterial);
+                        planeMesh.rotation.x -= Math.PI / 2;
+                        planeMesh.position.z = 70000;
+                        planeMesh.receiveShadow = true;
+                        planeMesh.castShadow = true;
 
-                scene.add(planeMesh);
+                        scene.add(planeMesh);
+                    }
+                );
             }
 
             function createPoles() {
