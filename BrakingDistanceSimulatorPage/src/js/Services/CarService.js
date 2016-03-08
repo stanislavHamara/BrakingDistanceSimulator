@@ -12,7 +12,7 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
             };
 
             var modal;
-
+            var drivingEnabled = false;
             var carPhysics = PhysicsService.getPhysicsData();
 
             var directionalLight = new THREE.DirectionalLight(0xffffff);
@@ -142,7 +142,7 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                     if (modal) {
                         setTimeout(function () {
                             modal.style.visibility = "visible";
-                        }, 1000);
+                        }, 500);
 
                     }
                 }
