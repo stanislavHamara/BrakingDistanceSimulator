@@ -16,17 +16,20 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
             var carPhysics = PhysicsService.getPhysicsData();
 
             var directionalLight = new THREE.DirectionalLight(0xffffff);
-            directionalLight.position.set(200, 500, 200);
+            directionalLight.position.set(0, 500, 0);
             directionalLight.castShadow = true;
-            directionalLight.shadowMapWidth = 2048;
-            directionalLight.shadowMapHeight = 2048;
+            directionalLight.shadow.mapSize.width = 2048;
+            directionalLight.shadow.mapSize.height = 2048;
 
-            var d = 1024;
 
-            directionalLight.shadowCameraTop = d;
-            directionalLight.shadowCameraBottom = -d;
-            directionalLight.shadowCameraLeft = -d;
-            directionalLight.shadowCameraRight = d;
+            directionalLight.shadow.camera.top = 200;
+            directionalLight.shadow.camera.bottom = -1024;
+            directionalLight.shadow.camera.left = -1500;
+            directionalLight.shadow.camera.right = 1500;
+
+            directionalLight.shadow.camera.near = 0;
+            directionalLight.shadow.camera.far = 650;
+
 
             var clock = new THREE.Clock();
 
@@ -145,8 +148,8 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                 }
 
                 directionalLight.target = car.root;
-                directionalLight.position.x = car.root.position.x + 200;
-                directionalLight.position.z = car.root.position.z + 200;
+                directionalLight.position.x = car.root.position.x - 200;
+                directionalLight.position.z = car.root.position.z + 75;
             }
 
             function render() {

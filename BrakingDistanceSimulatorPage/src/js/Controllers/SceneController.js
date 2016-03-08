@@ -98,6 +98,8 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 directionalLight = CarService.getCarLight();
                 scene.add(directionalLight);
 
+                //scene.add(new THREE.CameraHelper(directionalLight.shadow.camera));
+
                 var envLight = new THREE.AmbientLight(0x404040);
                 envLight.position.set(0, 1000, 0);
 
@@ -109,7 +111,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
 
                 loader.load(
                     "dist/textures/asphalt.jpg",
-                    function ( texture ) {
+                    function (texture) {
                         texture.wrapS = THREE.RepeatWrapping;
                         texture.wrapT = THREE.RepeatWrapping;
                         texture.repeat.set(100, 375);
@@ -132,7 +134,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 var poleMaterial = new THREE.MeshLambertMaterial({color: 0xbbbbbb});
                 var pole;
                 var poleCount = 290;
-                
+
                 for (var i = -1; i < poleCount; i++) {
                     var randomHeight = Math.random() * (800 - 100) + 100;
                     poleGeometry = new THREE.BoxGeometry(40, randomHeight, 40);
