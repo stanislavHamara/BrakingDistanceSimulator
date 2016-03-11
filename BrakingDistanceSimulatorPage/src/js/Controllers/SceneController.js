@@ -9,6 +9,8 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
             var plane, planeMaterial, planeMesh;
             var directionalLight;
             var asphaltT, gravelT, sandT, iceT, snowT;
+            var reflectionCube;
+            var skyMesh;
 
             $scope.initScene = function () {
 
@@ -33,32 +35,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 //reflection for a car
                 sceneCube = new THREE.Scene();
 
-                var path = "dist/textures/";
-                var format = ".png";
-                var urls = [
-                    path + 'px' + format, path + 'nx' + format,
-                    path + 'py' + format, path + 'ny' + format,
-                    path + 'pz' + format, path + 'nz' + format
-                ];
-
-                var cubeLoader = new THREE.CubeTextureLoader();
-                var reflectionCube = cubeLoader.load(urls);
-                reflectionCube.format = THREE.RGBFormat;
-
-                //Skybox
-                var shader = THREE.ShaderLib['cube'];
-                shader.uniforms["tCube"].value = reflectionCube;
-
-                var shaderMaterial = new THREE.ShaderMaterial({
-                    fragmentShader: shader.fragmentShader,
-                    vertexShader: shader.vertexShader,
-                    uniforms: shader.uniforms,
-                    depthWrite: false,
-                    side: THREE.BackSide
-                });
-
-                var skyMesh = new THREE.Mesh(new THREE.BoxGeometry(100, 100, 100), shaderMaterial);
-                sceneCube.add(skyMesh);
+                createEnvironment();
 
                 //load the car
                 CarService.getCar(scene, reflectionCube, controls);
@@ -108,6 +85,25 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 scene.add(envLight);
             }
 
+            function createPoles() {
+                var poleGeometry;
+                var poleMaterial = new THREE.MeshLambertMaterial({color: 0xbbbbbb});
+                var pole;
+                var poleCount = 290;
+
+                for (var i = -1; i < poleCount; i++) {
+                    var randomHeight = Math.random() * (800 - 100) + 100;
+                    poleGeometry = new THREE.BoxGeometry(40, randomHeight, 40);
+                    pole = new THREE.Mesh(poleGeometry, poleMaterial);
+                    pole.position.x = -200;
+                    pole.position.z = 500 * i;
+                    pole.receiveShadow = true;
+                    pole.castShadow = true;
+                    scene.add(pole);
+                }
+
+            }
+
             function createGroundPlane() {
                 plane = new THREE.PlaneGeometry(40000, 150000);
                 planeMaterial = new THREE.MeshLambertMaterial({map: asphaltT});
@@ -116,8 +112,6 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 planeMesh.position.z = 70000;
                 planeMesh.receiveShadow = true;
                 planeMesh.castShadow = true;
-
-                console.log(planeMesh);
 
                 scene.add(planeMesh);
             }
@@ -140,59 +134,40 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                     function (texture) {
                         texture.wrapS = THREE.RepeatWrapping;
                         texture.wrapT = THREE.RepeatWrapping;
-                        texture.repeat.set(100, 375);
+                        texture.repeat.set(200, 750);
                         gravelT = texture;
                     }
                 );
 
                 loader.load(
-                    "dist/textures/gravel.jpg",
+                    "dist/textures/sand.jpg",
                     function (texture) {
                         texture.wrapS = THREE.RepeatWrapping;
                         texture.wrapT = THREE.RepeatWrapping;
-                        texture.repeat.set(100, 375);
+                        texture.repeat.set(200, 750);
                         sandT = texture;
                     }
                 );
 
                 loader.load(
-                    "dist/textures/gravel.jpg",
+                    "dist/textures/ice.jpg",
                     function (texture) {
                         texture.wrapS = THREE.RepeatWrapping;
                         texture.wrapT = THREE.RepeatWrapping;
-                        texture.repeat.set(100, 375);
+                        texture.repeat.set(200, 750);
                         iceT = texture;
                     }
                 );
 
                 loader.load(
-                    "dist/textures/gravel.jpg",
+                    "dist/textures/snow.jpg",
                     function (texture) {
                         texture.wrapS = THREE.RepeatWrapping;
                         texture.wrapT = THREE.RepeatWrapping;
-                        texture.repeat.set(100, 375);
+                        texture.repeat.set(200, 375);
                         snowT = texture;
                     }
                 );
-            }
-
-            function createPoles() {
-                var poleGeometry;
-                var poleMaterial = new THREE.MeshLambertMaterial({color: 0xbbbbbb});
-                var pole;
-                var poleCount = 290;
-
-                for (var i = -1; i < poleCount; i++) {
-                    var randomHeight = Math.random() * (800 - 100) + 100;
-                    poleGeometry = new THREE.BoxGeometry(40, randomHeight, 40);
-                    pole = new THREE.Mesh(poleGeometry, poleMaterial);
-                    pole.position.x = -200;
-                    pole.position.z = 500 * i;
-                    pole.receiveShadow = true;
-                    pole.castShadow = true;
-                    scene.add(pole);
-                }
-
             }
 
             function updateGround() {
@@ -205,10 +180,50 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                         case 'Gravel':
                             planeMesh.material.map = gravelT;
                             break;
+                        case 'Sand':
+                            planeMesh.material.map = sandT;
+                            break;
+                        case 'Snow':
+                            planeMesh.material.map = snowT;
+                            break;
+                        case 'Ice':
+                            planeMesh.material.map = iceT;
+                            break;
                     }
 
                     planeMesh.material.needsUpdate = true;
+                    //TODO: change the environment too to change the car reflection
                 }
+            }
+
+            function createEnvironment() {
+                var path = "dist/textures/";
+                var format = ".png";
+                var urls = [
+                    path + 'px' + format, path + 'nx' + format,
+                    path + 'py' + format, path + 'ny' + format,
+                    path + 'pz' + format, path + 'nz' + format
+                ];
+
+                var cubeLoader = new THREE.CubeTextureLoader();
+                reflectionCube = cubeLoader.load(urls);
+                reflectionCube.format = THREE.RGBFormat;
+
+                //Skybox
+                var shader = THREE.ShaderLib['cube'];
+                shader.uniforms["tCube"].value = reflectionCube;
+
+                var shaderMaterial = new THREE.ShaderMaterial({
+                    fragmentShader: shader.fragmentShader,
+                    vertexShader: shader.vertexShader,
+                    uniforms: shader.uniforms,
+                    depthWrite: false,
+                    side: THREE.BackSide
+                });
+
+                skyMesh = new THREE.Mesh(new THREE.BoxGeometry(100, 100, 100), shaderMaterial);
+                console.log(skyMesh.material.uniforms['tCube'].value);
+                sceneCube.add(skyMesh);
             }
 
         }]);
