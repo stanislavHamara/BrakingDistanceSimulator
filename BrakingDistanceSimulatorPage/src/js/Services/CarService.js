@@ -21,7 +21,6 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
             directionalLight.shadow.mapSize.width = 2048;
             directionalLight.shadow.mapSize.height = 2048;
 
-
             directionalLight.shadow.camera.top = 200;
             directionalLight.shadow.camera.bottom = -1024;
             directionalLight.shadow.camera.left = -1500;
@@ -29,7 +28,6 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
 
             directionalLight.shadow.camera.near = 0;
             directionalLight.shadow.camera.far = 650;
-
 
             var clock = new THREE.Clock();
 
@@ -45,73 +43,73 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                 car.modelScale = 0.1;
                 car.backWheelOffset = 60;
                 car.FRONT_ACCELERATION = 500; //equivalent to 9.4 m/s^2
-                car.MAX_SPEED = 6000; // 62.5 = 1mph
+                car.MAX_SPEED = 3000; // 62.5 = 1mph
                 car.loadPartsJSON("dist/js/models/body.js", "dist/js/models/wheel.js");
-                car.callback = function (object) {
+                car.callback = function (car) {
                     oControls = controls;
-                    addCar(object, 0, 0, 0, scene);
-                    addTextures(object, reflection);
-                    CameraService.setTarget(object);
+                    addCar(car, 0, 0, 0, scene);
+                    addTextures(car, reflection);
+                    CameraService.setTarget(car);
                 };
             }
 
-            function addCar(object, x, y, z, scene) {
+            function addCar(car, x, y, z, scene) {
 
-                object.root.position.set(x, y, z);
-                object.enableShadows(true);
-                oControls.target = object.root.position;
+                car.root.position.set(x, y, z);
+                car.enableShadows(true);
+                oControls.target = car.root.position;
 
-                scene.add(object.root);
+                scene.add(car.root);
 
                 animate();
                 render();
             }
 
-            function addTextures(object, reflection) {
+            function addTextures(car, reflection) {
                 //body
-                object.bodyMaterials[1] = new THREE.MeshLambertMaterial({
+                car.bodyMaterials[1] = new THREE.MeshLambertMaterial({
                     color: 0x000033,
                     envMap: reflection,
                     combine: THREE.MixOperation,
                     reflectivity: 0.2
                 });
                 //carbon
-                object.bodyMaterials[2] = new THREE.MeshLambertMaterial({
+                car.bodyMaterials[2] = new THREE.MeshLambertMaterial({
                     color: 0xffffff,
                     envMap: reflection,
                     combine: THREE.MixOperation,
                     reflectivity: 0.3
                 });
                 //mirror
-                object.bodyMaterials[4] = new THREE.MeshLambertMaterial({
+                car.bodyMaterials[4] = new THREE.MeshLambertMaterial({
                     color: 0xffffff,
                     envMap: reflection,
                     combine: THREE.MixOperation,
                     reflectivity: 1
                 });
                 //windows
-                object.bodyMaterials[5] = new THREE.MeshLambertMaterial({
+                car.bodyMaterials[5] = new THREE.MeshLambertMaterial({
                     color: 0x111111,
                     envMap: reflection,
                     combine: THREE.MixOperation,
                     reflectivity: 0.6
                 });
                 //backlight
-                object.bodyMaterials[6] = new THREE.MeshLambertMaterial({
+                car.bodyMaterials[6] = new THREE.MeshLambertMaterial({
                     color: 0x440000,
                     envMap: reflection,
                     combine: THREE.MixOperation,
                     reflectivity: 0.1
                 });
 
-                object.wheelMaterials[1] = new THREE.MeshLambertMaterial({
+                car.wheelMaterials[1] = new THREE.MeshLambertMaterial({
                     color: 0xffffff,
                     envMap: reflection,
                     combine: THREE.MixOperation,
                     reflectivity: 0.7
                 });
 
-                object.wheelMaterials[3] = object.wheelMaterials[2] = object.wheelMaterials[1];
+                car.wheelMaterials[3] = car.wheelMaterials[2] = car.wheelMaterials[1];
             }
 
             function animate() {
@@ -143,7 +141,6 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                         setTimeout(function () {
                             modal.style.visibility = "visible";
                         }, 500);
-
                     }
                 }
 
@@ -160,7 +157,6 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
             function onKeyDown(event) {
                 if (drivingEnabled)
                     switch (event.keyCode) {
-
                         case 38: /*up*/
                             controlsCar.moveForward = true;
                             break;
@@ -194,7 +190,6 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
             function onKeyUp(event) {
                 if (drivingEnabled)
                     switch (event.keyCode) {
-
                         case 38: /*up*/
                             controlsCar.moveForward = false;
                             break;
@@ -223,7 +218,6 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                             controlsCar.moveRight = false;
                             break;
                     }
-
             }
 
             return {
@@ -233,6 +227,9 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                 getCarLight: function () {
                     return directionalLight;
                 },
+                updateDriving: function () {
+                    drivingEnabled = CameraService.getDriving();
+                },
                 startSimulation: function () {
                     modal = document.getElementById("resultModal");
                     modal.style.visibility = "hidden";
@@ -241,6 +238,10 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                     car.root.position.x = 0;
                     car.root.position.y = 0;
                     car.root.position.z = 0;
+                    
+                    //restart car's orientation
+                    car.carOrientation = 0;
+                    car.wheelOrientation = 0;
 
                     var maxSpeed = carPhysics.userInput.speed;
                     simulate = true;

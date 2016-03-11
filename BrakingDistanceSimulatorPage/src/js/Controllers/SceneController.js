@@ -34,7 +34,6 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
 
                 //reflection for a car
                 sceneCube = new THREE.Scene();
-
                 createEnvironment();
 
                 //load the car
@@ -46,11 +45,11 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 // note: three.js includes requestAnimationFrame shim
                 requestAnimationFrame($scope.animate);
                 $scope.render();
-
             };
 
             $scope.render = function () {
                 CameraService.updateCamera();
+                CarService.updateDriving();
                 updateGround();
                 directionalLight = CarService.getCarLight();
                 renderer.render(sceneCube, CameraService.getCubeCamera());
@@ -81,7 +80,6 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
 
                 var envLight = new THREE.AmbientLight(0x404040);
                 envLight.position.set(0, 1000, 0);
-
                 scene.add(envLight);
             }
 
@@ -101,7 +99,6 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                     pole.castShadow = true;
                     scene.add(pole);
                 }
-
             }
 
             function createGroundPlane() {
@@ -192,7 +189,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                     }
 
                     planeMesh.material.needsUpdate = true;
-                    //TODO: change the environment too to change the car reflection
+                    //TODO: change the environment too, to change the car reflection
                 }
             }
 
@@ -225,5 +222,4 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 console.log(skyMesh.material.uniforms['tCube'].value);
                 sceneCube.add(skyMesh);
             }
-
         }]);
