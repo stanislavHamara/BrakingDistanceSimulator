@@ -34,6 +34,7 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
             var decelerate = false;
             var simulate = false;
             var thinkingTime = 670; //http://www.brake.org.uk/rsw/15-facts-a-resources/facts/1255-speed
+            var tiltBack = false;
 
             document.addEventListener('keydown', onKeyDown, false);
             document.addEventListener('keyup', onKeyUp, false);
@@ -136,11 +137,21 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                     car.speed = 0;
                     decelerate = false;
                     car.wheelsLocked = false;
+                    tiltBack = true;
 
                     if (modal) {
                         setTimeout(function () {
                             modal.style.visibility = "visible";
-                        }, 500);
+                        }, 700);
+                    }
+                }
+
+                if(tiltBack && car.acceleration < 0){
+                    if(car.acceleration + 0.2 > 0){
+                        car.acceleration = 0;
+                        tiltBack = false;
+                    } else {
+                        car.acceleration += 0.2;
                     }
                 }
 

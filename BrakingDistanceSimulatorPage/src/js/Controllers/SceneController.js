@@ -198,7 +198,7 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 var format = ".png";
                 var urls = [
                     path + 'px' + format, path + 'nx' + format,
-                    path + 'py' + format, path + 'ny' + format,
+                    path + 'py' + format, path + 'nya' + format,
                     path + 'pz' + format, path + 'nz' + format
                 ];
 
