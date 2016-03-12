@@ -45,7 +45,7 @@ angular.module('CarService', ['PhysicsService', 'CameraService'])
                 car.backWheelOffset = 60;
                 car.FRONT_ACCELERATION = 500; //equivalent to 9.4 m/s^2
                 car.MAX_SPEED = 3000; // 62.5 = 1mph
-                car.loadPartsJSON("dist/js/models/body.js", "dist/js/models/wheel.js");
+                car.loadPartsJSON("dist/js/models/body-min.js", "dist/js/models/wheel.js");
                 car.callback = function (car) {
                     oControls = controls;
                     addCar(car, 0, 0, 0, scene);

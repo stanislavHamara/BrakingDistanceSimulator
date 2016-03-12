@@ -197,9 +197,9 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 var path = "dist/textures/";
                 var format = ".png";
                 var urls = [
-                    path + 'px' + format, path + 'nx' + format,
+                    path + 'pxa' + format, path + 'nxa' + format,
                     path + 'py' + format, path + 'nya' + format,
-                    path + 'pz' + format, path + 'nz' + format
+                    path + 'pza' + format, path + 'nza' + format
                 ];
 
                 var cubeLoader = new THREE.CubeTextureLoader();
@@ -219,7 +219,6 @@ angular.module('Scene', ['rt.resize', 'OrbitControlsService', 'StatsService', 'C
                 });
 
                 skyMesh = new THREE.Mesh(new THREE.BoxGeometry(100, 100, 100), shaderMaterial);
-                console.log(skyMesh.material.uniforms['tCube'].value);
                 sceneCube.add(skyMesh);
             }
         }]);
