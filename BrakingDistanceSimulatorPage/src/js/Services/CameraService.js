@@ -1,7 +1,8 @@
 angular.module('CameraService', [])
     .factory('CameraService', function () {
-        var carCamera, carCamera2, carCamera3, cubeCamera,  currentCamera, cameraTarget, targetIndex;
+        var carCamera, carCamera2, carCamera3, cubeCamera, currentCamera, cameraTarget, targetIndex;
         var element = document.getElementById('bds-threejs-container');
+        var drivingCameraMode = false;
 
         carCamera = new THREE.PerspectiveCamera(75, element.offsetWidth / element.offsetHeight, 1, 2000000);
         carCamera.position.x = 470;
@@ -29,7 +30,11 @@ angular.module('CameraService', [])
             getCubeCamera: function () {
                 return cubeCamera;
             },
+            getDriving: function () {
+                return drivingCameraMode;
+            },
             setCamera: function (index) {
+                drivingCameraMode = false;
                 switch (index) {
                     case 1:
                         currentCamera = carCamera;
@@ -39,6 +44,12 @@ angular.module('CameraService', [])
                         break;
                     case 3:
                         currentCamera = carCamera3;
+                        break;
+                    case 4:
+                        currentCamera = carCamera;
+                        currentCamera.position.x = cameraTarget.root.position.x + 470;
+                        currentCamera.position.z = cameraTarget.root.position.z + 150;
+                        drivingCameraMode = true;
                         break;
                     default:
                         break;
