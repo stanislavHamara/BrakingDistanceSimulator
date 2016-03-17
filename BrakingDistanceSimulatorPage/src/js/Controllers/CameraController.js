@@ -11,4 +11,8 @@ angular.module('Camera', ['CameraService'])
         $scope.checkSelectedCamera = function (cameraIndex) {
             return cameraIndex == $scope.currentCameraIndex;
         };
+
+        $scope.isDriving = function (){
+            return $scope.currentCameraIndex == 4;
+        }
     }]);

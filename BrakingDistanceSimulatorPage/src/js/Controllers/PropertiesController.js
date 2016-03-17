@@ -60,7 +60,7 @@ angular.module('Properties', [])
                     PropertiesService.setSpeed($scope.speed, $scope.togglePreferences.imperial);
 
                 } else {
-                    alert ('Invalid value. Speed must be a number between 1 and 200');
+                    alert ('Invalid value. Speed must be a number between 1 and 100');
                     var modal = document.getElementById("resultModal");
                     modal.style.visibility = "hidden";
                 }
