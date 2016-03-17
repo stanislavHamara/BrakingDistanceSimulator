@@ -42,11 +42,14 @@
     <div class="row"><h3 style="margin-top: 7%">Other</h3></div>
     <div class="row">
         <div class="bds-switch">
-            Imperial Units
-            <input bs-switch type="checkbox"
+            Speed Units
+            <input bs-switch type="checkbox" class="units"
                    name="my-checkbox"
                    ng-model="togglePreferences.imperial"
-                   ng-change="setUnits()">
+                   ng-change="setUnits()"
+                   data-on-text="MPH"
+                   data-off-text="KM/H"
+                   data-handle-width="30">
         </div>
     </div>
     <div class="row">
@@ -55,7 +58,8 @@
             <input bs-switch="" type="checkbox"
                    name="my-checkbox"
                    ng-model="togglePreferences.lookAround"
-                   ng-change="setControls()">
+                   ng-change="setControls()"
+                   data-handle-width="30">
         </div>
     </div>
     <div class="row">
