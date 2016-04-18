@@ -14,9 +14,10 @@ angular.module('Properties', [])
                 lookAround: true
             };
 
+
             $scope.setUnits = function () {
                 $scope.units = $scope.togglePreferences.imperial ? 'mph' : 'km/h';
-                $scope.speed = $scope.togglePreferences.imperial ? 40 : 60;
+                $scope.speed = $scope.togglePreferences.imperial ? Math.round($scope.speed / 1.6) : Math.round($scope.speed * 1.6);
             };
 
             $scope.setControls = function() {
@@ -60,7 +61,7 @@ angular.module('Properties', [])
                     PropertiesService.setSpeed($scope.speed, $scope.togglePreferences.imperial);
 
                 } else {
-                    alert ('Invalid value. Speed must be a number between 1 and 200');
+                    alert ('Invalid value. Speed must be a number between 1 and 100');
                     var modal = document.getElementById("resultModal");
                     modal.style.visibility = "hidden";
                 }
