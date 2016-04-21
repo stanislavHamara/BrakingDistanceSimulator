@@ -20,14 +20,14 @@ angular.module('Properties', [])
                 $scope.speed = $scope.togglePreferences.imperial ? Math.round($scope.speed / 1.6) : Math.round($scope.speed * 1.6);
             };
 
-            $scope.setControls = function() {
+            $scope.setControls = function () {
                 PropertiesService.setControls($scope.togglePreferences.lookAround);
             };
 
             $scope.setSpeed = function (speed) {
                 $scope.speed += speed;
 
-                if($scope.togglePreferences.imperial){
+                if ($scope.togglePreferences.imperial) {
                     if ($scope.speed < 1) $scope.speed = 1;
                     else if ($scope.speed > 100) $scope.speed = 100;
                 } else {
@@ -35,7 +35,6 @@ angular.module('Properties', [])
                     else if ($scope.speed > 140) $scope.speed = 140;
                 }
                 PropertiesService.setSpeed($scope.speed, $scope.togglePreferences.imperial);
-
             };
 
             $scope.setSurface = function (surfaceType) {
@@ -55,13 +54,13 @@ angular.module('Properties', [])
             };
 
             $scope.startSimulation = function () {
-                if(validateSpeed()) {
+                if (validateSpeed()) {
                     CarService.startSimulation();
                     //for responsive menu
                     PropertiesService.setSpeed($scope.speed, $scope.togglePreferences.imperial);
 
                 } else {
-                    alert ('Invalid value. Speed must be a number between 1 and 100');
+                    alert('Invalid value. Speed must be a number between 1 and 100');
                     var modal = document.getElementById("resultModal");
                     modal.style.visibility = "hidden";
                 }
